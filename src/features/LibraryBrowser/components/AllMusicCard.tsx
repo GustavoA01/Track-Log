@@ -1,11 +1,11 @@
-import { cn } from "@/lib/utils"
-import { Song } from "@/data/types"
+import { cn } from "@/lib/utils";
+import { Song } from "@/data/types";
 
 type AllMusicCardProps = {
-  songs: Song[]
-  selectedFolderId: string | null
-  setSelectedFolderId: (folderId: string | null) => void
-}
+  songs: Song[];
+  selectedFolderId: string | null;
+  setSelectedFolderId: (folderId: string | null) => void;
+};
 
 export const AllMusicCard = ({
   songs,
@@ -30,4 +30,4 @@ export const AllMusicCard = ({
       <p className="text-xs text-muted-foreground">Biblioteca</p>
     </div>
   </button>
-)
+);

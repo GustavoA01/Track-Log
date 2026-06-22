@@ -13,7 +13,9 @@ export function HomeHeader() {
           </div>
           <div>
             <p className="text-sm font-semibold leading-none">Track Log</p>
-            <p className="text-xs text-muted-foreground">Seu diário de estudos</p>
+            <p className="text-xs text-muted-foreground">
+              Seu diário de estudos
+            </p>
           </div>
         </div>
 

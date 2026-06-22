@@ -1,7 +1,7 @@
 type ClearFilterButtonProps = {
-  selectedFolderId: string | null
-  setSelectedFolderId: (folderId: string | null) => void
-}
+  selectedFolderId: string | null;
+  setSelectedFolderId: (folderId: string | null) => void;
+};
 
 export const ClearFilterButton = ({
   selectedFolderId,
@@ -19,4 +19,4 @@ export const ClearFilterButton = ({
       </button>
     )}
   </div>
-)
+);

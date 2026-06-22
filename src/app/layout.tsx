@@ -20,7 +20,11 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="pt-BR" suppressHydrationWarning className={cn("h-full antialiased", inter.variable)}>
+    <html
+      lang="pt-BR"
+      suppressHydrationWarning
+      className={cn("h-full antialiased", inter.variable)}
+    >
       <body className="min-h-full font-sans">
         <ThemeProvider
           attribute="class"
@@ -33,6 +37,6 @@ const RootLayout = ({
       </body>
     </html>
   );
-}
+};
 
 export default RootLayout;

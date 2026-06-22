@@ -1,13 +1,13 @@
-import { Folder, Song } from "@/data/types"
-import { CoverImage } from "@/features/LibraryBrowser/components/CoverImage"
-import { Badge } from "@/components/ui/badge"
-import { songStatusVariants, songStatusLabels } from "@/data/constants"
+import { Folder, Song } from "@/data/types";
+import { CoverImage } from "@/features/LibraryBrowser/components/CoverImage";
+import { Badge } from "@/components/ui/badge";
+import { songStatusVariants, songStatusLabels } from "@/data/constants";
 
 type MusicCardProps = {
-  folders: Folder[]
-  song: Song
-  sessionCount: number
-}
+  folders: Folder[];
+  song: Song;
+  sessionCount: number;
+};
 
 export const MusicCard = ({ folders, song, sessionCount }: MusicCardProps) => (
   <button
@@ -33,4 +33,4 @@ export const MusicCard = ({ folders, song, sessionCount }: MusicCardProps) => (
       </p>
     </div>
   </button>
-)
+);

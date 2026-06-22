@@ -1,57 +1,57 @@
-"use client"
-import { useMemo, useState } from "react"
+"use client";
+import { useMemo, useState } from "react";
 import {
   folders,
   getSessionCountBySongId,
   getSongsByFolder,
   songs,
-} from "@/data/mock-data"
-import { FolderCard } from "../components/FolderCard"
-import { MusicCard } from "../components/MusicCard"
-import { SearchSection } from "../components/SearchSection"
-import { AllMusicCard } from "../components/AllMusicCard"
-import { ClearFilterButton } from "../components/ClearFilterButton"
+} from "@/data/mock-data";
+import { FolderCard } from "../components/FolderCard";
+import { MusicCard } from "../components/MusicCard";
+import { SearchSection } from "../components/SearchSection";
+import { AllMusicCard } from "../components/AllMusicCard";
+import { ClearFilterButton } from "../components/ClearFilterButton";
 
 function normalize(text: string) {
   return text
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
+    .toLowerCase();
 }
 
 export const LibraryBrowser = () => {
-  const [query, setQuery] = useState("")
-  const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null)
+  const [query, setQuery] = useState("");
+  const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
 
-  const normalizedQuery = normalize(query.trim())
+  const normalizedQuery = normalize(query.trim());
 
   const filteredSongs = useMemo(() => {
-    let result = selectedFolderId ? getSongsByFolder(selectedFolderId) : songs
+    let result = selectedFolderId ? getSongsByFolder(selectedFolderId) : songs;
 
     if (normalizedQuery) {
       result = result.filter(
         (song) =>
           normalize(song.title).includes(normalizedQuery) ||
           normalize(song.artist).includes(normalizedQuery),
-      )
+      );
     }
 
-    return result
-  }, [normalizedQuery, selectedFolderId])
+    return result;
+  }, [normalizedQuery, selectedFolderId]);
 
   const filteredFolders = useMemo(() => {
-    if (!normalizedQuery) return folders
+    if (!normalizedQuery) return folders;
 
     return folders.filter((folder) => {
-      const folderMatches = normalize(folder.name).includes(normalizedQuery)
+      const folderMatches = normalize(folder.name).includes(normalizedQuery);
       const hasMatchingSong = getSongsByFolder(folder.id).some(
         (song) =>
           normalize(song.title).includes(normalizedQuery) ||
           normalize(song.artist).includes(normalizedQuery),
-      )
-      return folderMatches || hasMatchingSong
-    })
-  }, [normalizedQuery])
+      );
+      return folderMatches || hasMatchingSong;
+    });
+  }, [normalizedQuery]);
 
   return (
     <div className="space-y-6">
@@ -71,8 +71,8 @@ export const LibraryBrowser = () => {
           />
 
           {filteredFolders.map((folder) => {
-            const count = getSongsByFolder(folder.id).length
-            const isSelected = selectedFolderId === folder.id
+            const count = getSongsByFolder(folder.id).length;
+            const isSelected = selectedFolderId === folder.id;
 
             return (
               <FolderCard
@@ -82,7 +82,7 @@ export const LibraryBrowser = () => {
                 isSelected={isSelected}
                 setSelectedFolderId={setSelectedFolderId}
               />
-            )
+            );
           })}
         </div>
       </section>
@@ -98,7 +98,7 @@ export const LibraryBrowser = () => {
         {filteredSongs.length > 0 ? (
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {filteredSongs.map((song) => {
-              const sessionCount = getSessionCountBySongId(song.id)
+              const sessionCount = getSessionCountBySongId(song.id);
 
               return (
                 <MusicCard
@@ -107,7 +107,7 @@ export const LibraryBrowser = () => {
                   song={song}
                   sessionCount={sessionCount}
                 />
-              )
+              );
             })}
           </div>
         ) : (
@@ -119,5 +119,5 @@ export const LibraryBrowser = () => {
         )}
       </section>
     </div>
-  )
-}
+  );
+};

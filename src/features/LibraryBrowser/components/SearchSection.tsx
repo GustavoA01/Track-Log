@@ -1,10 +1,10 @@
-import { Search } from "lucide-react"
-import { Input } from "@/components/ui/input"
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 type SearchSectionProps = {
-  query: string
-  setQuery: (query: string) => void
-}
+  query: string;
+  setQuery: (query: string) => void;
+};
 
 export const SearchSection = ({ query, setQuery }: SearchSectionProps) => (
   <section className="relative">
@@ -19,4 +19,4 @@ export const SearchSection = ({ query, setQuery }: SearchSectionProps) => (
       className="pl-9"
     />
   </section>
-)
+);

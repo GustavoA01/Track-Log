@@ -33,7 +33,7 @@ export const CoverImage = ({
         className={cn(
           "relative overflow-hidden bg-muted",
           sizeClasses[size],
-          className
+          className,
         )}
       >
         <Image
@@ -52,17 +52,17 @@ export const CoverImage = ({
       className={cn(
         "flex items-center justify-center",
         sizeClasses[size],
-        className
+        className,
       )}
       style={{ backgroundColor: `${fallbackColor}20` }}
     >
       <FallbackIcon
         className={cn(
           "text-muted-foreground/70",
-          size === "sm" ? "size-4" : "size-8"
+          size === "sm" ? "size-4" : "size-8",
         )}
         style={{ color: fallbackColor }}
       />
     </div>
   );
-}
+};

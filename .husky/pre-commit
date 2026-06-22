@@ -1,0 +1,2 @@
+git diff --name-only --cached --diff-filter=ACMR | xargs -r npx prettier --write --ignore-unknown
+git diff --name-only --cached | xargs -r git add --

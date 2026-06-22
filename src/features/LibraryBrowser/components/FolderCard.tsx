@@ -1,13 +1,13 @@
-import { cn } from "@/lib/utils"
-import { Folder } from "@/data/types"
-import { CoverImage } from "@/features/LibraryBrowser/components/CoverImage"
+import { cn } from "@/lib/utils";
+import { Folder } from "@/data/types";
+import { CoverImage } from "@/features/LibraryBrowser/components/CoverImage";
 
 type FolderCardProps = {
-  folder: Folder
-  count: number
-  isSelected: boolean
-  setSelectedFolderId: (id: string | null) => void
-}
+  folder: Folder;
+  count: number;
+  isSelected: boolean;
+  setSelectedFolderId: (id: string | null) => void;
+};
 
 export const FolderCard = ({
   folder,
