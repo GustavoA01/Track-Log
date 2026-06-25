@@ -1,16 +1,20 @@
-export type SongStatus = "learning" | "want_to_learn" | "learned" | "paused";
+export type SongStatusType =
+  | "learning"
+  | "want_to_learn"
+  | "learned"
+  | "paused";
 
-export type FolderType = "custom" | "genre" | "instrument";
+export type FolderKindType = "custom" | "genre" | "instrument";
 
-export interface Folder {
+export interface FolderType {
   id: string;
   name: string;
   color: string;
-  type: FolderType;
+  type: FolderKindType;
   imageUrl?: string;
 }
 
-export interface Song {
+export interface SongType {
   id: string;
   folderId: string;
   title: string;
@@ -18,19 +22,19 @@ export interface Song {
   genre: string;
   instrument: string;
   difficulty: number;
-  originalBpm: number;
-  currentBpm: number;
-  status: SongStatus;
+  status: SongStatusType;
   progress: number;
   notes: string;
   imageUrl?: string;
+  videoUrl?: string;
+  tabUrl?: string;
+  accentColor?: string;
 }
 
-export interface PracticeSession {
+export interface PracticeSessionType {
   id: string;
   songId: string;
   date: string;
   minutes: number;
-  bpm: number;
   notes: string;
 }

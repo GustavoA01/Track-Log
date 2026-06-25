@@ -1,7 +1,9 @@
+import Link from "next/link";
 import { FolderPlus, Music, Plus } from "lucide-react";
 
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function HomeHeader() {
   return (
@@ -25,10 +27,13 @@ export function HomeHeader() {
             <FolderPlus data-icon="inline-start" />
             Nova pasta
           </Button>
-          <Button size="sm">
+          <Link
+            href="/musica/nova"
+            className={cn(buttonVariants({ size: "sm" }))}
+          >
             <Plus data-icon="inline-start" />
             Nova música
-          </Button>
+          </Link>
         </div>
       </div>
     </header>

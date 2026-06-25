@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
-import { Folder } from "@/data/types";
+import type { FolderType } from "@/data/types";
 import { CoverImage } from "@/features/LibraryBrowser/components/CoverImage";
 
 type FolderCardProps = {
-  folder: Folder;
+  folder: FolderType;
   count: number;
   isSelected: boolean;
   setSelectedFolderId: (id: string | null) => void;

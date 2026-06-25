@@ -1,10 +1,10 @@
 "use client";
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useTheme } from "@wrksz/themes/client";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-export function ThemeToggle() {
+export const ThemeToggle = () => {
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -34,4 +34,4 @@ export function ThemeToggle() {
       )}
     </Button>
   );
-}
+};

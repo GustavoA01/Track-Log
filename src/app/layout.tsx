@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeProvider } from "@wrksz/themes/next";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -18,25 +18,23 @@ const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) => {
-  return (
-    <html
-      lang="pt-BR"
-      suppressHydrationWarning
-      className={cn("h-full antialiased", inter.variable)}
-    >
-      <body className="min-h-full font-sans">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
-  );
-};
+}>) => (
+  <html
+    lang="pt-BR"
+    suppressHydrationWarning
+    className={cn("h-full antialiased", inter.variable)}
+  >
+    <body className="min-h-full font-sans">
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        {children}
+      </ThemeProvider>
+    </body>
+  </html>
+);
 
 export default RootLayout;

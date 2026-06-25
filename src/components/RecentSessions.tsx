@@ -1,4 +1,4 @@
-import { Calendar, Gauge } from "lucide-react";
+import { Calendar } from "lucide-react";
 import {
   Card,
   CardAction,
@@ -62,10 +62,6 @@ export const RecentSessions = () => {
                   <p className="font-medium text-foreground">
                     {session.minutes} min
                   </p>
-                  <div className="flex items-center justify-end gap-1">
-                    <Gauge className="size-3" />
-                    {session.bpm} BPM
-                  </div>
                 </div>
               </div>
               {index < recent.length - 1 && <Separator className="mt-4" />}

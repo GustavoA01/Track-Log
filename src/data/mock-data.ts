@@ -1,6 +1,6 @@
-import type { Folder, PracticeSession, Song } from "./types";
+import type { FolderType, PracticeSessionType, SongType } from "./types";
 
-export const folders: Folder[] = [
+export const folders: FolderType[] = [
   {
     id: "1",
     name: "Rock",
@@ -20,7 +20,7 @@ export const folders: Folder[] = [
   },
 ];
 
-export const songs: Song[] = [
+export const songs: SongType[] = [
   {
     id: "1",
     folderId: "1",
@@ -29,13 +29,15 @@ export const songs: Song[] = [
     genre: "Rock",
     instrument: "Violão",
     difficulty: 4,
-    originalBpm: 82,
-    currentBpm: 65,
     status: "learning",
     progress: 45,
     notes: "Focar na parte do solo",
     imageUrl:
-      "https://images.unsplash.com/photo-1514320291840-7557229e927c?w=300&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1514320291840-7557229e927c?w=600&h=600&fit=crop",
+    videoUrl: "https://www.youtube.com/watch?v=QkF3oxziUI4",
+    tabUrl:
+      "https://www.songsterr.com/a/wsa/led-zeppelin-stairway-to-heaven-tab",
+    accentColor: "#6d28d9",
   },
   {
     id: "2",
@@ -45,8 +47,6 @@ export const songs: Song[] = [
     genre: "Rock",
     instrument: "Violão",
     difficulty: 3,
-    originalBpm: 96,
-    currentBpm: 80,
     status: "learning",
     progress: 70,
     notes: "",
@@ -59,8 +59,6 @@ export const songs: Song[] = [
     genre: "Rock",
     instrument: "Violão",
     difficulty: 2,
-    originalBpm: 87,
-    currentBpm: 87,
     status: "learned",
     progress: 100,
     notes: "Completa!",
@@ -75,21 +73,18 @@ export const songs: Song[] = [
     genre: "Rock",
     instrument: "Guitarra",
     difficulty: 5,
-    originalBpm: 63,
-    currentBpm: 0,
     status: "want_to_learn",
     progress: 0,
     notes: "Próxima na fila",
   },
 ];
 
-export const practiceSessions: PracticeSession[] = [
+export const practiceSessions: PracticeSessionType[] = [
   {
     id: "1",
     songId: "1",
     date: "2026-06-21",
     minutes: 45,
-    bpm: 65,
     notes: "Trabalhei a transição do verso pro refrão",
   },
   {
@@ -97,7 +92,6 @@ export const practiceSessions: PracticeSession[] = [
     songId: "2",
     date: "2026-06-20",
     minutes: 30,
-    bpm: 75,
     notes: "Fingerpicking mais fluido",
   },
   {
@@ -105,7 +99,6 @@ export const practiceSessions: PracticeSession[] = [
     songId: "1",
     date: "2026-06-18",
     minutes: 60,
-    bpm: 60,
     notes: "Sessão longa, bom progresso",
   },
   {
@@ -113,7 +106,6 @@ export const practiceSessions: PracticeSession[] = [
     songId: "3",
     date: "2026-06-15",
     minutes: 20,
-    bpm: 87,
     notes: "Revisão final",
   },
 ];
@@ -128,6 +120,23 @@ export function getSongsByFolder(folderId: string) {
 
 export function getSessionCountBySongId(songId: string) {
   return practiceSessions.filter((session) => session.songId === songId).length;
+}
+
+export function getSessionsBySongId(songId: string) {
+  return practiceSessions
+    .filter((session) => session.songId === songId)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+export function getPracticeMinutesBySongId(songId: string) {
+  return getSessionsBySongId(songId).reduce(
+    (acc, session) => acc + session.minutes,
+    0,
+  );
+}
+
+export function getFolderById(id: string) {
+  return folders.find((folder) => folder.id === id);
 }
 
 export function getTotalPracticeMinutes() {

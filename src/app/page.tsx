@@ -16,7 +16,9 @@ const Home = () => {
             Veja seu progresso e continue evoluindo nas suas músicas.
           </p>
         </section>
+
         <StatsCards />
+
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <LibraryBrowser />

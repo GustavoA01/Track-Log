@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
-import { Song } from "@/data/types";
+import type { SongType } from "@/data/types";
 
 type AllMusicCardProps = {
-  songs: Song[];
+  songs: SongType[];
   selectedFolderId: string | null;
   setSelectedFolderId: (folderId: string | null) => void;
 };
