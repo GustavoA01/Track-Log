@@ -1,5 +1,4 @@
 "use client";
-
 import {
   ExternalLink,
   Link2,
@@ -9,7 +8,6 @@ import {
   Trash2,
 } from "lucide-react";
 import { useState } from "react";
-
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
@@ -33,7 +31,24 @@ type SongResourceCardProps = {
   embedUrl?: string | null;
 };
 
-export function SongResourceCard({
+export const videoResourceDefaults = {
+  title: "Vídeo de referência",
+  description: "Assista a uma performance ou aula para guiar seu estudo.",
+  emptyLabel: "Nenhum vídeo adicionado ainda.",
+  linkLabel: "Abrir vídeo",
+  icon: PlayCircle,
+};
+
+export const tabResourceDefaults = {
+  title: "Tablatura",
+  description:
+    "Guarde o link da cifra ou tab para consultar durante a prática.",
+  emptyLabel: "Nenhuma tablatura adicionada ainda.",
+  linkLabel: "Abrir tablatura",
+  icon: ExternalLink,
+};
+
+export const SongResourceCard = ({
   title,
   description,
   url,
@@ -43,7 +58,7 @@ export function SongResourceCard({
   onSave,
   onRemove,
   embedUrl,
-}: SongResourceCardProps) {
+}: SongResourceCardProps) => {
   const [isAdding, setIsAdding] = useState(false);
   const [draftUrl, setDraftUrl] = useState(url ?? "");
 
@@ -160,46 +175,4 @@ export function SongResourceCard({
       </CardContent>
     </Card>
   );
-}
-
-export function getYouTubeEmbedUrl(url: string): string | null {
-  try {
-    const parsed = new URL(url);
-
-    if (parsed.hostname.includes("youtu.be")) {
-      const videoId = parsed.pathname.slice(1);
-      return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
-    }
-
-    if (parsed.hostname.includes("youtube.com")) {
-      const videoId = parsed.searchParams.get("v");
-      if (videoId) return `https://www.youtube.com/embed/${videoId}`;
-
-      const embedMatch = parsed.pathname.match(/\/embed\/([^/]+)/);
-      if (embedMatch?.[1]) {
-        return `https://www.youtube.com/embed/${embedMatch[1]}`;
-      }
-    }
-  } catch {
-    return null;
-  }
-
-  return null;
-}
-
-export const videoResourceDefaults = {
-  title: "Vídeo de referência",
-  description: "Assista a uma performance ou aula para guiar seu estudo.",
-  emptyLabel: "Nenhum vídeo adicionado ainda.",
-  linkLabel: "Abrir vídeo",
-  icon: PlayCircle,
-};
-
-export const tabResourceDefaults = {
-  title: "Tablatura",
-  description:
-    "Guarde o link da cifra ou tab para consultar durante a prática.",
-  emptyLabel: "Nenhuma tablatura adicionada ainda.",
-  linkLabel: "Abrir tablatura",
-  icon: ExternalLink,
 };

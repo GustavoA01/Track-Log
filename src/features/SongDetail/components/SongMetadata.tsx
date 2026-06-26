@@ -1,6 +1,7 @@
 import { Calendar, Guitar, Music2, Star } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { SongType } from "@/data/types";
+import { format } from "date-fns";
 
 type SongMetadataProps = {
   song: SongType;
@@ -12,19 +13,11 @@ type MetadataItem = {
   icon: React.ElementType;
 };
 
-function formatDate(dateStr: string) {
-  return new Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(new Date(dateStr));
-}
-
-function buildMetadataItems(song: SongType): MetadataItem[] {
+const buildMetadataItems = (song: SongType): MetadataItem[] => {
   const items: MetadataItem[] = [
     {
       label: "Data de criação",
-      value: formatDate(song.createdAt),
+      value: format(new Date(song.createdAt), "dd/MM/yyyy"),
       icon: Calendar,
     },
   ];
@@ -54,9 +47,9 @@ function buildMetadataItems(song: SongType): MetadataItem[] {
   }
 
   return items;
-}
+};
 
-export function SongMetadata({ song }: SongMetadataProps) {
+export const SongMetadata = ({ song }: SongMetadataProps) => {
   const items = buildMetadataItems(song);
 
   if (items.length === 0) return null;
@@ -91,4 +84,4 @@ export function SongMetadata({ song }: SongMetadataProps) {
       </Card>
     </section>
   );
-}
+};

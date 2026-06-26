@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { Music } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 
 type SongCoverProps = {
@@ -11,13 +10,13 @@ type SongCoverProps = {
   className?: string;
 };
 
-export function SongCover({
+export const SongCover = ({
   title,
   imageUrl,
   accentColor,
   fallbackColor,
   className,
-}: SongCoverProps) {
+}: SongCoverProps) => {
   if (imageUrl) {
     return (
       <div
@@ -54,4 +53,4 @@ export function SongCover({
       />
     </div>
   );
-}
+};

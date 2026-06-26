@@ -24,7 +24,7 @@ export const SongSessions = ({ initialSessions }: SongSessionsProps) => {
     0,
   );
 
-  function handleClearSessions() {
+  const handleClearSessions = () => {
     if (sessions.length === 0) return;
 
     const confirmed = window.confirm(
@@ -34,7 +34,7 @@ export const SongSessions = ({ initialSessions }: SongSessionsProps) => {
     if (confirmed) {
       setSessions([]);
     }
-  }
+  };
 
   return (
     <Card className="h-fit">

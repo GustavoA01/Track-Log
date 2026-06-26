@@ -9,7 +9,6 @@ import {
 import type { FolderType, SongType } from "@/data/types";
 import { SongMetadata } from "@/features/SongDetail/components/SongMetadata";
 import {
-  getYouTubeEmbedUrl,
   SongResourceCard,
   tabResourceDefaults,
   videoResourceDefaults,
@@ -21,28 +20,56 @@ import { HeroSection } from "../components/HeroSection";
 type SongDetailContentProps = {
   song: SongType;
   folder?: Pick<FolderType, "name" | "color">;
-  accentColor: string;
 };
 
-export function SongDetailContent({
+const getAccentColor = (song: SongType, folder?: Pick<FolderType, "color">) => {
+  if (song.accentColor) return song.accentColor;
+  if (folder?.color) return folder.color;
+  return "#7c3aed";
+};
+
+export const SongDetailContent = ({
   song: initialSong,
   folder,
-  accentColor,
-}: SongDetailContentProps) {
+}: SongDetailContentProps) => {
   const router = useRouter();
   const [song, setSong] = useState(initialSong);
-
+  const accentColor = getAccentColor(song, folder ?? undefined);
   const sessions = getSessionsBySongId(song.id);
   const sessionCount = getSessionCountBySongId(song.id);
   const totalMinutes = getPracticeMinutesBySongId(song.id);
 
-  function handleDelete() {
+  const handleDelete = () => {
     const confirmed = window.confirm(
       `Tem certeza que deseja excluir "${song.title}"? Esta ação não pode ser desfeita.`,
     );
 
     if (confirmed) router.push("/");
-  }
+  };
+
+  const getYouTubeEmbedUrl = (url: string): string | null => {
+    try {
+      const parsed = new URL(url);
+
+      if (parsed.hostname.includes("youtu.be")) {
+        const videoId = parsed.pathname.slice(1);
+        return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+      }
+
+      if (parsed.hostname.includes("youtube.com")) {
+        const videoId = parsed.searchParams.get("v");
+        if (videoId) return `https://www.youtube.com/embed/${videoId}`;
+
+        const embedMatch = parsed.pathname.match(/\/embed\/([^/]+)/);
+        if (embedMatch?.[1])
+          return `https://www.youtube.com/embed/${embedMatch[1]}`;
+      }
+    } catch {
+      return null;
+    }
+
+    return null;
+  };
 
   return (
     <div className="min-h-full bg-background">
@@ -109,4 +136,4 @@ export function SongDetailContent({
       </main>
     </div>
   );
-}
+};

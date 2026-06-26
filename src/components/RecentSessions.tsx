@@ -10,13 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getSongById, practiceSessions } from "@/data/mock-data";
-
-function formatDate(dateStr: string) {
-  return new Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit",
-    month: "short",
-  }).format(new Date(dateStr));
-}
+import { format } from "date-fns";
 
 export const RecentSessions = () => {
   const recent = [...practiceSessions]
@@ -57,7 +51,7 @@ export const RecentSessions = () => {
                 <div className="shrink-0 space-y-1 text-right text-xs text-muted-foreground">
                   <div className="flex items-center justify-end gap-1">
                     <Calendar className="size-3" />
-                    {formatDate(session.date)}
+                    {format(new Date(session.date), "dd/MM/yyyy")}
                   </div>
                   <p className="font-medium text-foreground">
                     {session.minutes} min
