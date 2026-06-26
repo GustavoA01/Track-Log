@@ -24,6 +24,7 @@ export interface SongType {
   difficulty: number;
   status: SongStatusType;
   progress: number;
+  createdAt: string;
   notes: string;
   imageUrl?: string;
   videoUrl?: string;

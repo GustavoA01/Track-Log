@@ -12,7 +12,7 @@ type MusicCardProps = {
 export const MusicCard = ({ folders, song, sessionCount }: MusicCardProps) => (
   <Link
     href={`/musica/${song.id}`}
-    className="flex flex-col gap-3 rounded-xl border p-3 text-left transition-colors hover:bg-muted/50"
+    className="flex flex-col gap-3 rounded-xl border p-3 text-left transition-colors hover:bg-muted/50 hover:border-primary"
   >
     <CoverImage
       src={song.imageUrl}

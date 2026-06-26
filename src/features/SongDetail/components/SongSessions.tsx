@@ -1,34 +1,28 @@
 "use client";
-
-import { Calendar, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useState } from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import type { PracticeSessionType } from "@/data/types";
+import { Session } from "./Session";
+import { HistoricalDescription } from "./HistoricalDescription";
 
 type SongSessionsProps = {
   initialSessions: PracticeSessionType[];
 };
 
-function formatDate(dateStr: string) {
-  return new Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(new Date(dateStr));
-}
-
-export function SongSessions({ initialSessions }: SongSessionsProps) {
+export const SongSessions = ({ initialSessions }: SongSessionsProps) => {
   const [sessions, setSessions] = useState(initialSessions);
+  const sessionsTotalTime = sessions.reduce(
+    (acc, session) => acc + session.minutes,
+    0,
+  );
 
   function handleClearSessions() {
     if (sessions.length === 0) return;
@@ -46,11 +40,12 @@ export function SongSessions({ initialSessions }: SongSessionsProps) {
     <Card className="h-fit">
       <CardHeader>
         <CardTitle className="text-base">Histórico de sessões</CardTitle>
-        <CardDescription>
-          {sessions.length === 0
-            ? "Nenhuma sessão registrada ainda"
-            : `${sessions.length} ${sessions.length === 1 ? "sessão" : "sessões"}`}
-        </CardDescription>
+
+        <HistoricalDescription
+          totalSessions={sessions.length}
+          totalTime={sessionsTotalTime}
+        />
+
         {sessions.length > 0 && (
           <CardAction>
             <Button
@@ -64,6 +59,7 @@ export function SongSessions({ initialSessions }: SongSessionsProps) {
           </CardAction>
         )}
       </CardHeader>
+
       <CardContent>
         {sessions.length === 0 ? (
           <p className="text-sm text-muted-foreground">
@@ -72,29 +68,16 @@ export function SongSessions({ initialSessions }: SongSessionsProps) {
         ) : (
           <div className="space-y-4">
             {sessions.map((session, index) => (
-              <div key={session.id}>
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0 space-y-1">
-                    <div className="flex items-center gap-1.5 text-sm font-medium">
-                      <Calendar className="size-3.5 text-muted-foreground" />
-                      {formatDate(session.date)}
-                    </div>
-                    {session.notes && (
-                      <p className="text-sm text-muted-foreground">
-                        {session.notes}
-                      </p>
-                    )}
-                  </div>
-                  <div className="shrink-0 text-right text-sm">
-                    <p className="font-medium">{session.minutes} min</p>
-                  </div>
-                </div>
-                {index < sessions.length - 1 && <Separator className="mt-4" />}
-              </div>
+              <Session
+                key={session.id}
+                session={session}
+                index={index}
+                sessions={sessions}
+              />
             ))}
           </div>
         )}
       </CardContent>
     </Card>
   );
-}
+};

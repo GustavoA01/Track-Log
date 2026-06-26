@@ -31,6 +31,7 @@ export const songs: SongType[] = [
     difficulty: 4,
     status: "learning",
     progress: 45,
+    createdAt: "2026-01-15",
     notes: "Focar na parte do solo",
     imageUrl:
       "https://images.unsplash.com/photo-1514320291840-7557229e927c?w=600&h=600&fit=crop",
@@ -49,6 +50,7 @@ export const songs: SongType[] = [
     difficulty: 3,
     status: "learning",
     progress: 70,
+    createdAt: "2026-03-02",
     notes: "",
   },
   {
@@ -61,6 +63,7 @@ export const songs: SongType[] = [
     difficulty: 2,
     status: "learned",
     progress: 100,
+    createdAt: "2025-11-20",
     notes: "Completa!",
     imageUrl:
       "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=300&h=300&fit=crop",
@@ -75,6 +78,7 @@ export const songs: SongType[] = [
     difficulty: 5,
     status: "want_to_learn",
     progress: 0,
+    createdAt: "2026-06-01",
     notes: "Próxima na fila",
   },
 ];

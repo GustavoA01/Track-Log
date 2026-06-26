@@ -114,7 +114,7 @@ export function SongResourceCard({
             </div>
           </>
         ) : (
-          <div className="flex flex-1 flex-col justify-center gap-4 rounded-lg border border-dashed bg-muted/20 p-4">
+          <div className="flex flex-1 flex-col gap-4 rounded-lg border border-dashed bg-muted/20 p-4">
             <div className="flex items-center gap-3 text-muted-foreground">
               <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted">
                 <Link2 className="size-4" />
