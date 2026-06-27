@@ -7,7 +7,6 @@ import {
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/lib/mappers";
 import { prisma } from "@/lib/prisma";
-
 import type { CreateSongInput } from "./types";
 
 export const createSong = async (data: CreateSongInput) => {

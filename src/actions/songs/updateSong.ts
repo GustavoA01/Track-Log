@@ -7,7 +7,6 @@ import {
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/lib/mappers";
 import { prisma } from "@/lib/prisma";
-
 import type { UpdateSongInput } from "./types";
 
 export const updateSong = async (id: string, input: UpdateSongInput) => {
@@ -21,6 +20,9 @@ export const updateSong = async (id: string, input: UpdateSongInput) => {
     throw new Error("Música não encontrada");
   }
 
+  const values = input.title !== undefined ? songFormSchema.parse(input) : null;
+  const payload = values ? formValuesToSongPayload(values) : null;
+
   if (input.folderId) {
     const folder = await prisma.folder.findFirst({
       where: { id: input.folderId, userId },
@@ -30,9 +32,6 @@ export const updateSong = async (id: string, input: UpdateSongInput) => {
       throw new Error("Pasta não encontrada");
     }
   }
-
-  const values = input.title !== undefined ? songFormSchema.parse(input) : null;
-  const payload = values ? formValuesToSongPayload(values) : null;
 
   const song = await prisma.song.update({
     where: { id },

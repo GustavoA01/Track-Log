@@ -1,15 +1,20 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm, useWatch } from "react-hook-form";
+import type { SongType } from "@/data/types";
 import {
   songFormDefaultValues,
   songFormSchema,
   type SongFormValuesType,
 } from "@/data/schemas/song-form";
-
 import { useCreateSongMutation } from "./useCreateSongMutation";
+import { useUpdateSongMutation } from "./useUpdateSongMutation";
 
-export const useSongForm = () => {
-  const { createSongFn, isPending, goBack } = useCreateSongMutation();
+export const useSongForm = (song?: SongType | null) => {
+  const router = useRouter();
+  const isEditing = Boolean(song?.id);
+  const { createSongFn, isPending: isCreating } = useCreateSongMutation();
+  const { updateSongFn, isPending: isUpdating } = useUpdateSongMutation();
 
   const methods = useForm<SongFormValuesType>({
     resolver: zodResolver(songFormSchema),
@@ -20,17 +25,30 @@ export const useSongForm = () => {
   const imageUrl = useWatch({ control, name: "imageUrl" });
 
   const onSubmit = async (data: SongFormValuesType) => {
+    if (isEditing && song?.id) {
+      await updateSongFn({ songId: song.id, data });
+      return;
+    }
+
     await createSongFn(data);
   };
 
-  const handleCancel = () => goBack();
+  const handleCancel = () => {
+    if (isEditing && song?.id) {
+      router.push(`/musica/${song.id}`);
+      return;
+    }
+    router.back();
+  };
 
   return {
     methods,
+    reset: methods.reset,
     register: methods.register,
     handleSubmit: methods.handleSubmit(onSubmit),
     handleCancel,
     imageUrl,
-    isSaving: isPending,
+    isSaving: isCreating || isUpdating,
+    isEditing,
   };
 };

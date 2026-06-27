@@ -28,7 +28,7 @@ const Home = async () => {
             <LibraryBrowser folders={folders} songs={songs} />
           </div>
           <div>
-            <RecentSessions />
+            <RecentSessions songs={songs} />
           </div>
         </div>
       </main>

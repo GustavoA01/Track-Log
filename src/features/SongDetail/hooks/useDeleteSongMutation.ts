@@ -2,9 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { deleteSong } from "@/actions/songs/deleteSong";
 import { songKeys } from "@/lib/query/song-keys";
+import { useRouter } from "next/navigation";
 
 export const useDeleteSongMutation = () => {
   const queryClient = useQueryClient();
+  const { push } = useRouter();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (id: string) => deleteSong(id),
@@ -12,6 +14,7 @@ export const useDeleteSongMutation = () => {
       queryClient.invalidateQueries({ queryKey: songKeys.all });
       queryClient.removeQueries({ queryKey: songKeys.detail(id) });
       toast.success("Música excluída com sucesso!");
+      push("/");
     },
     onError: (error) => {
       toast.error(

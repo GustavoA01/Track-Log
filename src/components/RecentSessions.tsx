@@ -1,4 +1,6 @@
 import { Calendar } from "lucide-react";
+import { format } from "date-fns";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -7,12 +9,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { getSongById, practiceSessions } from "@/data/mock-data";
-import { format } from "date-fns";
+import { practiceSessions } from "@/data/mock-data";
+import type { SongType } from "@/data/types";
 
-export const RecentSessions = () => {
+type RecentSessionsProps = {
+  songs: SongType[];
+};
+
+export const RecentSessions = ({ songs }: RecentSessionsProps) => {
   const recent = [...practiceSessions]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 5);
@@ -30,7 +35,7 @@ export const RecentSessions = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         {recent.map((session, index) => {
-          const song = getSongById(session.songId);
+          const song = songs.find((item) => item.id === session.songId);
 
           return (
             <div key={session.id}>
@@ -43,7 +48,7 @@ export const RecentSessions = () => {
                     {song?.artist}
                   </p>
                   {session.notes && (
-                    <p className="text-xs text-muted-foreground line-clamp-1">
+                    <p className="line-clamp-1 text-xs text-muted-foreground">
                       {session.notes}
                     </p>
                   )}

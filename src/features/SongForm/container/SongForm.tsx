@@ -1,25 +1,33 @@
 "use client";
 import { ImageIcon, NotebookPen } from "lucide-react";
+import { useEffect } from "react";
 import { FormProvider } from "react-hook-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { songToFormValues } from "@/data/schemas/song-form";
+import type { SongType } from "@/data/types";
 import { FormFieldLabel } from "@/features/SongForm/components/FormFieldLabel";
 import { FormFooter } from "@/features/SongForm/components/FormFooter";
 import { SongImagePreview } from "@/features/SongForm/components/SongImagePreview";
+import { useSongForm } from "../hooks/useSongForm";
 import { BasicFields } from "./BasicFields";
 import { ExtraFields } from "./ExtraFields";
-import { useSongForm } from "../hooks/useSongForm";
 
-export const SongForm = () => {
+export const SongForm = ({ song }: { song?: SongType | null }) => {
   const {
     methods,
+    reset,
     handleSubmit,
     isSaving,
-    isSuccess,
+    isEditing,
     handleCancel,
     imageUrl,
     register,
-  } = useSongForm();
+  } = useSongForm(song);
+
+  useEffect(() => {
+    if (song) reset(songToFormValues(song));
+  }, [song, reset]);
 
   return (
     <Card>
@@ -58,8 +66,8 @@ export const SongForm = () => {
           </CardContent>
 
           <FormFooter
-            isSaving={isSaving || isSuccess}
-            submitLabel={isSuccess ? "Salvo!" : "Criar música"}
+            isSaving={isSaving}
+            submitLabel={isEditing ? "Salvar alterações" : "Criar música"}
             handleCancel={handleCancel}
           />
         </form>

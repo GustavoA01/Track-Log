@@ -23,7 +23,7 @@ export const SongHeader = ({ songId, onDelete }: SongHeaderProps) => (
 
       <div className="ml-auto flex items-center gap-2">
         <Link
-          href={`/musica/${songId}/editar`}
+          href={`/musica/nova/?songId=${songId}`}
           className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
         >
           <Pencil data-icon="inline-start" />

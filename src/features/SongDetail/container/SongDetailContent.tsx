@@ -1,11 +1,5 @@
 "use client";
-import { useState } from "react";
 import { updateSongResources } from "@/actions/songs/updateSongResources";
-import {
-  getPracticeMinutesBySongId,
-  getSessionCountBySongId,
-  getSessionsBySongId,
-} from "@/data/mock-data";
 import type { FolderType, SongType } from "@/data/types";
 import { SongMetadata } from "@/features/SongDetail/components/SongMetadata";
 import {
@@ -18,56 +12,29 @@ import { ActiveSessionBar } from "@/features/StartSession/container/ActiveSessio
 import { DeleteSongDialog } from "./DeleteSongDialog";
 import { SongHeader } from "../components/SongHeader";
 import { HeroSection } from "../components/HeroSection";
+import { useSongDetailContent } from "../hooks/useSondDetailContent";
 
 type SongDetailContentProps = {
   song: SongType;
   folder?: Pick<FolderType, "name" | "color">;
 };
 
-const getAccentColor = (song: SongType, folder?: Pick<FolderType, "color">) => {
-  if (song.accentColor) return song.accentColor;
-  if (folder?.color) return folder.color;
-  return "#7c3aed";
-};
-
 export const SongDetailContent = ({
   song: initialSong,
   folder,
 }: SongDetailContentProps) => {
-  const [song, setSong] = useState(initialSong);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const accentColor = getAccentColor(song, folder ?? undefined);
-  const sessions = getSessionsBySongId(song.id);
-  const sessionCount = getSessionCountBySongId(song.id);
-  const totalMinutes = getPracticeMinutesBySongId(song.id);
-
-  const handleStartSession = (minutes: number) => {
-    console.log({ songId: song.id, durationMinutes: minutes });
-  };
-
-  const getYouTubeEmbedUrl = (url: string): string | null => {
-    try {
-      const parsed = new URL(url);
-
-      if (parsed.hostname.includes("youtu.be")) {
-        const videoId = parsed.pathname.slice(1);
-        return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
-      }
-
-      if (parsed.hostname.includes("youtube.com")) {
-        const videoId = parsed.searchParams.get("v");
-        if (videoId) return `https://www.youtube.com/embed/${videoId}`;
-
-        const embedMatch = parsed.pathname.match(/\/embed\/([^/]+)/);
-        if (embedMatch?.[1])
-          return `https://www.youtube.com/embed/${embedMatch[1]}`;
-      }
-    } catch {
-      return null;
-    }
-
-    return null;
-  };
+  const {
+    song,
+    deleteDialogOpen,
+    setDeleteDialogOpen,
+    accentColor,
+    sessions,
+    sessionCount,
+    totalMinutes,
+    getYouTubeEmbedUrl,
+    handleStartSession,
+    setSong,
+  } = useSongDetailContent({ initialSong, folder });
 
   return (
     <div className="min-h-full bg-background">

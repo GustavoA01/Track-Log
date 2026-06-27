@@ -3,7 +3,6 @@ import { revalidatePath } from "next/cache";
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/lib/mappers";
 import { prisma } from "@/lib/prisma";
-
 import type { UpdateSongResourcesInput } from "./types";
 
 export const updateSongResources = async (
