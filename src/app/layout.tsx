@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@wrksz/themes/next";
+import { AppProviders } from "@/components/providers/AppProviders";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -31,7 +32,7 @@ const RootLayout = ({
         enableSystem
         disableTransitionOnChange
       >
-        {children}
+        <AppProviders>{children}</AppProviders>
       </ThemeProvider>
     </body>
   </html>

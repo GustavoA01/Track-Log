@@ -1,6 +1,6 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { updateSongResources } from "@/actions/songs/updateSongResources";
 import {
   getPracticeMinutesBySongId,
   getSessionCountBySongId,
@@ -15,6 +15,7 @@ import {
 } from "@/features/SongDetail/components/SongResourceCard";
 import { SongSessions } from "@/features/SongDetail/components/SongSessions";
 import { ActiveSessionBar } from "@/features/StartSession/container/ActiveSessionBar";
+import { DeleteSongDialog } from "./DeleteSongDialog";
 import { SongHeader } from "../components/SongHeader";
 import { HeroSection } from "../components/HeroSection";
 
@@ -33,20 +34,12 @@ export const SongDetailContent = ({
   song: initialSong,
   folder,
 }: SongDetailContentProps) => {
-  const router = useRouter();
   const [song, setSong] = useState(initialSong);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const accentColor = getAccentColor(song, folder ?? undefined);
   const sessions = getSessionsBySongId(song.id);
   const sessionCount = getSessionCountBySongId(song.id);
   const totalMinutes = getPracticeMinutesBySongId(song.id);
-
-  const handleDelete = () => {
-    const confirmed = window.confirm(
-      `Tem certeza que deseja excluir "${song.title}"? Esta ação não pode ser desfeita.`,
-    );
-
-    if (confirmed) router.push("/");
-  };
 
   const handleStartSession = (minutes: number) => {
     console.log({ songId: song.id, durationMinutes: minutes });
@@ -78,7 +71,14 @@ export const SongDetailContent = ({
 
   return (
     <div className="min-h-full bg-background">
-      <SongHeader songId={song.id} handleDelete={handleDelete} />
+      <SongHeader songId={song.id} onDelete={() => setDeleteDialogOpen(true)} />
+
+      <DeleteSongDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        songId={song.id}
+        songTitle={song.title}
+      />
 
       <main className="pb-20">
         <HeroSection
@@ -115,23 +115,35 @@ export const SongDetailContent = ({
                 embedUrl={
                   song.videoUrl ? getYouTubeEmbedUrl(song.videoUrl) : null
                 }
-                onSave={(videoUrl) =>
-                  setSong((current) => ({ ...current, videoUrl }))
-                }
-                onRemove={() =>
-                  setSong((current) => ({ ...current, videoUrl: undefined }))
-                }
+                onSave={async (videoUrl) => {
+                  const updated = await updateSongResources(song.id, {
+                    videoUrl,
+                  });
+                  setSong(updated);
+                }}
+                onRemove={async () => {
+                  const updated = await updateSongResources(song.id, {
+                    videoUrl: null,
+                  });
+                  setSong(updated);
+                }}
               />
 
               <SongResourceCard
                 {...tabResourceDefaults}
                 url={song.tabUrl}
-                onSave={(tabUrl) =>
-                  setSong((current) => ({ ...current, tabUrl }))
-                }
-                onRemove={() =>
-                  setSong((current) => ({ ...current, tabUrl: undefined }))
-                }
+                onSave={async (tabUrl) => {
+                  const updated = await updateSongResources(song.id, {
+                    tabUrl,
+                  });
+                  setSong(updated);
+                }}
+                onRemove={async () => {
+                  const updated = await updateSongResources(song.id, {
+                    tabUrl: null,
+                  });
+                  setSong(updated);
+                }}
               />
             </div>
           </section>

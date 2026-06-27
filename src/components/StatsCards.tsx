@@ -11,37 +11,41 @@ import {
   getTotalPracticeMinutes,
   getWeeklyPracticeMinutes,
   practiceSessions,
-  songs,
 } from "@/data/mock-data";
+import type { SongType } from "@/data/types";
 
-const stats = [
-  {
-    label: "Músicas",
-    value: songs.length,
-    description: `${songs.filter((s) => s.status === "learning").length} em aprendizado`,
-    icon: Music2,
-  },
-  {
-    label: "Esta semana",
-    value: `${getWeeklyPracticeMinutes()} min`,
-    description: "Tempo de prática",
-    icon: Clock,
-  },
-  {
-    label: "Total praticado",
-    value: `${getTotalPracticeMinutes()} min`,
-    description: `${practiceSessions.length} sessões registradas`,
-    icon: TrendingUp,
-  },
-  {
-    label: "Aprendidas",
-    value: songs.filter((s) => s.status === "learned").length,
-    description: `${songs.filter((s) => s.status === "want_to_learn").length} na fila`,
-    icon: BookOpen,
-  },
-];
+type StatsCardsProps = {
+  songs: SongType[];
+};
 
-export function StatsCards() {
+export function StatsCards({ songs }: StatsCardsProps) {
+  const stats = [
+    {
+      label: "Músicas",
+      value: songs.length,
+      description: `${songs.filter((s) => s.status === "learning").length} em aprendizado`,
+      icon: Music2,
+    },
+    {
+      label: "Esta semana",
+      value: `${getWeeklyPracticeMinutes()} min`,
+      description: "Tempo de prática",
+      icon: Clock,
+    },
+    {
+      label: "Total praticado",
+      value: `${getTotalPracticeMinutes()} min`,
+      description: `${practiceSessions.length} sessões registradas`,
+      icon: TrendingUp,
+    },
+    {
+      label: "Aprendidas",
+      value: songs.filter((s) => s.status === "learned").length,
+      description: `${songs.filter((s) => s.status === "want_to_learn").length} na fila`,
+      icon: BookOpen,
+    },
+  ];
+
   return (
     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (

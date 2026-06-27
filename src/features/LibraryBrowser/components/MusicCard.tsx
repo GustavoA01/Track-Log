@@ -18,6 +18,7 @@ export const MusicCard = ({ folders, song, sessionCount }: MusicCardProps) => (
       src={song.imageUrl}
       alt={song.title}
       fallbackColor={
+        song.accentColor ??
         folders.find((f: FolderType) => f.id === song.folderId)?.color
       }
       size="lg"

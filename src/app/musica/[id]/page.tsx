@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { getFolderById, getSongById } from "@/data/mock-data";
+import { getFolderById } from "@/actions/folders/getFolderById";
+import { getSongById } from "@/actions/songs/getSongById";
 import { SongDetailContent } from "@/features/SongDetail/container/SongDetailContent";
 
 type MusicPageProps = {
@@ -8,12 +9,13 @@ type MusicPageProps = {
 
 const MusicPage = async ({ params }: MusicPageProps) => {
   const { id } = await params;
-  const song = getSongById(id);
-  const folder = song ? getFolderById(song.folderId) : undefined;
+  const song = await getSongById(id);
 
   if (!song) notFound();
 
-  return <SongDetailContent song={song} folder={folder} />;
+  const folder = song.folderId ? await getFolderById(song.folderId) : undefined;
+
+  return <SongDetailContent song={song} folder={folder ?? undefined} />;
 };
 
 export default MusicPage;

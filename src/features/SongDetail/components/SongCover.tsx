@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { RemoteImage } from "@/components/RemoteImage";
 import { Music } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -25,14 +25,7 @@ export const SongCover = ({
           className,
         )}
       >
-        <Image
-          src={imageUrl}
-          alt={title}
-          fill
-          priority
-          className="object-cover"
-          sizes="(max-width: 1024px) 280px, 360px"
-        />
+        <RemoteImage src={imageUrl} alt={title} fill className="object-cover" />
       </div>
     );
   }

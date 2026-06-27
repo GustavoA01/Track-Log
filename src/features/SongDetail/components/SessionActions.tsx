@@ -16,7 +16,6 @@ export const SessionActions = () => (
     >
       <Ellipsis />
     </DropdownMenuTrigger>
-
     <DropdownMenuContent align="end">
       <DropdownMenuItem className="w-auto min-w-max">
         <Button variant="ghost" size="sm" className="w-full">

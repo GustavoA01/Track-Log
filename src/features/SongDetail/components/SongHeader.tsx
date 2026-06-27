@@ -7,10 +7,10 @@ import { Trash2 } from "lucide-react";
 
 type SongHeaderProps = {
   songId: string;
-  handleDelete: () => void;
+  onDelete: () => void;
 };
 
-export const SongHeader = ({ songId, handleDelete }: SongHeaderProps) => (
+export const SongHeader = ({ songId, onDelete }: SongHeaderProps) => (
   <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
     <div className="container mx-auto flex h-14 items-center gap-3 px-4 sm:px-6">
       <Link
@@ -29,7 +29,7 @@ export const SongHeader = ({ songId, handleDelete }: SongHeaderProps) => (
           <Pencil data-icon="inline-start" />
           Editar
         </Link>
-        <Button variant="destructive" size="sm" onClick={handleDelete}>
+        <Button variant="destructive" size="sm" onClick={onDelete}>
           <Trash2 data-icon="inline-start" />
           Excluir
         </Button>

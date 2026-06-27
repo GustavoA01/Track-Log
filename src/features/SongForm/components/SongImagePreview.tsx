@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { RemoteImage } from "@/components/RemoteImage";
 import { ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -22,14 +22,7 @@ export const SongImagePreview = ({
           isFolder && "m-auto",
         )}
       >
-        <Image
-          src={imageUrl}
-          alt="Prévia da capa"
-          fill
-          className="object-cover"
-          sizes="200px"
-          unoptimized
-        />
+        <RemoteImage src={imageUrl} alt="Prévia da capa" fill />
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { RemoteImage } from "@/components/RemoteImage";
 import { FolderOpen, Music } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -36,13 +36,7 @@ export const CoverImage = ({
           className,
         )}
       >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover"
-          sizes={size === "sm" ? "40px" : "(max-width: 768px) 50vw, 200px"}
-        />
+        <RemoteImage src={src} alt={alt} fill className="object-cover" />
       </div>
     );
   }

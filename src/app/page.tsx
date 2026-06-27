@@ -1,9 +1,13 @@
 import { HomeHeader } from "@/components/HomeHeader";
 import { RecentSessions } from "@/components/RecentSessions";
 import { StatsCards } from "@/components/StatsCards";
+import { getFolders } from "@/actions/folders/getFolders";
+import { getSongs } from "@/actions/songs/getSongs";
 import { LibraryBrowser } from "@/features/LibraryBrowser/container/LibraryBrowser";
 
-const Home = () => {
+const Home = async () => {
+  const [folders, songs] = await Promise.all([getFolders(), getSongs()]);
+
   return (
     <div className="min-h-full bg-background">
       <HomeHeader />
@@ -17,11 +21,11 @@ const Home = () => {
           </p>
         </section>
 
-        <StatsCards />
+        <StatsCards songs={songs} />
 
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <LibraryBrowser />
+            <LibraryBrowser folders={folders} songs={songs} />
           </div>
           <div>
             <RecentSessions />

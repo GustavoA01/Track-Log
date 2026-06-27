@@ -1,14 +1,16 @@
-import type { FolderType } from "@/data/types";
+import type { FolderType, SongType } from "@/data/types";
 import { AllMusicCard } from "../components/AllMusicCard";
 import { ClearFilterButton } from "../components/ClearFilterButton";
 import { FolderCard } from "../components/FolderCard";
-import { folders, getSongsByFolder } from "@/data/mock-data";
-import { songs } from "@/data/mock-data";
 
 export const FolderSection = ({
+  folders,
+  songs,
   selectedFolderId,
   setSelectedFolderId,
 }: {
+  folders: FolderType[];
+  songs: SongType[];
   selectedFolderId: string | null;
   setSelectedFolderId: (folderId: string | null) => void;
 }) => {
@@ -27,7 +29,9 @@ export const FolderSection = ({
         />
 
         {folders.map((folder: FolderType) => {
-          const count = getSongsByFolder(folder.id).length;
+          const count = songs.filter(
+            (song) => song.folderId === folder.id,
+          ).length;
           const isSelected = selectedFolderId === folder.id;
 
           return (

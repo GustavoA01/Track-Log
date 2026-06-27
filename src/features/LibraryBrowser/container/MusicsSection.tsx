@@ -1,9 +1,13 @@
-import { songs } from "@/data/mock-data";
 import { getSessionCountBySongId } from "@/data/mock-data";
+import type { FolderType, SongType } from "@/data/types";
 import { MusicCard } from "../components/MusicCard";
-import { folders } from "@/data/mock-data";
 
-export const MusicsSection = () => {
+type MusicsSectionProps = {
+  folders: FolderType[];
+  songs: SongType[];
+};
+
+export const MusicsSection = ({ folders, songs }: MusicsSectionProps) => {
   return (
     <section className="space-y-3">
       <header className="flex items-center">

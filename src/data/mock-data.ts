@@ -5,16 +5,14 @@ export const folders: FolderType[] = [
     id: "1",
     name: "Rock",
     color: "#ef4444",
-    type: "genre",
     imageUrl:
       "https://images.unsplash.com/photo-1498038432885-c6f3f1e91201?w=200&h=200&fit=crop",
   },
-  { id: "2", name: "Violão", color: "#3b82f6", type: "instrument" },
+  { id: "2", name: "Violão", color: "#3b82f6" },
   {
     id: "3",
     name: "Favoritas",
     color: "#a855f7",
-    type: "custom",
     imageUrl:
       "https://images.unsplash.com/photo-1511379938545-c1f69419868d?w=200&h=200&fit=crop",
   },
@@ -30,7 +28,6 @@ export const songs: SongType[] = [
     instrument: "Violão",
     difficulty: 4,
     status: "learning",
-    progress: 45,
     createdAt: "2026-01-15",
     notes: "Focar na parte do solo",
     imageUrl:
@@ -39,6 +36,7 @@ export const songs: SongType[] = [
     tabUrl:
       "https://www.songsterr.com/a/wsa/led-zeppelin-stairway-to-heaven-tab",
     accentColor: "#6d28d9",
+    sessionsTotalTime: 105,
   },
   {
     id: "2",
@@ -49,9 +47,9 @@ export const songs: SongType[] = [
     instrument: "Violão",
     difficulty: 3,
     status: "learning",
-    progress: 70,
     createdAt: "2026-03-02",
     notes: "",
+    sessionsTotalTime: 30,
   },
   {
     id: "3",
@@ -62,11 +60,11 @@ export const songs: SongType[] = [
     instrument: "Violão",
     difficulty: 2,
     status: "learned",
-    progress: 100,
     createdAt: "2025-11-20",
     notes: "Completa!",
     imageUrl:
       "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=300&h=300&fit=crop",
+    sessionsTotalTime: 20,
   },
   {
     id: "4",
@@ -77,9 +75,9 @@ export const songs: SongType[] = [
     instrument: "Guitarra",
     difficulty: 5,
     status: "want_to_learn",
-    progress: 0,
     createdAt: "2026-06-01",
     notes: "Próxima na fila",
+    sessionsTotalTime: 0,
   },
 ];
 

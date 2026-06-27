@@ -1,5 +1,4 @@
 import { z } from "zod";
-
 import type { SongStatusType, SongType } from "@/data/types";
 
 const optionalUrl = z
@@ -21,6 +20,14 @@ export const songFormSchema = z.object({
   title: z.string().trim().min(1, "Título é obrigatório"),
   artist: z.string().trim().min(1, "Artista é obrigatório"),
   status: z.enum(songStatusValues),
+  difficulty: z
+    .number({ error: "Informe a dificuldade" })
+    .refine((value) => !Number.isNaN(value), {
+      message: "Informe a dificuldade",
+    })
+    .int("Use um número inteiro")
+    .min(1, "Mínimo 1")
+    .max(5, "Máximo 5"),
   imageUrl: optionalUrl,
   videoUrl: optionalUrl,
   tabUrl: optionalUrl,
@@ -35,6 +42,7 @@ export const songFormDefaultValues: SongFormValuesType = {
   title: "",
   artist: "",
   status: "want_to_learn",
+  difficulty: 3,
   imageUrl: "",
   videoUrl: "",
   tabUrl: "",
@@ -47,6 +55,7 @@ export const songToFormValues = (song: SongType): SongFormValuesType => ({
   title: song.title,
   artist: song.artist,
   status: song.status,
+  difficulty: song.difficulty,
   imageUrl: song.imageUrl ?? "",
   videoUrl: song.videoUrl ?? "",
   tabUrl: song.tabUrl ?? "",
@@ -59,6 +68,7 @@ export const formValuesToSongPayload = (values: SongFormValuesType) => ({
   title: values.title,
   artist: values.artist,
   status: values.status,
+  difficulty: values.difficulty,
   imageUrl: values.imageUrl || undefined,
   videoUrl: values.videoUrl || undefined,
   tabUrl: values.tabUrl || undefined,

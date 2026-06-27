@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum SongStatus {
+  learning
+  want_to_learn
+  learned
+  paused
+}
+
+model Folder {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  color     String   @default("#7c3aed")
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  songs     Song[]
+
+  @@index([userId])
+}
+
+model Song {
+  id          String     @id @default(cuid())
+  userId      String
+  folderId    String?
+  title       String
+  artist      String
+  genre       String     @default("")
+  instrument  String     @default("")
+  difficulty  Int        @default(1)
+  status      SongStatus @default(want_to_learn)
+  notes       String     @default("")
+  imageUrl    String?
+  videoUrl    String?
+  tabUrl      String?
+  accentColor String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  folder      Folder?    @relation(fields: [folderId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([folderId])
+}

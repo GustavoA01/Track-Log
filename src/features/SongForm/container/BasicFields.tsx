@@ -1,5 +1,5 @@
 import { FormFieldLabel } from "../components/FormFieldLabel";
-import { Music2, Mic2, ToggleLeft, Tags, Guitar } from "lucide-react";
+import { Music2, Mic2, ToggleLeft, Tags, Guitar, Gauge } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { FieldError } from "@/components/FieldError";
 import { StatusSelect } from "../components/StatusSelect";
@@ -69,6 +69,23 @@ export const BasicFields = () => {
           placeholder="Violão, guitarra..."
           {...register("instrument")}
         />
+      </div>
+
+      <div className="space-y-2">
+        <FormFieldLabel htmlFor="difficulty" icon={Gauge}>
+          Dificuldade
+        </FormFieldLabel>
+        <Input
+          id="difficulty"
+          type="number"
+          min={1}
+          max={5}
+          inputMode="numeric"
+          placeholder="1 a 5"
+          aria-invalid={!!errors.difficulty}
+          {...register("difficulty", { valueAsNumber: true })}
+        />
+        <FieldError message={errors.difficulty?.message} />
       </div>
     </div>
   );

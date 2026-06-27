@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { createFolder } from "@/actions/folders/createFolder";
 import {
   folderFormDefaultValues,
   folderFormSchema,
@@ -27,11 +28,13 @@ export const FolderDialog = () => {
     setOpen(false);
   };
 
-  const onSubmit = (values: FolderFormValuesType) => {
+  const onSubmit = async (values: FolderFormValuesType) => {
     setIsSaving(true);
 
     try {
-      console.log(values);
+      await createFolder(values);
+      methods.reset();
+      setOpen(false);
     } finally {
       setIsSaving(false);
     }

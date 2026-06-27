@@ -4,26 +4,22 @@ export type SongStatusType =
   | "learned"
   | "paused";
 
-export type FolderKindType = "custom" | "genre" | "instrument";
-
 export interface FolderType {
   id: string;
   name: string;
   color: string;
-  type: FolderKindType;
   imageUrl?: string;
 }
 
 export interface SongType {
   id: string;
-  folderId: string;
+  folderId?: string;
   title: string;
   artist: string;
   genre: string;
   instrument: string;
   difficulty: number;
   status: SongStatusType;
-  progress: number;
   createdAt: string;
   notes: string;
   imageUrl?: string;
