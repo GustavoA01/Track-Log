@@ -3,8 +3,7 @@ import { SongCover } from "./SongCover";
 import { SongType } from "@/data/types";
 import { FolderType } from "@/data/types";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Timer } from "lucide-react";
+import { StartSessionTrigger } from "@/features/StartSession/components/StartSessionTrigger";
 
 type HeroSectionProps = {
   song: Pick<SongType, "title" | "imageUrl" | "status" | "artist">;
@@ -12,6 +11,7 @@ type HeroSectionProps = {
   folder?: Pick<FolderType, "name" | "color">;
   sessionCount: number;
   totalMinutes: number;
+  onStartSession: (minutes: number) => void;
 };
 
 export const HeroSection = ({
@@ -20,6 +20,7 @@ export const HeroSection = ({
   folder,
   sessionCount,
   totalMinutes,
+  onStartSession,
 }: HeroSectionProps) => (
   <section
     className="w-full"
@@ -58,10 +59,7 @@ export const HeroSection = ({
             {totalMinutes} min praticados
           </p>
 
-          <Button size="lg" className="w-full sm:w-auto">
-            <Timer data-icon="inline-start" />
-            Iniciar sessão de estudo
-          </Button>
+          <StartSessionTrigger onStart={onStartSession} />
         </div>
       </div>
     </div>

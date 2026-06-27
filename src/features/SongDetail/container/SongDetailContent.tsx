@@ -14,6 +14,7 @@ import {
   videoResourceDefaults,
 } from "@/features/SongDetail/components/SongResourceCard";
 import { SongSessions } from "@/features/SongDetail/components/SongSessions";
+import { ActiveSessionBar } from "@/features/StartSession/container/ActiveSessionBar";
 import { SongHeader } from "../components/SongHeader";
 import { HeroSection } from "../components/HeroSection";
 
@@ -47,6 +48,10 @@ export const SongDetailContent = ({
     if (confirmed) router.push("/");
   };
 
+  const handleStartSession = (minutes: number) => {
+    console.log({ songId: song.id, durationMinutes: minutes });
+  };
+
   const getYouTubeEmbedUrl = (url: string): string | null => {
     try {
       const parsed = new URL(url);
@@ -75,13 +80,14 @@ export const SongDetailContent = ({
     <div className="min-h-full bg-background">
       <SongHeader songId={song.id} handleDelete={handleDelete} />
 
-      <main className="pb-12">
+      <main className="pb-20">
         <HeroSection
           song={song}
           accentColor={accentColor}
           folder={folder ?? undefined}
           sessionCount={sessionCount}
           totalMinutes={totalMinutes}
+          onStartSession={handleStartSession}
         />
 
         <div className="container mx-auto space-y-8 px-4 pt-8 sm:px-6">
@@ -134,6 +140,14 @@ export const SongDetailContent = ({
           <SongSessions initialSessions={sessions} />
         </div>
       </main>
+
+      {false && (
+        <ActiveSessionBar
+          title={song.title}
+          remainingTime="00:00"
+          progress={0}
+        />
+      )}
     </div>
   );
 };

@@ -30,6 +30,7 @@ export interface SongType {
   videoUrl?: string;
   tabUrl?: string;
   accentColor?: string;
+  sessionsTotalTime: number;
 }
 
 export interface PracticeSessionType {
