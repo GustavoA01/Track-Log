@@ -7,41 +7,45 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useDeleteFolderMutation } from "@/features/FolderForm/hooks/useDeleteFolderMutation";
 
-import { useDeleteSongMutation } from "../hooks/useDeleteSongMutation";
-
-type DeleteSongDialogProps = {
+type DeleteFolderDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  songId: string;
-  songTitle: string;
+  folderId: string;
+  folderName: string;
+  onDeleted?: () => void;
 };
 
-export const DeleteSongDialog = ({
+export const DeleteFolderDialog = ({
   open,
   onOpenChange,
-  songId,
-  songTitle,
-}: DeleteSongDialogProps) => {
-  const { mutateAsync, isPending } = useDeleteSongMutation();
+  folderId,
+  folderName,
+  onDeleted,
+}: DeleteFolderDialogProps) => {
+  const { mutateAsync, isPending } = useDeleteFolderMutation();
 
   const handleConfirm = async () => {
-    await mutateAsync(songId);
+    await mutateAsync(folderId);
+    onDeleted?.();
     onOpenChange(false);
   };
 
   const handleOpenChange = (nextOpen: boolean) => {
-    if (!isPending) onOpenChange(nextOpen);
+    if (!isPending) {
+      onOpenChange(nextOpen);
+    }
   };
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent showCloseButton={!isPending}>
         <DialogHeader>
-          <DialogTitle>Excluir música?</DialogTitle>
+          <DialogTitle>Excluir pasta?</DialogTitle>
           <DialogDescription>
-            Tem certeza que deseja excluir &ldquo;{songTitle}&rdquo;? Esta ação
-            não pode ser desfeita.
+            Tem certeza que deseja excluir &ldquo;{folderName}&rdquo;? As
+            músicas desta pasta não serão excluídas.
           </DialogDescription>
         </DialogHeader>
 

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export const useDeleteSongMutation = () => {
   const queryClient = useQueryClient();
-  const { push } = useRouter();
+  const { replace } = useRouter();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (id: string) => deleteSong(id),
@@ -14,7 +14,7 @@ export const useDeleteSongMutation = () => {
       queryClient.invalidateQueries({ queryKey: songKeys.all });
       queryClient.removeQueries({ queryKey: songKeys.detail(id) });
       toast.success("Música excluída com sucesso!");
-      push("/");
+      replace("/");
     },
     onError: (error) => {
       toast.error(

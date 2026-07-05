@@ -1,6 +1,5 @@
 import { ImageIcon, Type } from "lucide-react";
 import { useFormContext, useWatch } from "react-hook-form";
-
 import { FieldError } from "@/components/FieldError";
 import { Input } from "@/components/ui/input";
 import type { FolderFormValuesType } from "@/data/schemas/folder-form";

@@ -2,12 +2,16 @@ import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 
 type FolderFormFooterProps = {
+  formId?: string;
   isSaving: boolean;
+  submitLabel?: string;
   onCancel: () => void;
 };
 
 export const FolderFormFooter = ({
+  formId = "new-folder-form",
   isSaving,
+  submitLabel = "Criar pasta",
   onCancel,
 }: FolderFormFooterProps) => (
   <DialogFooter>
@@ -19,8 +23,8 @@ export const FolderFormFooter = ({
     >
       Cancelar
     </Button>
-    <Button type="submit" form="new-folder-form" disabled={isSaving}>
-      {isSaving ? "Salvando..." : "Criar pasta"}
+    <Button type="submit" form={formId} disabled={isSaving}>
+      {isSaving ? "Salvando..." : submitLabel}
     </Button>
   </DialogFooter>
 );

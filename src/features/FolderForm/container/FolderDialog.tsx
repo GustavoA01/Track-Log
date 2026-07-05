@@ -1,53 +1,59 @@
 "use client";
-import { useState } from "react";
+import { useEffect } from "react";
+import { FormProvider } from "react-hook-form";
+import { getFolderById } from "@/actions/folders/getFolderById";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { createFolder } from "@/actions/folders/createFolder";
-import {
-  folderFormDefaultValues,
-  folderFormSchema,
-  type FolderFormValuesType,
-} from "@/data/schemas/folder-form";
 import { FolderDialogHeader } from "../components/FolderDialogHeader";
 import { FolderFormFooter } from "../components/FolderFormFooter";
 import { NewFolderTrigger } from "../components/NewFolderTrigger";
-import { FormProvider } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFolderForm } from "../hooks/useFolderForm";
 import { FolderFormFields } from "./FolderFormFields";
 
-export const FolderDialog = () => {
-  const [open, setOpen] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const methods = useForm<FolderFormValuesType>({
-    resolver: zodResolver(folderFormSchema),
-    defaultValues: folderFormDefaultValues,
-  });
+type FolderDialogProps = {
+  folderId?: string;
+  editOpen?: boolean;
+  editOnOpenChange?: (open: boolean) => void;
+};
 
-  const onCancel = () => {
-    methods.reset();
-    setOpen(false);
-  };
+export const FolderDialog = ({
+  folderId,
+  editOpen,
+  editOnOpenChange,
+}: FolderDialogProps) => {
+  const { isEditing, open, setOpen, isSaving, methods, onCancel, onSubmit } =
+    useFolderForm({
+      folderId,
+      open: editOpen,
+      onOpenChange: editOnOpenChange,
+    });
 
-  const onSubmit = async (values: FolderFormValuesType) => {
-    setIsSaving(true);
+  const { reset } = methods;
 
-    try {
-      await createFolder(values);
-      methods.reset();
-      setOpen(false);
-    } finally {
-      setIsSaving(false);
+  useEffect(() => {
+    if (!isEditing || !folderId || !open) return;
+
+    async function loadFolder() {
+      const folder = await getFolderById(folderId!);
+
+      if (folder) {
+        reset({
+          name: folder.name,
+          imageUrl: folder.imageUrl ?? "",
+        });
+      }
     }
-  };
+
+    loadFolder();
+  }, [isEditing, folderId, open, reset]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <NewFolderTrigger />
+      {!isEditing && <NewFolderTrigger />}
       <DialogContent className="sm:max-w-md">
-        <FolderDialogHeader />
+        <FolderDialogHeader isEditing={isEditing} />
         <FormProvider {...methods}>
           <form
-            id="new-folder-form"
+            id="folder-form"
             className="space-y-4"
             onSubmit={methods.handleSubmit(onSubmit)}
           >
@@ -55,7 +61,12 @@ export const FolderDialog = () => {
           </form>
         </FormProvider>
 
-        <FolderFormFooter isSaving={isSaving} onCancel={onCancel} />
+        <FolderFormFooter
+          formId="folder-form"
+          isSaving={isSaving}
+          submitLabel={isEditing ? "Salvar alterações" : "Criar pasta"}
+          onCancel={onCancel}
+        />
       </DialogContent>
     </Dialog>
   );
