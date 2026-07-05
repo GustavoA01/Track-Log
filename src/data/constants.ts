@@ -36,3 +36,8 @@ export const songStatusConfig: Record<SongStatusType, SongStatusConfig> = {
       "border-red-300/60 bg-red-50/80 dark:border-red-400/30 dark:bg-red-500/10",
   },
 };
+
+export const bottomNavigationLinks = [
+  { href: "/", label: "Início" },
+  { href: "/historico", label: "Histórico" },
+];

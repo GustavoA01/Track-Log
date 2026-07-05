@@ -1,6 +1,7 @@
 import { getSessionCountBySongId } from "@/data/mock-data";
 import type { FolderType, SongType } from "@/data/types";
 import { MusicCard } from "./MusicCard";
+import { MusicListItem } from "./MusicListItem";
 
 type MusicsSectionProps = {
   folders: FolderType[];
@@ -17,20 +18,36 @@ export const MusicsSection = ({ folders, songs }: MusicsSectionProps) => (
     </header>
 
     {songs.length > 0 ? (
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {songs.map((song) => {
-          const sessionCount = getSessionCountBySongId(song.id);
+      <>
+        <div className="divide-y overflow-hidden rounded-xl border sm:hidden">
+          {songs.map((song) => {
+            const sessionCount = getSessionCountBySongId(song.id);
 
-          return (
-            <MusicCard
-              key={song.id}
-              folders={folders}
-              song={song}
-              sessionCount={sessionCount}
-            />
-          );
-        })}
-      </div>
+            return (
+              <MusicListItem
+                key={song.id}
+                song={song}
+                sessionCount={sessionCount}
+              />
+            );
+          })}
+        </div>
+
+        <div className="hidden gap-3 sm:grid sm:grid-cols-2 xl:grid-cols-3">
+          {songs.map((song) => {
+            const sessionCount = getSessionCountBySongId(song.id);
+
+            return (
+              <MusicCard
+                key={song.id}
+                folders={folders}
+                song={song}
+                sessionCount={sessionCount}
+              />
+            );
+          })}
+        </div>
+      </>
     ) : (
       <div className="rounded-xl border border-dashed py-12 text-center">
         <p className="text-sm text-muted-foreground">

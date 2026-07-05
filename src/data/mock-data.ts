@@ -31,6 +31,11 @@ export const practiceSessions: PracticeSessionType[] = [
   },
 ];
 
+export const getAllPracticeSessions = () =>
+  [...practiceSessions].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+  );
+
 export const getSessionCountBySongId = (songId: string) =>
   practiceSessions.filter((session) => session.songId === songId).length;
 

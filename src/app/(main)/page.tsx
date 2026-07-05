@@ -27,7 +27,7 @@ const Home = async () => {
           <div className="lg:col-span-2">
             <LibraryBrowser folders={folders} songs={songs} />
           </div>
-          <div>
+          <div className="hidden lg:block">
             <RecentSessions songs={songs} />
           </div>
         </div>
