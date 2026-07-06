@@ -1,5 +1,4 @@
 import type { PracticeSessionType, SongType } from "@/data/types";
-import { Separator } from "@/components/ui/separator";
 import { SessionHistoryItem } from "./SessionHistoryItem";
 
 type SessionHistoryListProps = {
@@ -24,34 +23,14 @@ export const SessionHistoryList = ({
   }
 
   return (
-    <>
-      <div className="divide-y overflow-hidden rounded-xl border sm:hidden">
-        {displayed.map((session) => {
-          const song = songs.find((item) => item.id === session.songId);
+    <div className="divide-y overflow-hidden rounded-xl border">
+      {displayed.map((session) => {
+        const song = songs.find((item) => item.id === session.songId);
 
-          return (
-            <SessionHistoryItem
-              key={session.id}
-              session={session}
-              song={song}
-              compact
-            />
-          );
-        })}
-      </div>
-
-      <div className="hidden space-y-4 sm:block">
-        {displayed.map((session, index) => {
-          const song = songs.find((item) => item.id === session.songId);
-
-          return (
-            <div key={session.id}>
-              <SessionHistoryItem session={session} song={song} />
-              {index < displayed.length - 1 && <Separator className="mt-4" />}
-            </div>
-          );
-        })}
-      </div>
-    </>
+        return (
+          <SessionHistoryItem key={session.id} session={session} song={song!} />
+        );
+      })}
+    </div>
   );
 };

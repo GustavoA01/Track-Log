@@ -1,17 +1,14 @@
-"use client";
 import { useState } from "react";
-import type { FolderType, PracticeSessionType, SongType } from "@/data/types";
+import type { PracticeSessionType, SongType } from "@/data/types";
 
 type UseSongDetailContentProps = {
   initialSong: SongType;
   sessions: PracticeSessionType[];
-  folder?: Pick<FolderType, "color">;
 };
 
 export const useSongDetailContent = ({
   initialSong,
   sessions,
-  folder,
 }: UseSongDetailContentProps) => {
   const [song, setSong] = useState(initialSong);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -20,16 +17,6 @@ export const useSongDetailContent = ({
     (acc, session) => acc + session.minutes,
     0,
   );
-
-  const getAccentColor = (
-    song: SongType,
-    folder?: Pick<FolderType, "color">,
-  ) => {
-    if (song.accentColor) return song.accentColor;
-    if (folder?.color) return folder.color;
-    return "#7c3aed";
-  };
-  const accentColor = getAccentColor(song, folder ?? undefined);
 
   const getYouTubeEmbedUrl = (url: string): string | null => {
     try {
@@ -59,7 +46,6 @@ export const useSongDetailContent = ({
     song,
     deleteDialogOpen,
     setDeleteDialogOpen,
-    accentColor,
     sessionCount,
     totalMinutes,
     getYouTubeEmbedUrl,

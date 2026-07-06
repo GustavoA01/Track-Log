@@ -1,33 +1,37 @@
+import { Ellipsis, Pencil, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Ellipsis } from "lucide-react";
-import { Pencil } from "lucide-react";
-import { Trash2 } from "lucide-react";
 
-export const SessionActions = () => (
+type SessionActionsProps = {
+  onDelete: () => void;
+};
+
+export const SessionActions = ({ onDelete }: SessionActionsProps) => (
   <DropdownMenu>
     <DropdownMenuTrigger
-      render={<Button variant="ghost" aria-label="Opções da sessão" />}
+      render={
+        <Button variant="ghost" size="icon-sm" aria-label="Opções da sessão" />
+      }
     >
       <Ellipsis />
     </DropdownMenuTrigger>
-    <DropdownMenuContent align="end">
-      <DropdownMenuItem className="w-auto min-w-max">
-        <Button variant="ghost" size="sm" className="w-full">
-          <Pencil className="size-3.5 text-muted-foreground" />
-          <span className="text-muted-foreground text-xs">Editar</span>
-        </Button>
+    <DropdownMenuContent align="end" className="w-auto min-w-max">
+      <DropdownMenuItem className="gap-2">
+        <Pencil className="size-3.5" />
+        Editar
       </DropdownMenuItem>
-      <DropdownMenuItem className="w-auto min-w-max">
-        <Button variant="ghost" size="sm" className="w-full">
-          <Trash2 className="text-destructive" />
-          <span className="text-destructive text-xs">Excluir</span>
-        </Button>
+      <DropdownMenuItem
+        variant="destructive"
+        className="gap-2"
+        onClick={onDelete}
+      >
+        <Trash2 className="size-3.5" />
+        Excluir
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>

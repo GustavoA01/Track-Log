@@ -14,7 +14,7 @@ import { usePracticeSessionTimer } from "@/features/StartSession/hooks/usePracti
 import { useCreateSessionMutation } from "@/features/StartSession/hooks/useCreateSessionMutation";
 import { DeleteSongDialog } from "./DeleteSongDialog";
 import { SongHeader } from "../components/SongHeader";
-import { HeroSection } from "../components/HeroSection";
+import { HeroSection } from "./HeroSection";
 import { useSongDetailContent } from "../hooks/useSongDetailContent";
 
 type SongDetailContentProps = {
@@ -32,12 +32,11 @@ export const SongDetailContent = ({
     song,
     deleteDialogOpen,
     setDeleteDialogOpen,
-    accentColor,
     sessionCount,
     totalMinutes,
     getYouTubeEmbedUrl,
     setSong,
-  } = useSongDetailContent({ initialSong, sessions, folder });
+  } = useSongDetailContent({ initialSong, sessions });
 
   const { mutateAsync: createSession, isPending: isSavingSession } =
     useCreateSessionMutation(song.id);
@@ -74,7 +73,6 @@ export const SongDetailContent = ({
       <main className="pb-20">
         <HeroSection
           song={song}
-          accentColor={accentColor}
           folder={folder ?? undefined}
           sessionCount={sessionCount}
           totalMinutes={totalMinutes}
