@@ -1,12 +1,9 @@
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { BackButton } from "@/components/BackButton";
 
 type SongFormLayoutProps = {
   title: string;
   description: string;
-  backHref: string;
+  backHref?: string;
   children: React.ReactNode;
 };
 
@@ -19,13 +16,7 @@ export const SongFormLayout = ({
   <div className="min-h-full bg-background">
     <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
       <div className="container mx-auto flex h-14 items-center px-4 sm:px-6">
-        <Link
-          href={backHref}
-          className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}
-        >
-          <ArrowLeft data-icon="inline-start" />
-          Voltar
-        </Link>
+        <BackButton href={backHref} />
       </div>
     </header>
     <main className="container mx-auto max-w-3xl px-4 py-8 sm:px-6">

@@ -11,7 +11,7 @@ import { useCreateSongMutation } from "./useCreateSongMutation";
 import { useUpdateSongMutation } from "./useUpdateSongMutation";
 
 export const useSongForm = (song?: SongType | null) => {
-  const router = useRouter();
+  const { back } = useRouter();
   const isEditing = Boolean(song?.id);
   const { createSongFn, isPending: isCreating } = useCreateSongMutation();
   const { updateSongFn, isPending: isUpdating } = useUpdateSongMutation();
@@ -33,20 +33,12 @@ export const useSongForm = (song?: SongType | null) => {
     await createSongFn(data);
   };
 
-  const handleCancel = () => {
-    if (isEditing && song?.id) {
-      router.push(`/musica/${song.id}`);
-      return;
-    }
-    router.back();
-  };
-
   return {
     methods,
     reset: methods.reset,
     register: methods.register,
     handleSubmit: methods.handleSubmit(onSubmit),
-    handleCancel,
+    handleCancel: back,
     imageUrl,
     isSaving: isCreating || isUpdating,
     isEditing,

@@ -1,16 +1,19 @@
 import type { PracticeSessionType, SongType } from "@/data/types";
+import type { SongDetailFrom } from "@/lib/navigation";
 import { SessionHistoryItem } from "./SessionHistoryItem";
 
 type SessionHistoryListProps = {
   sessions: PracticeSessionType[];
   songs: SongType[];
   limit?: number;
+  from?: SongDetailFrom;
 };
 
 export const SessionHistoryList = ({
   sessions,
   songs,
   limit,
+  from,
 }: SessionHistoryListProps) => {
   const displayed = limit ? sessions.slice(0, limit) : sessions;
 
@@ -28,7 +31,12 @@ export const SessionHistoryList = ({
         const song = songs.find((item) => item.id === session.songId);
 
         return (
-          <SessionHistoryItem key={session.id} session={session} song={song!} />
+          <SessionHistoryItem
+            key={session.id}
+            session={session}
+            song={song!}
+            from={from}
+          />
         );
       })}
     </div>

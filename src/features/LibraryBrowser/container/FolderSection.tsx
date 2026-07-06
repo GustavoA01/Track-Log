@@ -1,6 +1,6 @@
 import type { FolderType, SongType } from "@/data/types";
-import { AllMusicCard } from "./AllMusicCard";
-import { ClearFilterButton } from "./ClearFilterButton";
+import { AllMusicCard } from "../components/AllMusicCard";
+import { ClearFilterButton } from "../components/ClearFilterButton";
 import { FolderCard } from "./FolderCard";
 
 export const FolderSection = ({

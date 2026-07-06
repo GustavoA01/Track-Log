@@ -4,6 +4,7 @@ import {
   formValuesToSongPayload,
   songFormSchema,
 } from "@/data/schemas/song-form";
+import { resolveSongAccentColor } from "@/lib/accent-color";
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/lib/mappers";
 import { prisma } from "@/lib/prisma";
@@ -33,6 +34,16 @@ export const updateSong = async (id: string, input: UpdateSongInput) => {
     }
   }
 
+  const imageUrl = payload ? (payload.imageUrl ?? null) : undefined;
+  const accentColor =
+    imageUrl !== undefined
+      ? await resolveSongAccentColor(
+          imageUrl,
+          existing.imageUrl,
+          existing.accentColor,
+        )
+      : undefined;
+
   const song = await prisma.song.update({
     where: { id },
     data: {
@@ -46,7 +57,8 @@ export const updateSong = async (id: string, input: UpdateSongInput) => {
             genre: payload.genre,
             instrument: payload.instrument,
             notes: payload.notes,
-            imageUrl: payload.imageUrl ?? null,
+            imageUrl,
+            accentColor,
             videoUrl: payload.videoUrl ?? null,
             tabUrl: payload.tabUrl ?? null,
           }

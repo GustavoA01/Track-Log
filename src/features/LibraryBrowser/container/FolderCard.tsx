@@ -1,10 +1,11 @@
-import { useState } from "react";
+"use client";
 import { cn } from "@/lib/utils";
 import type { FolderType } from "@/data/types";
 import { DeleteFolderDialog } from "@/features/FolderForm/container/DeleteFolderDialog";
 import { CoverImage } from "@/features/LibraryBrowser/components/CoverImage";
-import { FolderCardMenu } from "./FolderCardMenu";
 import { FolderDialog } from "@/features/FolderForm/container/FolderDialog";
+import { FolderCardMenu } from "./FolderCardMenu";
+import { useFolder } from "../hooks/useFolder";
 
 type FolderCardProps = {
   folder: FolderType;
@@ -19,15 +20,16 @@ export const FolderCard = ({
   isSelected,
   setSelectedFolderId,
 }: FolderCardProps) => {
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
-
-  const handleDeleted = () => {
-    if (isSelected) setSelectedFolderId(null);
-  };
-
-  const handleOnDelete = () => setDeleteOpen(true);
-  const handleEdit = () => setEditOpen(true);
+  const {
+    deleteOpen,
+    setDeleteOpen,
+    editOpen,
+    setEditOpen,
+    handleDeleted,
+    openDeleteDialog,
+    openEditDialog,
+    toggleSelection,
+  } = useFolder({ folderId: folder.id, isSelected, setSelectedFolderId });
 
   return (
     <>
@@ -39,7 +41,7 @@ export const FolderCard = ({
       >
         <button
           type="button"
-          onClick={() => setSelectedFolderId(isSelected ? null : folder.id)}
+          onClick={toggleSelection}
           className="flex w-full flex-col gap-2 text-left"
         >
           <CoverImage
@@ -59,7 +61,11 @@ export const FolderCard = ({
         </button>
 
         <div className="absolute top-1 right-1">
-          <FolderCardMenu onDelete={handleOnDelete} onEdit={handleEdit} />
+          <FolderCardMenu
+            folderName={folder.name}
+            onDelete={openDeleteDialog}
+            onEdit={openEditDialog}
+          />
         </div>
       </div>
 

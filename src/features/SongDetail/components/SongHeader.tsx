@@ -7,13 +7,14 @@ import { Button } from "@/components/ui/button";
 
 type SongHeaderProps = {
   songId: string;
+  backHref: string;
   onDelete: () => void;
 };
 
-export const SongHeader = ({ songId, onDelete }: SongHeaderProps) => (
+export const SongHeader = ({ songId, backHref, onDelete }: SongHeaderProps) => (
   <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
     <div className="container mx-auto flex h-14 items-center gap-3 px-4 sm:px-6">
-      <BackButton />
+      <BackButton href={backHref} />
 
       <div className="ml-auto flex items-center gap-2">
         <Link

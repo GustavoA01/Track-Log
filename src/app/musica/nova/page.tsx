@@ -23,7 +23,7 @@ const NewSongPage = async ({
           ? "Atualize os dados da faixa."
           : "Cadastre uma faixa para acompanhar seu progresso."
       }
-      backHref={isEditing ? `/musica/${song!.id}` : "/"}
+      backHref={isEditing ? undefined : "/"}
     >
       <SongForm song={song} />
     </SongFormLayout>

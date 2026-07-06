@@ -7,19 +7,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type FolderCardMenuProps = {
-  onDelete: () => void;
+type FolderCardMenuDropdownProps = {
   onEdit: () => void;
+  onDelete: () => void;
 };
 
-export const FolderCardMenu = ({ onDelete, onEdit }: FolderCardMenuProps) => (
+export const FolderCardMenuDropdown = ({
+  onEdit,
+  onDelete,
+}: FolderCardMenuDropdownProps) => (
   <DropdownMenu>
     <DropdownMenuTrigger
       render={
         <Button
           variant="ghost"
           size="icon-sm"
-          className="size-7 shrink-0"
+          className="hidden size-7 shrink-0 sm:inline-flex"
           aria-label="Opções da pasta"
           onClick={(event) => event.stopPropagation()}
         />

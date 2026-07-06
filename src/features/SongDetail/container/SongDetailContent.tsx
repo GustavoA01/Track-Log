@@ -21,12 +21,14 @@ type SongDetailContentProps = {
   song: SongType;
   sessions: PracticeSessionType[];
   folder?: Pick<FolderType, "name" | "color">;
+  backHref: string;
 };
 
 export const SongDetailContent = ({
   song: initialSong,
   sessions,
   folder,
+  backHref,
 }: SongDetailContentProps) => {
   const {
     song,
@@ -61,7 +63,11 @@ export const SongDetailContent = ({
 
   return (
     <div className="min-h-full bg-background">
-      <SongHeader songId={song.id} onDelete={() => setDeleteDialogOpen(true)} />
+      <SongHeader
+        songId={song.id}
+        backHref={backHref}
+        onDelete={() => setDeleteDialogOpen(true)}
+      />
 
       <DeleteSongDialog
         open={deleteDialogOpen}

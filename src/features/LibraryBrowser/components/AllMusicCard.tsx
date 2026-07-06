@@ -13,7 +13,6 @@ export const AllMusicCard = ({
   setSelectedFolderId,
 }: AllMusicCardProps) => (
   <button
-    type="button"
     onClick={() => setSelectedFolderId(null)}
     className={cn(
       "flex w-28 shrink-0 flex-col gap-2 rounded-xl border p-2 text-left transition-colors hover:bg-muted/50",

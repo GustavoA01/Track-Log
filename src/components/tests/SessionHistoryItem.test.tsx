@@ -27,6 +27,17 @@ describe("SessionHistoryItem", () => {
     expect(screen.getByText("21/06/2026")).toBeInTheDocument();
   });
 
+  it("renders link to the song with from param when provided", () => {
+    render(
+      <SessionHistoryItem session={session} song={song} from="historico" />,
+    );
+
+    expect(screen.getByRole("link")).toHaveAttribute(
+      "href",
+      "/musica/song-1?from=historico",
+    );
+  });
+
   it("renders link to the song", () => {
     render(<SessionHistoryItem session={session} song={song} />);
 

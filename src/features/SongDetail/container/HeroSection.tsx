@@ -5,10 +5,12 @@ import { SongType } from "@/data/types";
 import { FolderType } from "@/data/types";
 import { Badge } from "@/components/ui/badge";
 import { StartSessionTrigger } from "@/features/StartSession/components/StartSessionTrigger";
-import { useHeroAccentColor } from "../hooks/useHeroAccentColor";
 
 type HeroSectionProps = {
-  song: Pick<SongType, "title" | "imageUrl" | "status" | "artist">;
+  song: Pick<
+    SongType,
+    "title" | "imageUrl" | "status" | "artist" | "accentColor"
+  >;
   folder?: Pick<FolderType, "name" | "color">;
   sessionCount: number;
   totalMinutes: number;
@@ -22,7 +24,7 @@ export const HeroSection = ({
   totalMinutes,
   onStartSession,
 }: HeroSectionProps) => {
-  const accentColor = useHeroAccentColor(song.imageUrl);
+  const accentColor = song.accentColor ?? "var(--primary)";
 
   return (
     <section

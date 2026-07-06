@@ -3,6 +3,7 @@ import { SessionHistoryList } from "@/components/SessionHistoryList";
 import { getAllSessions } from "@/actions/sessions/getAllSessions";
 import { getPracticeStats } from "@/actions/sessions/getPracticeStats";
 import { getSongs } from "@/actions/songs/getSongs";
+import { songDetailFrom } from "@/lib/navigation";
 
 const HistoryPage = async () => {
   const [songs, sessions, practiceStats] = await Promise.all([
@@ -26,7 +27,11 @@ const HistoryPage = async () => {
           </p>
         </section>
 
-        <SessionHistoryList sessions={sessions} songs={songs} />
+        <SessionHistoryList
+          sessions={sessions}
+          songs={songs}
+          from={songDetailFrom.historico}
+        />
       </main>
     </div>
   );

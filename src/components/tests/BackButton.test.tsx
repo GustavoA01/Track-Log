@@ -42,6 +42,13 @@ describe("BackButton", () => {
     expect(back).toHaveBeenCalledTimes(1);
   });
 
+  it("renders a link when href is provided", () => {
+    render(<BackButton href="/" />);
+
+    const link = screen.getByRole("link", { name: /voltar/i });
+    expect(link).toHaveAttribute("href", "/");
+  });
+
   it("applies extra className", () => {
     render(<BackButton className="custom-class" />);
 

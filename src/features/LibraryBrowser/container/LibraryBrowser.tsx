@@ -1,7 +1,7 @@
 "use client";
 import type { FolderType, SongType } from "@/data/types";
 import { SearchSection } from "../components/SearchSection";
-import { FolderSection } from "../components/FolderSection";
+import { FolderSection } from "./FolderSection";
 import { MusicsSection } from "../components/MusicsSection";
 import { useLibraryBrowser } from "../hooks/useLibraryBrowser";
 

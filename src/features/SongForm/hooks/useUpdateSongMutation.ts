@@ -13,7 +13,7 @@ type UpdateSongVariables = {
 
 export const useUpdateSongMutation = () => {
   const queryClient = useQueryClient();
-  const { push } = useRouter();
+  const { back } = useRouter();
 
   const { mutateAsync: updateSongFn, isPending } = useMutation({
     mutationFn: ({ songId, data }: UpdateSongVariables) =>
@@ -23,7 +23,7 @@ export const useUpdateSongMutation = () => {
       queryClient.invalidateQueries({ queryKey: songKeys.detail(songId) });
       toast.success("Música atualizada com sucesso!");
       setTimeout(() => {
-        push(`/musica/${data.id}`);
+        back();
       }, 800);
     },
     onError: (error) => {
