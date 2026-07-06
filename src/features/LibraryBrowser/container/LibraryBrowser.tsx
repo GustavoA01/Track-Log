@@ -8,9 +8,14 @@ import { useLibraryBrowser } from "../hooks/useLibraryBrowser";
 type LibraryBrowserProps = {
   folders: FolderType[];
   songs: SongType[];
+  sessionCounts: Record<string, number>;
 };
 
-export const LibraryBrowser = ({ folders, songs }: LibraryBrowserProps) => {
+export const LibraryBrowser = ({
+  folders,
+  songs,
+  sessionCounts,
+}: LibraryBrowserProps) => {
   const {
     query,
     setQuery,
@@ -28,7 +33,11 @@ export const LibraryBrowser = ({ folders, songs }: LibraryBrowserProps) => {
         selectedFolderId={selectedFolderId}
         setSelectedFolderId={setSelectedFolderId}
       />
-      <MusicsSection folders={folders} songs={filteredSongs} />
+      <MusicsSection
+        folders={folders}
+        songs={filteredSongs}
+        sessionCounts={sessionCounts}
+      />
     </div>
   );
 };

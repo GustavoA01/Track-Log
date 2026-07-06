@@ -7,18 +7,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  getTotalPracticeMinutes,
-  getWeeklyPracticeMinutes,
-  practiceSessions,
-} from "@/data/mock-data";
 import type { SongType } from "@/data/types";
+
+type PracticeStats = {
+  totalMinutes: number;
+  weeklyMinutes: number;
+  sessionCount: number;
+};
 
 type StatsCardsProps = {
   songs: SongType[];
+  practiceStats: PracticeStats;
 };
 
-export function StatsCards({ songs }: StatsCardsProps) {
+export function StatsCards({ songs, practiceStats }: StatsCardsProps) {
   const stats = [
     {
       label: "Músicas",
@@ -28,14 +30,14 @@ export function StatsCards({ songs }: StatsCardsProps) {
     },
     {
       label: "Esta semana",
-      value: `${getWeeklyPracticeMinutes()} min`,
+      value: `${practiceStats.weeklyMinutes} min`,
       description: "Tempo de prática",
       icon: Clock,
     },
     {
       label: "Total praticado",
-      value: `${getTotalPracticeMinutes()} min`,
-      description: `${practiceSessions.length} sessões registradas`,
+      value: `${practiceStats.totalMinutes} min`,
+      description: `${practiceStats.sessionCount} sessões registradas`,
       icon: TrendingUp,
     },
     {

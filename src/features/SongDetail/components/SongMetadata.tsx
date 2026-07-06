@@ -1,7 +1,7 @@
 import { Calendar, Guitar, Music2, Star } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { SongType } from "@/data/types";
-import { format } from "date-fns";
+import { formatDateOnly } from "@/lib/dates";
 
 type SongMetadataProps = {
   song: SongType;
@@ -17,7 +17,7 @@ const buildMetadataItems = (song: SongType): MetadataItem[] => {
   const items: MetadataItem[] = [
     {
       label: "Data de criação",
-      value: format(new Date(song.createdAt), "dd/MM/yyyy"),
+      value: formatDateOnly(song.createdAt),
       icon: Calendar,
     },
   ];

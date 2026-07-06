@@ -1,5 +1,15 @@
-import type { FolderRecord, SongRecord } from "@/lib/prisma-types";
-import type { FolderType, SongStatusType, SongType } from "@/data/types";
+import type {
+  FolderRecord,
+  PracticeSessionRecord,
+  SongRecord,
+} from "@/lib/prisma-types";
+import type {
+  FolderType,
+  PracticeSessionType,
+  SongStatusType,
+  SongType,
+} from "@/data/types";
+import { toDateOnlyString } from "@/lib/dates";
 
 export const toFolderType = (folder: FolderRecord): FolderType => ({
   id: folder.id,
@@ -20,11 +30,21 @@ export const toSongType = (
   instrument: song.instrument,
   difficulty: song.difficulty,
   status: song.status as SongStatusType,
-  createdAt: song.createdAt.toISOString().slice(0, 10),
+  createdAt: toDateOnlyString(song.createdAt),
   notes: song.notes,
   imageUrl: song.imageUrl ?? undefined,
   videoUrl: song.videoUrl ?? undefined,
   tabUrl: song.tabUrl ?? undefined,
   accentColor: song.accentColor ?? undefined,
   sessionsTotalTime,
+});
+
+export const toPracticeSessionType = (
+  session: PracticeSessionRecord,
+): PracticeSessionType => ({
+  id: session.id,
+  songId: session.songId,
+  date: toDateOnlyString(session.date),
+  minutes: session.minutes,
+  notes: session.notes,
 });

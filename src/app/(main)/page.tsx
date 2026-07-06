@@ -2,11 +2,21 @@ import { HomeHeader } from "@/components/HomeHeader";
 import { RecentSessions } from "@/components/RecentSessions";
 import { StatsCards } from "@/components/StatsCards";
 import { getFolders } from "@/actions/folders/getFolders";
+import { getAllSessions } from "@/actions/sessions/getAllSessions";
+import { getPracticeStats } from "@/actions/sessions/getPracticeStats";
+import { getSessionCountsBySongId } from "@/actions/sessions/getSessionCountsBySongId";
 import { getSongs } from "@/actions/songs/getSongs";
 import { LibraryBrowser } from "@/features/LibraryBrowser/container/LibraryBrowser";
 
 const Home = async () => {
-  const [folders, songs] = await Promise.all([getFolders(), getSongs()]);
+  const [folders, songs, practiceStats, sessionCounts, sessions] =
+    await Promise.all([
+      getFolders(),
+      getSongs(),
+      getPracticeStats(),
+      getSessionCountsBySongId(),
+      getAllSessions(),
+    ]);
 
   return (
     <div className="min-h-full bg-background">
@@ -21,14 +31,18 @@ const Home = async () => {
           </p>
         </section>
 
-        <StatsCards songs={songs} />
+        <StatsCards songs={songs} practiceStats={practiceStats} />
 
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <LibraryBrowser folders={folders} songs={songs} />
+            <LibraryBrowser
+              folders={folders}
+              songs={songs}
+              sessionCounts={sessionCounts}
+            />
           </div>
           <div className="hidden lg:block">
-            <RecentSessions songs={songs} />
+            <RecentSessions songs={songs} sessions={sessions} />
           </div>
         </div>
       </main>

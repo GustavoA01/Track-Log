@@ -1,4 +1,3 @@
-import { getSessionCountBySongId } from "@/data/mock-data";
 import type { FolderType, SongType } from "@/data/types";
 import { MusicCard } from "./MusicCard";
 import { MusicListItem } from "./MusicListItem";
@@ -6,9 +5,14 @@ import { MusicListItem } from "./MusicListItem";
 type MusicsSectionProps = {
   folders: FolderType[];
   songs: SongType[];
+  sessionCounts: Record<string, number>;
 };
 
-export const MusicsSection = ({ folders, songs }: MusicsSectionProps) => (
+export const MusicsSection = ({
+  folders,
+  songs,
+  sessionCounts,
+}: MusicsSectionProps) => (
   <section className="space-y-3">
     <header className="flex items-center">
       <h2 className="text-sm font-medium">Músicas</h2>
@@ -20,32 +24,24 @@ export const MusicsSection = ({ folders, songs }: MusicsSectionProps) => (
     {songs.length > 0 ? (
       <>
         <div className="divide-y overflow-hidden rounded-xl border sm:hidden">
-          {songs.map((song) => {
-            const sessionCount = getSessionCountBySongId(song.id);
-
-            return (
-              <MusicListItem
-                key={song.id}
-                song={song}
-                sessionCount={sessionCount}
-              />
-            );
-          })}
+          {songs.map((song) => (
+            <MusicListItem
+              key={song.id}
+              song={song}
+              sessionCount={sessionCounts[song.id] ?? 0}
+            />
+          ))}
         </div>
 
         <div className="hidden gap-3 sm:grid sm:grid-cols-2 xl:grid-cols-3">
-          {songs.map((song) => {
-            const sessionCount = getSessionCountBySongId(song.id);
-
-            return (
-              <MusicCard
-                key={song.id}
-                folders={folders}
-                song={song}
-                sessionCount={sessionCount}
-              />
-            );
-          })}
+          {songs.map((song) => (
+            <MusicCard
+              key={song.id}
+              folders={folders}
+              song={song}
+              sessionCount={sessionCounts[song.id] ?? 0}
+            />
+          ))}
         </div>
       </>
     ) : (

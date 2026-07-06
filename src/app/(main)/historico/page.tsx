@@ -1,15 +1,15 @@
 import { HomeHeader } from "@/components/HomeHeader";
 import { SessionHistoryList } from "@/components/SessionHistoryList";
+import { getAllSessions } from "@/actions/sessions/getAllSessions";
+import { getPracticeStats } from "@/actions/sessions/getPracticeStats";
 import { getSongs } from "@/actions/songs/getSongs";
-import {
-  getAllPracticeSessions,
-  getTotalPracticeMinutes,
-} from "@/data/mock-data";
 
 const HistoryPage = async () => {
-  const songs = await getSongs();
-  const sessions = getAllPracticeSessions();
-  const totalMinutes = getTotalPracticeMinutes();
+  const [songs, sessions, practiceStats] = await Promise.all([
+    getSongs(),
+    getAllSessions(),
+    getPracticeStats(),
+  ]);
 
   return (
     <div className="min-h-full bg-background">
@@ -18,11 +18,11 @@ const HistoryPage = async () => {
         <section className="space-y-1">
           <h1 className="text-2xl font-semibold tracking-tight">Histórico</h1>
           <p className="text-muted-foreground">
-            {sessions.length}{" "}
-            {sessions.length === 1
+            {practiceStats.sessionCount}{" "}
+            {practiceStats.sessionCount === 1
               ? "sessão registrada"
               : "sessões registradas"}{" "}
-            · {totalMinutes} min praticados
+            · {practiceStats.totalMinutes} min praticados
           </p>
         </section>
 

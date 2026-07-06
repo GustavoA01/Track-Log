@@ -1,6 +1,6 @@
 "use client";
 import { updateSongResources } from "@/actions/songs/updateSongResources";
-import type { FolderType, SongType } from "@/data/types";
+import type { FolderType, PracticeSessionType, SongType } from "@/data/types";
 import { SongMetadata } from "@/features/SongDetail/components/SongMetadata";
 import {
   SongResourceCard,
@@ -9,18 +9,23 @@ import {
 } from "@/features/SongDetail/components/SongResourceCard";
 import { SongSessions } from "@/features/SongDetail/components/SongSessions";
 import { ActiveSessionBar } from "@/features/StartSession/container/ActiveSessionBar";
+import { EndSessionDialog } from "@/features/StartSession/container/EndSessionDialog";
+import { usePracticeSessionTimer } from "@/features/StartSession/hooks/usePracticeSessionTimer";
+import { useCreateSessionMutation } from "@/features/StartSession/hooks/useCreateSessionMutation";
 import { DeleteSongDialog } from "./DeleteSongDialog";
 import { SongHeader } from "../components/SongHeader";
 import { HeroSection } from "../components/HeroSection";
-import { useSongDetailContent } from "../hooks/useSondDetailContent";
+import { useSongDetailContent } from "../hooks/useSongDetailContent";
 
 type SongDetailContentProps = {
   song: SongType;
+  sessions: PracticeSessionType[];
   folder?: Pick<FolderType, "name" | "color">;
 };
 
 export const SongDetailContent = ({
   song: initialSong,
+  sessions,
   folder,
 }: SongDetailContentProps) => {
   const {
@@ -28,13 +33,32 @@ export const SongDetailContent = ({
     deleteDialogOpen,
     setDeleteDialogOpen,
     accentColor,
-    sessions,
     sessionCount,
     totalMinutes,
     getYouTubeEmbedUrl,
-    handleStartSession,
     setSong,
-  } = useSongDetailContent({ initialSong, folder });
+  } = useSongDetailContent({ initialSong, sessions, folder });
+
+  const { mutateAsync: createSession, isPending: isSavingSession } =
+    useCreateSessionMutation(song.id);
+
+  const {
+    handleStartSession,
+    handleRequestStop,
+    handleEndSession,
+    handleTogglePause,
+    getElapsedMinutes,
+    isTimerActive,
+    isPaused,
+    isEndSessionOpen,
+    remainingTime,
+    sessionProgress,
+  } = usePracticeSessionTimer();
+
+  const handleSaveSessionNotes = async (notes: string) => {
+    await createSession({ minutes: getElapsedMinutes(), notes });
+    handleEndSession();
+  };
 
   return (
     <div className="min-h-full bg-background">
@@ -116,17 +140,30 @@ export const SongDetailContent = ({
           </section>
 
           <SongMetadata song={song} />
-          <SongSessions initialSessions={sessions} />
+          <SongSessions songId={song.id} sessions={sessions} />
         </div>
       </main>
 
-      {false && (
+      {isTimerActive && !isEndSessionOpen && (
         <ActiveSessionBar
           title={song.title}
-          remainingTime="00:00"
-          progress={0}
+          remainingTime={remainingTime}
+          progress={sessionProgress}
+          isPaused={isPaused}
+          onTogglePause={handleTogglePause}
+          onStop={handleRequestStop}
         />
       )}
+
+      <EndSessionDialog
+        open={isEndSessionOpen}
+        songTitle={song.title}
+        songArtist={song.artist}
+        minutes={getElapsedMinutes()}
+        isSubmitting={isSavingSession}
+        onSave={handleSaveSessionNotes}
+        onDiscard={handleEndSession}
+      />
     </div>
   );
 };

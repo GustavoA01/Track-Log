@@ -1,5 +1,5 @@
+"use client";
 import { Trash2 } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,29 +11,17 @@ import {
 import type { PracticeSessionType } from "@/data/types";
 import { Session } from "./Session";
 import { HistoricalDescription } from "./HistoricalDescription";
+import { useSongSessions } from "../hooks/useSongSessions";
 
 type SongSessionsProps = {
-  initialSessions: PracticeSessionType[];
+  songId: string;
+  sessions: PracticeSessionType[];
 };
 
-export const SongSessions = ({ initialSessions }: SongSessionsProps) => {
-  const [sessions, setSessions] = useState(initialSessions);
-  const sessionsTotalTime = sessions.reduce(
-    (acc, session) => acc + session.minutes,
-    0,
+export const SongSessions = ({ songId, sessions }: SongSessionsProps) => {
+  const { sessionsTotalTime, handleClearSessions, isPending } = useSongSessions(
+    { songId, sessions },
   );
-
-  const handleClearSessions = () => {
-    if (sessions.length === 0) return;
-
-    const confirmed = window.confirm(
-      "Tem certeza que deseja limpar todas as sessões desta música?",
-    );
-
-    if (confirmed) {
-      setSessions([]);
-    }
-  };
 
   return (
     <Card className="h-fit">
@@ -50,10 +38,11 @@ export const SongSessions = ({ initialSessions }: SongSessionsProps) => {
             <Button
               variant="destructive"
               size="sm"
+              disabled={isPending}
               onClick={handleClearSessions}
             >
               <Trash2 data-icon="inline-start" />
-              Limpar sessões
+              {isPending ? "Limpando..." : "Limpar sessões"}
             </Button>
           </CardAction>
         )}

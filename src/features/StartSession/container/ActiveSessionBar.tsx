@@ -1,10 +1,13 @@
-import { Pause, Square } from "lucide-react";
+import { Pause, Play, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 type ActiveSessionBarProps = {
   title: string;
   remainingTime: string;
   progress: number;
+  isPaused?: boolean;
+  onTogglePause?: () => void;
+  onStop?: () => void;
   className?: string;
 };
 
@@ -12,6 +15,9 @@ export const ActiveSessionBar = ({
   title,
   remainingTime,
   progress,
+  isPaused = false,
+  onTogglePause,
+  onStop,
   className,
 }: ActiveSessionBarProps) => (
   <div
@@ -33,14 +39,20 @@ export const ActiveSessionBar = ({
         </span>
 
         <div className="flex shrink-0 items-center gap-0.5">
-          <Button variant="ghost" size="icon-sm" aria-label="Pausar sessão">
-            <Pause />
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            aria-label={isPaused ? "Retomar sessão" : "Pausar sessão"}
+            onClick={onTogglePause}
+          >
+            {isPaused ? <Play /> : <Pause />}
           </Button>
           <Button
             variant="ghost"
             size="icon-sm"
             aria-label="Parar sessão"
             className="text-destructive hover:text-destructive"
+            onClick={onStop}
           >
             <Square />
           </Button>

@@ -1,6 +1,6 @@
 import type { PracticeSessionType } from "@/data/types";
-import { format } from "date-fns";
 import { Calendar } from "lucide-react";
+import { formatDateOnly } from "@/lib/dates";
 import { Separator } from "@/components/ui/separator";
 import { SessionActions } from "./SessionActions";
 
@@ -16,7 +16,7 @@ export const Session = ({ session, index, sessions }: SessionProps) => (
       <div className="min-w-0 space-y-1">
         <div className="flex items-center gap-1.5 text-sm font-medium">
           <Calendar className="size-3.5 text-muted-foreground" />
-          {format(new Date(session.date), "dd/MM/yyyy")}
+          {formatDateOnly(session.date)}
         </div>
         {session.notes && (
           <p className="text-sm text-muted-foreground">{session.notes}</p>

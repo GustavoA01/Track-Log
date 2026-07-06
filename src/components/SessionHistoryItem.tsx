@@ -1,7 +1,7 @@
 import { Calendar, ChevronRight } from "lucide-react";
-import { format } from "date-fns";
 import Link from "next/link";
 import type { PracticeSessionType, SongType } from "@/data/types";
+import { formatDateOnly } from "@/lib/dates";
 import { cn } from "@/lib/utils";
 
 type SessionHistoryItemProps = {
@@ -47,7 +47,7 @@ export const SessionHistoryItem = ({
         <div className="space-y-1 text-right text-xs text-muted-foreground">
           <div className="flex items-center justify-end gap-1">
             <Calendar className="size-3" />
-            {format(new Date(session.date), "dd/MM/yyyy")}
+            {formatDateOnly(session.date)}
           </div>
           <p className="font-medium text-foreground">{session.minutes} min</p>
         </div>

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getFolderById } from "@/actions/folders/getFolderById";
+import { getSessionsBySongId } from "@/actions/sessions/getSessionsBySongId";
 import { getSongById } from "@/actions/songs/getSongById";
 import { SongDetailContent } from "@/features/SongDetail/container/SongDetailContent";
 
@@ -9,13 +10,22 @@ type MusicPageProps = {
 
 const MusicPage = async ({ params }: MusicPageProps) => {
   const { id } = await params;
-  const song = await getSongById(id);
+  const [song, sessions] = await Promise.all([
+    getSongById(id),
+    getSessionsBySongId(id),
+  ]);
 
   if (!song) notFound();
 
   const folder = song.folderId ? await getFolderById(song.folderId) : undefined;
 
-  return <SongDetailContent song={song} folder={folder ?? undefined} />;
+  return (
+    <SongDetailContent
+      song={song}
+      sessions={sessions}
+      folder={folder ?? undefined}
+    />
+  );
 };
 
 export default MusicPage;

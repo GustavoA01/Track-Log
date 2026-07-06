@@ -46,10 +46,10 @@ export const HeroSection = ({
           </div>
 
           <div className="space-y-1">
-            <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
+            <h1 className="text-2xl font-semibold font-montserrat tracking-tight sm:text-3xl lg:text-4xl">
               {song.title}
             </h1>
-            <p className="text-lg text-muted-foreground lg:text-xl">
+            <p className="text-lg text-muted-foreground font-montserrat lg:text-xl">
               {song.artist}
             </p>
           </div>

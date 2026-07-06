@@ -5,6 +5,9 @@ const prisma = new PrismaClient();
 const DEV_USER_ID = "dev-user";
 
 async function main() {
+  await prisma.practiceSession.deleteMany({
+    where: { song: { userId: DEV_USER_ID } },
+  });
   await prisma.song.deleteMany({ where: { userId: DEV_USER_ID } });
   await prisma.folder.deleteMany({ where: { userId: DEV_USER_ID } });
 
@@ -105,6 +108,40 @@ async function main() {
         status: "want_to_learn",
         notes: "Próxima na fila",
         createdAt: new Date("2026-06-01"),
+      },
+    ],
+  });
+
+  const songs = await prisma.song.findMany({
+    where: { userId: DEV_USER_ID },
+  });
+  const byTitle = Object.fromEntries(songs.map((song) => [song.title, song]));
+
+  await prisma.practiceSession.createMany({
+    data: [
+      {
+        songId: byTitle["Stairway to Heaven"].id,
+        date: new Date("2026-06-21"),
+        minutes: 45,
+        notes: "Trabalhei a transição do verso pro refrão",
+      },
+      {
+        songId: byTitle["Blackbird"].id,
+        date: new Date("2026-06-20"),
+        minutes: 30,
+        notes: "Fingerpicking mais fluido",
+      },
+      {
+        songId: byTitle["Stairway to Heaven"].id,
+        date: new Date("2026-06-18"),
+        minutes: 60,
+        notes: "Sessão longa, bom progresso",
+      },
+      {
+        songId: byTitle["Wonderwall"].id,
+        date: new Date("2026-06-15"),
+        minutes: 20,
+        notes: "Revisão final",
       },
     ],
   });
