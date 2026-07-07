@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -17,27 +16,20 @@ export const BackButton = ({ className, href }: BackButtonProps) => {
     className,
   );
 
-  if (href) {
-    return (
-      <Link
-        href={href}
-        className={cn(
-          buttonVariants({ variant: "ghost", size: "sm" }),
-          buttonClassName,
-        )}
-      >
-        <ArrowLeft data-icon="inline-start" />
-        <p className="max-sm:hidden">Voltar</p>
-      </Link>
-    );
-  }
+  const handleClick = () => {
+    if (href) router.push(href);
+    else router.back();
+  };
 
   return (
     <Button
       variant="ghost"
       size="sm"
-      className={buttonClassName}
-      onClick={() => router.back()}
+      className={cn(
+        buttonVariants({ variant: "ghost", size: "sm" }),
+        buttonClassName,
+      )}
+      onClick={handleClick}
     >
       <ArrowLeft data-icon="inline-start" />
       <p className="max-sm:hidden">Voltar</p>

@@ -42,11 +42,23 @@ describe("BackButton", () => {
     expect(back).toHaveBeenCalledTimes(1);
   });
 
-  it("renders a link when href is provided", () => {
-    render(<BackButton href="/" />);
+  it("calls router.push when href is provided", async () => {
+    const push = jest.fn();
+    mockUseRouter.mockReturnValue({
+      push,
+      replace: jest.fn(),
+      refresh: jest.fn(),
+      back: jest.fn(),
+      forward: jest.fn(),
+      prefetch: jest.fn(),
+    });
 
-    const link = screen.getByRole("link", { name: /voltar/i });
-    expect(link).toHaveAttribute("href", "/");
+    const user = userEvent.setup();
+    render(<BackButton href="/biblioteca" />);
+
+    await user.click(screen.getByRole("button", { name: /voltar/i }));
+
+    expect(push).toHaveBeenCalledWith("/biblioteca");
   });
 
   it("applies extra className", () => {

@@ -20,7 +20,7 @@ type StatsCardsProps = {
   practiceStats: PracticeStats;
 };
 
-export function StatsCards({ songs, practiceStats }: StatsCardsProps) {
+export const StatsCards = ({ songs, practiceStats }: StatsCardsProps) => {
   const stats = [
     {
       label: "Músicas",
@@ -68,4 +68,4 @@ export function StatsCards({ songs, practiceStats }: StatsCardsProps) {
       ))}
     </div>
   );
-}
+};
