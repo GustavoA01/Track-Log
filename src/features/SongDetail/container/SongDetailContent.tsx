@@ -6,9 +6,9 @@ import {
   SongResourceCard,
   tabResourceDefaults,
   videoResourceDefaults,
-} from "@/features/SongDetail/components/SongResourceCard";
+} from "@/features/SongDetail/container/SongResourceCard";
 import { SongSessions } from "@/features/SongDetail/components/SongSessions";
-import { ActiveSessionBar } from "@/features/StartSession/container/ActiveSessionBar";
+import { ActiveSessionBar } from "@/features/StartSession/components/ActiveSessionBar";
 import { EndSessionDialog } from "@/features/StartSession/container/EndSessionDialog";
 import { usePracticeSessionTimer } from "@/features/StartSession/hooks/usePracticeSessionTimer";
 import { useCreateSessionMutation } from "@/features/StartSession/hooks/useCreateSessionMutation";

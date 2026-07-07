@@ -8,7 +8,7 @@ import { songToFormValues } from "@/data/schemas/song-form";
 import type { SongType } from "@/data/types";
 import { FormFieldLabel } from "@/features/SongForm/components/FormFieldLabel";
 import { FormFooter } from "@/features/SongForm/components/FormFooter";
-import { SongImagePreview } from "@/features/SongForm/components/SongImagePreview";
+import { SongImagePreview } from "@/components/SongImagePreview";
 import { useSongForm } from "../hooks/useSongForm";
 import { BasicFields } from "./BasicFields";
 import { ExtraFields } from "./ExtraFields";

@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-
 import { createFolder } from "@/actions/folders/createFolder";
 import type { FolderFormValuesType } from "@/data/schemas/folder-form";
 import { folderKeys } from "@/lib/query/folder-keys";

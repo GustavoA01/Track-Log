@@ -7,14 +7,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useDeleteFolderMutation } from "@/features/FolderForm/hooks/useDeleteFolderMutation";
+import { useDeleteDialog } from "../hooks/useDeleteDialog";
 
 type DeleteFolderDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   folderId: string;
   folderName: string;
-  onDeleted?: () => void;
+  onDeleted: () => void;
 };
 
 export const DeleteFolderDialog = ({
@@ -24,19 +24,11 @@ export const DeleteFolderDialog = ({
   folderName,
   onDeleted,
 }: DeleteFolderDialogProps) => {
-  const { mutateAsync, isPending } = useDeleteFolderMutation();
-
-  const handleConfirm = async () => {
-    await mutateAsync(folderId);
-    onDeleted?.();
-    onOpenChange(false);
-  };
-
-  const handleOpenChange = (nextOpen: boolean) => {
-    if (!isPending) {
-      onOpenChange(nextOpen);
-    }
-  };
+  const { handleConfirm, handleOpenChange, isPending } = useDeleteDialog(
+    folderId,
+    onDeleted,
+    onOpenChange,
+  );
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>

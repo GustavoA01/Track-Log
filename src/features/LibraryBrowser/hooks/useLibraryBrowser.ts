@@ -5,15 +5,15 @@ type UseLibraryBrowserProps = {
   songs: SongType[];
 };
 
-const normalize = (text: string) =>
-  text
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-
 export const useLibraryBrowser = ({ songs }: UseLibraryBrowserProps) => {
   const [query, setQuery] = useState("");
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
+
+  const normalize = (text: string) =>
+    text
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
 
   const normalizedQuery = normalize(query.trim());
 

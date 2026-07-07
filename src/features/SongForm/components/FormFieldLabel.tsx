@@ -8,19 +8,17 @@ type FormFieldLabelProps = {
   className?: string;
 };
 
-export function FormFieldLabel({
+export const FormFieldLabel = ({
   htmlFor,
   icon: Icon,
   children,
   className,
-}: FormFieldLabelProps) {
-  return (
-    <Label
-      htmlFor={htmlFor}
-      className={cn("inline-flex items-center gap-1.5", className)}
-    >
-      <Icon className="size-3.5 shrink-0 text-muted-foreground" />
-      {children}
-    </Label>
-  );
-}
+}: FormFieldLabelProps) => (
+  <Label
+    htmlFor={htmlFor}
+    className={cn("inline-flex items-center gap-1.5", className)}
+  >
+    <Icon className="size-3.5 shrink-0 text-muted-foreground" />
+    {children}
+  </Label>
+);

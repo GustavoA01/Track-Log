@@ -4,7 +4,7 @@ import { FieldError } from "@/components/FieldError";
 import { Input } from "@/components/ui/input";
 import type { FolderFormValuesType } from "@/data/schemas/folder-form";
 import { FormFieldLabel } from "@/features/SongForm/components/FormFieldLabel";
-import { SongImagePreview } from "@/features/SongForm/components/SongImagePreview";
+import { SongImagePreview } from "@/components/SongImagePreview";
 
 export const FolderFormFields = () => {
   const {

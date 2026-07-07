@@ -36,15 +36,10 @@ export const useFolderForm = ({
   const dialogOpen = isEditing ? (controlledOpen ?? false) : open;
 
   const handleOpenChange = (nextOpen: boolean) => {
-    if (isEditing) {
-      controlledOnOpenChange?.(nextOpen);
-    } else {
-      setOpen(nextOpen);
-    }
+    if (isEditing) controlledOnOpenChange?.(nextOpen);
+    else setOpen(nextOpen);
 
-    if (!nextOpen) {
-      methods.reset(folderFormDefaultValues);
-    }
+    if (!nextOpen) methods.reset(folderFormDefaultValues);
   };
 
   const onSubmit = async (values: FolderFormValuesType) => {
