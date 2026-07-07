@@ -35,12 +35,12 @@ jest.mock("next/navigation", () => ({
   })),
 }));
 
-
-
-const mockUseCreateSongMutation =
-  useCreateSongMutation as jest.MockedFunction<typeof useCreateSongMutation>;
-const mockUseUpdateSongMutation =
-  useUpdateSongMutation as jest.MockedFunction<typeof useUpdateSongMutation>;
+const mockUseCreateSongMutation = useCreateSongMutation as jest.MockedFunction<
+  typeof useCreateSongMutation
+>;
+const mockUseUpdateSongMutation = useUpdateSongMutation as jest.MockedFunction<
+  typeof useUpdateSongMutation
+>;
 
 describe("useSongForm", () => {
   beforeEach(() => {
@@ -133,7 +133,10 @@ describe("useSongForm", () => {
     const { result } = renderHook(() => useSongForm());
 
     act(() => {
-      result.current.methods.setValue("imageUrl", "https://example.com/cover.jpg");
+      result.current.methods.setValue(
+        "imageUrl",
+        "https://example.com/cover.jpg",
+      );
     });
 
     expect(result.current.imageUrl).toBe("https://example.com/cover.jpg");

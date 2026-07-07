@@ -10,8 +10,7 @@ const config: Config = {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testMatch: [
-    "<rootDir>/src/components/tests/**/*.test.{ts,tsx}",
-    "<rootDir>/src/features/**/tests/**/*.test.{ts,tsx}",
+    "<rootDir>/src/components/tests/**/*.spec.{ts,tsx}",
     "<rootDir>/src/features/**/tests/**/*.spec.{ts,tsx}",
     "<rootDir>/src/lib/tests/**/*.spec.{ts,tsx}",
   ],

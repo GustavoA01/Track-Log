@@ -13,7 +13,9 @@ describe("SongFormLayout", () => {
       </SongFormLayout>,
     );
 
-    expect(screen.getByRole("heading", { name: "Nova música" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Nova música" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("Cadastre uma nova música")).toBeInTheDocument();
     expect(screen.getByText("Formulário")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /voltar/i })).toBeInTheDocument();

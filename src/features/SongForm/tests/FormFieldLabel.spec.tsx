@@ -13,7 +13,9 @@ describe("FormFieldLabel", () => {
     const label = screen.getByText("Título*");
 
     expect(label).toHaveAttribute("for", "title");
-    expect(label.closest("label")?.querySelector(".lucide-music2")).toBeInTheDocument();
+    expect(
+      label.closest("label")?.querySelector(".lucide-music2"),
+    ).toBeInTheDocument();
   });
 
   it("applies custom className", () => {

@@ -26,9 +26,7 @@ describe("SongHeader", () => {
       />,
     );
 
-    expect(
-      screen.getByRole("button", { name: /voltar/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /voltar/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /editar/i })).toHaveAttribute(
       "href",
       "/musica/nova/?songId=song-1",

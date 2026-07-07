@@ -14,7 +14,10 @@ const handleCancel = jest.fn();
 const songFormMock: SongFormHookReturn = {
   methods: {} as UseFormReturn<SongFormValuesType>,
   reset: (() => undefined) as SongFormHookReturn["reset"],
-  register: (() => ({}) as ReturnType<SongFormHookReturn["register"]>) as SongFormHookReturn["register"],
+  register: (() =>
+    ({}) as ReturnType<
+      SongFormHookReturn["register"]
+    >) as SongFormHookReturn["register"],
   handleSubmit: ((event) => {
     event?.preventDefault?.();
   }) as SongFormHookReturn["handleSubmit"],
@@ -56,14 +59,18 @@ describe("SongForm", () => {
     render(<SongFormHarness />);
 
     expect(screen.getByText("Capa e recursos")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Criar música" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Criar música" }),
+    ).toBeInTheDocument();
     expect(screen.getByLabelText("Anotações")).toBeInTheDocument();
   });
 
   it("renders edit mode submit label", () => {
     render(<SongFormHarness songProp={song} />);
 
-    expect(screen.getByRole("button", { name: "Salvar alterações" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Salvar alterações" }),
+    ).toBeInTheDocument();
   });
 
   it("calls handleCancel from footer", async () => {

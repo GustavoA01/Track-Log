@@ -7,7 +7,9 @@ describe("FormFooter", () => {
     render(<FormFooter isSaving={false} handleCancel={jest.fn()} />);
 
     expect(screen.getByRole("button", { name: "Salvar" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Cancelar" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Cancelar" }),
+    ).toBeInTheDocument();
   });
 
   it("shows saving state and disables buttons", () => {
@@ -26,7 +28,9 @@ describe("FormFooter", () => {
       />,
     );
 
-    expect(screen.getByRole("button", { name: "Criar música" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Criar música" }),
+    ).toBeInTheDocument();
   });
 
   it("calls handleCancel when cancel is clicked", async () => {

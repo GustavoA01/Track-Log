@@ -4,9 +4,13 @@ import { StartSessionFormFooter } from "../components/StartSessionFormFooter";
 
 describe("StartSessionFormFooter", () => {
   it("renders action buttons", () => {
-    render(<StartSessionFormFooter isSubmitting={false} onCancel={jest.fn()} />);
+    render(
+      <StartSessionFormFooter isSubmitting={false} onCancel={jest.fn()} />,
+    );
 
-    expect(screen.getByRole("button", { name: "Cancelar" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Cancelar" }),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Iniciar cronômetro" }),
     ).toHaveAttribute("form", "start-session-form");

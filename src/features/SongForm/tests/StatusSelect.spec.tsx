@@ -44,9 +44,15 @@ describe("StatusSelect", () => {
 
     await user.click(screen.getByRole("combobox"));
 
-    expect(await screen.findByRole("option", { name: "Aprendendo" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Quero aprender" })).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Aprendida" })).toBeInTheDocument();
+    expect(
+      await screen.findByRole("option", { name: "Aprendendo" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: "Quero aprender" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: "Aprendida" }),
+    ).toBeInTheDocument();
     expect(screen.getByRole("option", { name: "Pausada" })).toBeInTheDocument();
   });
 });

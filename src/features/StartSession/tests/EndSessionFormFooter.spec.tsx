@@ -6,7 +6,9 @@ describe("EndSessionFormFooter", () => {
   it("renders action buttons", () => {
     render(<EndSessionFormFooter isSubmitting={false} onDiscard={jest.fn()} />);
 
-    expect(screen.getByRole("button", { name: "Descartar" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Descartar" }),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: "Salvar sessão" }),
     ).toHaveAttribute("form", "end-session-form");
