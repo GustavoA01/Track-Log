@@ -11,7 +11,9 @@ import {
 import type { PracticeSessionType } from "@/data/types";
 import { ClearSessionsDialog } from "../container/ClearSessionsDialog";
 import { DeleteSessionDialog } from "../container/DeleteSessionDialog";
+import { EditSessionDialog } from "../container/EditSessionDialog";
 import { useDeleteSessionDialog } from "../hooks/useDeleteSessionDialog";
+import { useEditSessionDialog } from "../hooks/useEditSessionDialog";
 import { useSongSessions } from "../hooks/useSongSessions";
 import { Session } from "./Session";
 import { HistoricalDescription } from "./HistoricalDescription";
@@ -25,6 +27,7 @@ export const SongSessions = ({ songId, sessions }: SongSessionsProps) => {
   const { sessionsTotalTime, clearDialogOpen, setClearDialogOpen } =
     useSongSessions({ sessions });
   const deleteSessionDialog = useDeleteSessionDialog(songId);
+  const editSessionDialog = useEditSessionDialog(songId);
 
   return (
     <>
@@ -66,6 +69,7 @@ export const SongSessions = ({ songId, sessions }: SongSessionsProps) => {
                   index={index}
                   sessions={sessions}
                   onDelete={deleteSessionDialog.openDialog}
+                  onEdit={editSessionDialog.openDialog}
                 />
               ))}
             </div>
@@ -79,6 +83,8 @@ export const SongSessions = ({ songId, sessions }: SongSessionsProps) => {
         songId={songId}
         sessionCount={sessions.length}
       />
+
+      <EditSessionDialog dialog={editSessionDialog} />
 
       <DeleteSessionDialog
         open={deleteSessionDialog.open}

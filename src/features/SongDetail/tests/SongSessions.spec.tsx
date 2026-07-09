@@ -10,6 +10,13 @@ jest.mock("../hooks/useDeleteSessionMutation", () => ({
   })),
 }));
 
+jest.mock("../hooks/useUpdateSessionMutation", () => ({
+  useUpdateSessionMutation: jest.fn(() => ({
+    mutateAsync: jest.fn(),
+    isPending: false,
+  })),
+}));
+
 jest.mock("../hooks/useClearSessionsMutation", () => ({
   useClearSessionsMutation: jest.fn(() => ({
     mutateAsync: jest.fn(),

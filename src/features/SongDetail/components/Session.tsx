@@ -9,6 +9,7 @@ type SessionProps = {
   index: number;
   sessions: PracticeSessionType[];
   onDelete: (session: PracticeSessionType) => void;
+  onEdit: (session: PracticeSessionType) => void;
 };
 
 export const Session = ({
@@ -16,6 +17,7 @@ export const Session = ({
   index,
   sessions,
   onDelete,
+  onEdit,
 }: SessionProps) => (
   <div>
     <div className="flex items-start justify-between gap-3">
@@ -31,7 +33,10 @@ export const Session = ({
 
       <div className="flex shrink-0 items-center gap-1">
         <p className="text-sm font-medium">{session.minutes} min</p>
-        <SessionActions onDelete={() => onDelete(session)} />
+        <SessionActions
+          onEdit={() => onEdit(session)}
+          onDelete={() => onDelete(session)}
+        />
       </div>
     </div>
     {index < sessions.length - 1 && <Separator className="mt-4" />}

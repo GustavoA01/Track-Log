@@ -8,10 +8,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 type SessionActionsProps = {
+  onEdit: () => void;
   onDelete: () => void;
 };
 
-export const SessionActions = ({ onDelete }: SessionActionsProps) => (
+export const SessionActions = ({ onEdit, onDelete }: SessionActionsProps) => (
   <DropdownMenu>
     <DropdownMenuTrigger
       render={
@@ -21,7 +22,7 @@ export const SessionActions = ({ onDelete }: SessionActionsProps) => (
       <Ellipsis />
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end" className="w-auto min-w-max">
-      <DropdownMenuItem className="gap-2">
+      <DropdownMenuItem className="gap-2" onClick={onEdit}>
         <Pencil className="size-3.5" />
         Editar
       </DropdownMenuItem>

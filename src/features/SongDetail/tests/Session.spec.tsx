@@ -10,6 +10,7 @@ describe("Session", () => {
         index={0}
         sessions={sessions}
         onDelete={jest.fn()}
+        onEdit={jest.fn()}
       />,
     );
 
@@ -25,6 +26,7 @@ describe("Session", () => {
         index={1}
         sessions={sessions}
         onDelete={jest.fn()}
+        onEdit={jest.fn()}
       />,
     );
 
