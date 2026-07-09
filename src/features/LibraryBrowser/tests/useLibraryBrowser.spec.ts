@@ -69,4 +69,17 @@ describe("useLibraryBrowser", () => {
     expect(result.current.filteredSongs).toHaveLength(1);
     expect(result.current.filteredSongs[0]?.id).toBe("song-1");
   });
+
+  it("includes songs that belong to multiple folders", () => {
+    const { result } = renderHook(() => useLibraryBrowser({ songs }));
+
+    act(() => {
+      result.current.setSelectedFolderId("folder-2");
+    });
+
+    expect(result.current.filteredSongs.map((song) => song.id)).toEqual([
+      "song-2",
+      "song-3",
+    ]);
+  });
 });

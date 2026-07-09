@@ -15,19 +15,20 @@ import { useCreateSessionMutation } from "@/features/StartSession/hooks/useCreat
 import { DeleteSongDialog } from "./DeleteSongDialog";
 import { SongHeader } from "../components/SongHeader";
 import { HeroSection } from "./HeroSection";
+import { SongFoldersSection } from "./SongFoldersSection";
 import { useSongDetailContent } from "../hooks/useSongDetailContent";
 
 type SongDetailContentProps = {
   song: SongType;
   sessions: PracticeSessionType[];
-  folder?: Pick<FolderType, "name" | "color">;
+  folders: FolderType[];
   backHref: string;
 };
 
 export const SongDetailContent = ({
   song: initialSong,
   sessions,
-  folder,
+  folders,
   backHref,
 }: SongDetailContentProps) => {
   const {
@@ -79,13 +80,23 @@ export const SongDetailContent = ({
       <main className="pb-20">
         <HeroSection
           song={song}
-          folder={folder ?? undefined}
+          folders={folders
+            .filter((folder) => song.folderIds.includes(folder.id))
+            .map(({ id, name, color }) => ({ id, name, color }))}
           sessionCount={sessionCount}
           totalMinutes={totalMinutes}
           onStartSession={handleStartSession}
         />
 
         <div className="container mx-auto space-y-8 px-4 pt-8 sm:px-6">
+          <SongFoldersSection
+            songId={song.id}
+            folders={folders}
+            songFolderIds={song.folderIds}
+            onFolderIdsChange={(folderIds) =>
+              setSong((currentSong) => ({ ...currentSong, folderIds }))
+            }
+          />
           {song.notes && (
             <div className="rounded-xl border bg-muted/30 p-4">
               <p className="mb-1 text-xs font-medium text-muted-foreground">

@@ -10,7 +10,10 @@ import {
 import { useCreateSongMutation } from "./useCreateSongMutation";
 import { useUpdateSongMutation } from "./useUpdateSongMutation";
 
-export const useSongForm = (song?: SongType | null) => {
+export const useSongForm = (
+  song?: SongType | null,
+  initialFolderIds?: string[],
+) => {
   const { back } = useRouter();
   const isEditing = Boolean(song?.id);
   const { createSongFn, isPending: isCreating } = useCreateSongMutation();
@@ -18,7 +21,10 @@ export const useSongForm = (song?: SongType | null) => {
 
   const methods = useForm<SongFormValuesType>({
     resolver: zodResolver(songFormSchema),
-    defaultValues: songFormDefaultValues,
+    defaultValues: {
+      ...songFormDefaultValues,
+      folderIds: initialFolderIds ?? song?.folderIds ?? [],
+    },
   });
 
   const { control } = methods;

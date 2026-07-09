@@ -8,22 +8,16 @@ import { resolveSongAccentColor } from "@/lib/accent-color";
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/lib/mappers";
 import { prisma } from "@/lib/prisma";
+import { validateSongFolderIds } from "@/actions/songs/folder-utils";
 import type { CreateSongInput } from "./types";
 
 export const createSong = async (data: CreateSongInput) => {
   const userId = await getCurrentUserId();
   const values = songFormSchema.parse(data);
   const payload = formValuesToSongPayload(values);
+  const folderIds = values.folderIds ?? [];
 
-  if (data.folderId) {
-    const folder = await prisma.folder.findFirst({
-      where: { id: data.folderId, userId },
-    });
-
-    if (!folder) {
-      throw new Error("Pasta não encontrada");
-    }
-  }
+  await validateSongFolderIds(userId, folderIds);
 
   const imageUrl = payload.imageUrl ?? null;
   const accentColor = await resolveSongAccentColor(imageUrl);
@@ -31,7 +25,6 @@ export const createSong = async (data: CreateSongInput) => {
   const song = await prisma.song.create({
     data: {
       userId,
-      folderId: data.folderId ?? null,
       title: payload.title,
       artist: payload.artist,
       status: payload.status,
@@ -43,11 +36,27 @@ export const createSong = async (data: CreateSongInput) => {
       accentColor,
       videoUrl: payload.videoUrl ?? null,
       tabUrl: payload.tabUrl ?? null,
+      folders:
+        folderIds.length > 0
+          ? {
+              create: folderIds.map((folderId) => ({ folderId })),
+            }
+          : undefined,
+    },
+    include: {
+      folders: {
+        select: { folderId: true },
+        orderBy: { createdAt: "asc" },
+      },
     },
   });
 
   revalidatePath("/");
   revalidatePath(`/musica/${song.id}`);
 
-  return toSongType(song);
+  return toSongType(
+    song,
+    0,
+    song.folders.map((folder) => folder.folderId),
+  );
 };

@@ -34,6 +34,7 @@ export const songFormSchema = z.object({
   genre: z.string().trim(),
   instrument: z.string().trim(),
   notes: z.string().trim(),
+  folderIds: z.array(z.string()),
 });
 
 export type SongFormValuesType = z.infer<typeof songFormSchema>;
@@ -49,6 +50,7 @@ export const songFormDefaultValues: SongFormValuesType = {
   genre: "",
   instrument: "",
   notes: "",
+  folderIds: [],
 };
 
 export const songToFormValues = (song: SongType): SongFormValuesType => ({
@@ -62,6 +64,7 @@ export const songToFormValues = (song: SongType): SongFormValuesType => ({
   genre: song.genre,
   instrument: song.instrument,
   notes: song.notes,
+  folderIds: song.folderIds,
 });
 
 export const formValuesToSongPayload = (values: SongFormValuesType) => ({

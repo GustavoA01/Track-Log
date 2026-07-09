@@ -3,7 +3,8 @@ import { revalidatePath } from "next/cache";
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/lib/mappers";
 import { prisma } from "@/lib/prisma";
-import type { UpdateSongResourcesInput } from "./types";
+import { getSongFolderIds } from "@/actions/songs/folder-utils";
+import { UpdateSongResourcesInput } from "./types";
 
 export const updateSongResources = async (
   id: string,
@@ -15,9 +16,7 @@ export const updateSongResources = async (
     where: { id, userId },
   });
 
-  if (!existing) {
-    throw new Error("Música não encontrada");
-  }
+  if (!existing) throw new Error("Música não encontrada");
 
   const song = await prisma.song.update({
     where: { id },
@@ -29,5 +28,7 @@ export const updateSongResources = async (
 
   revalidatePath(`/musica/${song.id}`);
 
-  return toSongType(song);
+  const folderIds = await getSongFolderIds(song.id);
+
+  return toSongType(song, 0, folderIds);
 };

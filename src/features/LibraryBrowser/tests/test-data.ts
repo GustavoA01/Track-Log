@@ -13,7 +13,7 @@ export const folders: FolderType[] = [
 export const songs: SongType[] = [
   {
     id: "song-1",
-    folderId: "folder-1",
+    folderIds: ["folder-1"],
     title: "Wonderwall",
     artist: "Oasis",
     genre: "Rock",
@@ -26,7 +26,7 @@ export const songs: SongType[] = [
   },
   {
     id: "song-2",
-    folderId: "folder-2",
+    folderIds: ["folder-2"],
     title: "Black",
     artist: "Pearl Jam",
     genre: "Rock",
@@ -39,7 +39,7 @@ export const songs: SongType[] = [
   },
   {
     id: "song-3",
-    folderId: "folder-1",
+    folderIds: ["folder-1", "folder-2"],
     title: "Café",
     artist: "Trilha Sonora",
     genre: "MPB",

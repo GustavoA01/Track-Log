@@ -20,7 +20,7 @@ describe("HeroSection", () => {
     render(
       <HeroSection
         song={song}
-        folder={folder}
+        folders={[folder]}
         sessionCount={2}
         totalMinutes={75}
         onStartSession={jest.fn()}
@@ -37,6 +37,21 @@ describe("HeroSection", () => {
       screen.getByText("2 sessões · 75 min praticados"),
     ).toBeInTheDocument();
     expect(screen.getByRole("img", { name: "Wonderwall" })).toBeInTheDocument();
+  });
+
+  it("renders multiple folder badges", () => {
+    render(
+      <HeroSection
+        song={song}
+        folders={[folder, { id: "folder-2", name: "Violão", color: "#2563eb" }]}
+        sessionCount={2}
+        totalMinutes={75}
+        onStartSession={jest.fn()}
+      />,
+    );
+
+    expect(screen.getByText("Rock")).toBeInTheDocument();
+    expect(screen.getByText("Violão")).toBeInTheDocument();
   });
 
   it("uses singular session label", () => {

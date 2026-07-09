@@ -68,6 +68,18 @@ describe("useSongForm", () => {
     expect(result.current.methods.getValues()).toEqual(songFormDefaultValues);
   });
 
+  it("initializes folderIds from initialFolderIds", () => {
+    const { result } = renderHook(() => useSongForm(null, ["folder-1"]));
+
+    expect(result.current.methods.getValues("folderIds")).toEqual(["folder-1"]);
+  });
+
+  it("initializes folderIds from song when editing", () => {
+    const { result } = renderHook(() => useSongForm(song));
+
+    expect(result.current.methods.getValues("folderIds")).toEqual(["folder-1"]);
+  });
+
   it("initializes edit mode when song is provided", () => {
     const { result } = renderHook(() => useSongForm(song));
 

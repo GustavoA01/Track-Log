@@ -14,6 +14,7 @@ describe("SessionHistoryList", () => {
       status: "learning",
       createdAt: "2026-01-15",
       notes: "",
+      folderIds: [],
       sessionsTotalTime: 45,
     },
     {
@@ -26,6 +27,7 @@ describe("SessionHistoryList", () => {
       status: "learned",
       createdAt: "2025-11-20",
       notes: "",
+      folderIds: [],
       sessionsTotalTime: 20,
     },
   ];

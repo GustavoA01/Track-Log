@@ -15,14 +15,14 @@ enum SongStatus {
 }
 
 model Folder {
-  id        String   @id @default(cuid())
+  id        String       @id @default(cuid())
   userId    String
   name      String
-  color     String   @default("#7c3aed")
+  color     String       @default("#7c3aed")
   imageUrl  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  songs     Song[]
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  songs     SongFolder[]
 
   @@index([userId])
 }
@@ -30,7 +30,6 @@ model Folder {
 model Song {
   id          String             @id @default(cuid())
   userId      String
-  folderId    String?
   title       String
   artist      String
   genre       String             @default("")
@@ -44,10 +43,21 @@ model Song {
   accentColor String?
   createdAt   DateTime           @default(now())
   updatedAt   DateTime           @updatedAt
-  folder      Folder?            @relation(fields: [folderId], references: [id], onDelete: SetNull)
+  folders     SongFolder[]
   sessions    PracticeSession[]
 
   @@index([userId])
+}
+
+model SongFolder {
+  songId    String
+  folderId  String
+  createdAt DateTime @default(now())
+  song      Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
+  folder    Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
+  @@id([songId, folderId])
+  @@index([songId])
   @@index([folderId])
 }
 

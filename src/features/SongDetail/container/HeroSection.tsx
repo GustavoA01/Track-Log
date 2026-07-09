@@ -11,7 +11,7 @@ type HeroSectionProps = {
     SongType,
     "title" | "imageUrl" | "status" | "artist" | "accentColor"
   >;
-  folder?: Pick<FolderType, "name" | "color">;
+  folders?: Pick<FolderType, "id" | "name" | "color">[];
   sessionCount: number;
   totalMinutes: number;
   onStartSession: (minutes: number) => void;
@@ -19,7 +19,7 @@ type HeroSectionProps = {
 
 export const HeroSection = ({
   song,
-  folder,
+  folders = [],
   sessionCount,
   totalMinutes,
   onStartSession,
@@ -44,7 +44,11 @@ export const HeroSection = ({
           <div className="flex w-full flex-1 flex-col items-center gap-4 text-center lg:items-start lg:pb-2 lg:text-left">
             <div className="flex flex-wrap items-center justify-center gap-2 lg:justify-start">
               <SongStatusBadge status={song.status} />
-              {folder && <Badge variant="outline">{folder.name}</Badge>}
+              {folders.map((folder) => (
+                <Badge key={folder.id} variant="outline">
+                  {folder.name}
+                </Badge>
+              ))}
             </div>
 
             <div className="space-y-1">

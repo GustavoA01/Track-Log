@@ -13,7 +13,7 @@ export interface FolderType {
 
 export interface SongType {
   id: string;
-  folderId?: string;
+  folderIds: string[];
   title: string;
   artist: string;
   genre: string;

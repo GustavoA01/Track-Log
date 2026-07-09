@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getFolders } from "@/actions/folders/getFolders";
 import { getSongById } from "@/actions/songs/getSongById";
 import { SongFormLayout } from "@/features/SongForm/components/SongFormLayout";
 import { SongForm } from "@/features/SongForm/container/SongForm";
@@ -6,10 +7,13 @@ import { SongForm } from "@/features/SongForm/container/SongForm";
 const NewSongPage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ songId?: string }>;
+  searchParams: Promise<{ songId?: string; folderId?: string }>;
 }) => {
-  const { songId } = await searchParams;
-  const song = songId ? await getSongById(songId) : null;
+  const { songId, folderId } = await searchParams;
+  const [song, folders] = await Promise.all([
+    songId ? getSongById(songId) : Promise.resolve(null),
+    getFolders(),
+  ]);
 
   if (songId && !song) notFound();
 
@@ -25,7 +29,11 @@ const NewSongPage = async ({
       }
       backHref={isEditing ? undefined : "/"}
     >
-      <SongForm song={song} />
+      <SongForm
+        song={song}
+        folders={folders}
+        initialFolderIds={folderId ? [folderId] : undefined}
+      />
     </SongFormLayout>
   );
 };

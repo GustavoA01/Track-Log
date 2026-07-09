@@ -8,6 +8,11 @@ import { resolveSongAccentColor } from "@/lib/accent-color";
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/lib/mappers";
 import { prisma } from "@/lib/prisma";
+import {
+  getSongFolderIds,
+  syncSongFolders,
+  validateSongFolderIds,
+} from "@/actions/songs/folder-utils";
 import type { UpdateSongInput } from "./types";
 
 export const updateSong = async (id: string, input: UpdateSongInput) => {
@@ -17,21 +22,13 @@ export const updateSong = async (id: string, input: UpdateSongInput) => {
     where: { id, userId },
   });
 
-  if (!existing) {
-    throw new Error("Música não encontrada");
-  }
+  if (!existing) throw new Error("Música não encontrada");
 
   const values = input.title !== undefined ? songFormSchema.parse(input) : null;
   const payload = values ? formValuesToSongPayload(values) : null;
 
-  if (input.folderId) {
-    const folder = await prisma.folder.findFirst({
-      where: { id: input.folderId, userId },
-    });
-
-    if (!folder) {
-      throw new Error("Pasta não encontrada");
-    }
+  if (input.folderIds !== undefined) {
+    await validateSongFolderIds(userId, input.folderIds);
   }
 
   const imageUrl = payload ? (payload.imageUrl ?? null) : undefined;
@@ -47,7 +44,6 @@ export const updateSong = async (id: string, input: UpdateSongInput) => {
   const song = await prisma.song.update({
     where: { id },
     data: {
-      ...(input.folderId !== undefined ? { folderId: input.folderId } : {}),
       ...(payload
         ? {
             title: payload.title,
@@ -66,8 +62,14 @@ export const updateSong = async (id: string, input: UpdateSongInput) => {
     },
   });
 
+  if (input.folderIds !== undefined) {
+    await syncSongFolders(id, input.folderIds);
+  }
+
+  const folderIds = await getSongFolderIds(id);
+
   revalidatePath("/");
   revalidatePath(`/musica/${song.id}`);
 
-  return toSongType(song);
+  return toSongType(song, 0, folderIds);
 };

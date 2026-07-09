@@ -2,15 +2,31 @@
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/lib/mappers";
 import { prisma } from "@/lib/prisma";
-import { SongRecord } from "@/lib/prisma-types";
 
 export const getSongsByFolder = async (folderId: string) => {
   const userId = await getCurrentUserId();
 
-  const songs = (await prisma.song.findMany({
-    where: { userId, folderId },
+  const songs = await prisma.song.findMany({
+    where: {
+      userId,
+      folders: {
+        some: { folderId },
+      },
+    },
+    include: {
+      folders: {
+        select: { folderId: true },
+        orderBy: { createdAt: "asc" },
+      },
+    },
     orderBy: { createdAt: "desc" },
-  })) as SongRecord[];
+  });
 
-  return songs.map((song) => toSongType(song));
+  return songs.map((song) =>
+    toSongType(
+      song,
+      0,
+      song.folders.map((folder) => folder.folderId),
+    ),
+  );
 };

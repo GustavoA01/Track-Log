@@ -35,4 +35,32 @@ describe("MusicsSection", () => {
     expect(screen.getByText("Nenhuma música encontrada")).toBeInTheDocument();
     expect(screen.getByText("(0)")).toBeInTheDocument();
   });
+
+  it("renders create link when a folder is selected", () => {
+    render(
+      <MusicsSection
+        folders={folders}
+        songs={songs}
+        sessionCounts={sessionCounts}
+        selectedFolderId="folder-1"
+      />,
+    );
+
+    const link = screen.getByRole("link", { name: /nova música em rock/i });
+    expect(link).toHaveAttribute("href", "/musica/nova?folderId=folder-1");
+  });
+
+  it("does not render create link without selected folder", () => {
+    render(
+      <MusicsSection
+        folders={folders}
+        songs={songs}
+        sessionCounts={sessionCounts}
+      />,
+    );
+
+    expect(
+      screen.queryByRole("link", { name: /nova música em/i }),
+    ).not.toBeInTheDocument();
+  });
 });

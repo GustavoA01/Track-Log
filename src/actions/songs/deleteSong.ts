@@ -10,9 +10,7 @@ export const deleteSong = async (id: string) => {
     where: { id, userId },
   });
 
-  if (!existing) {
-    throw new Error("Música não encontrada");
-  }
+  if (!existing) throw new Error("Música não encontrada");
 
   await prisma.song.delete({
     where: { id },

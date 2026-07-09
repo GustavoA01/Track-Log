@@ -1,8 +1,13 @@
-import type { SongType } from "@/data/types";
+import type { FolderType, SongType } from "@/data/types";
+
+export const folders: FolderType[] = [
+  { id: "folder-1", name: "Rock", color: "#7c3aed" },
+  { id: "folder-2", name: "Violão", color: "#2563eb" },
+];
 
 export const song: SongType = {
   id: "song-1",
-  folderId: "folder-1",
+  folderIds: ["folder-1"],
   title: "Wonderwall",
   artist: "Oasis",
   genre: "Rock",
@@ -28,4 +33,5 @@ export const validFormValues = {
   genre: "Rock",
   instrument: "Violão",
   notes: "",
+  folderIds: [],
 };

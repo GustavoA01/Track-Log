@@ -21,9 +21,10 @@ export const toFolderType = (folder: FolderRecord): FolderType => ({
 export const toSongType = (
   song: SongRecord,
   sessionsTotalTime = 0,
+  folderIds: string[] = [],
 ): SongType => ({
   id: song.id,
-  folderId: song.folderId ?? undefined,
+  folderIds,
   title: song.title,
   artist: song.artist,
   genre: song.genre,

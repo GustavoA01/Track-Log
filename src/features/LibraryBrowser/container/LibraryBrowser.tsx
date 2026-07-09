@@ -37,6 +37,7 @@ export const LibraryBrowser = ({
         folders={folders}
         songs={filteredSongs}
         sessionCounts={sessionCounts}
+        selectedFolderId={selectedFolderId}
       />
     </div>
   );

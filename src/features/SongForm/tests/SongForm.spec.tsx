@@ -1,54 +1,35 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { useForm, type UseFormReturn } from "react-hook-form";
-import type { SongFormValuesType } from "@/data/schemas/song-form";
-import { songFormDefaultValues } from "@/data/schemas/song-form";
 import { SongForm } from "../container/SongForm";
-import { useSongForm } from "../hooks/useSongForm";
-import { song } from "./test-data";
+import { song, folders } from "./test-data";
 
-type SongFormHookReturn = ReturnType<typeof useSongForm>;
+const back = jest.fn();
 
-const handleCancel = jest.fn();
-
-const songFormMock: SongFormHookReturn = {
-  methods: {} as UseFormReturn<SongFormValuesType>,
-  reset: (() => undefined) as SongFormHookReturn["reset"],
-  register: (() =>
-    ({}) as ReturnType<
-      SongFormHookReturn["register"]
-    >) as SongFormHookReturn["register"],
-  handleSubmit: ((event) => {
-    event?.preventDefault?.();
-  }) as SongFormHookReturn["handleSubmit"],
-  isSaving: false,
-  isEditing: false,
-  handleCancel,
-  imageUrl: "",
-};
-
-jest.mock("../hooks/useSongForm", () => ({
-  useSongForm: () => songFormMock,
+jest.mock("../hooks/useCreateSongMutation", () => ({
+  useCreateSongMutation: jest.fn(() => ({
+    createSongFn: jest.fn(),
+    isPending: false,
+    goBack: back,
+  })),
 }));
 
-function SongFormHarness({ songProp }: { songProp?: typeof song }) {
-  const methods = useForm<SongFormValuesType>({
-    defaultValues: songFormDefaultValues,
-  });
+jest.mock("../hooks/useUpdateSongMutation", () => ({
+  useUpdateSongMutation: jest.fn(() => ({
+    updateSongFn: jest.fn(),
+    isPending: false,
+  })),
+}));
 
-  songFormMock.methods = methods;
-  songFormMock.reset = methods.reset;
-  songFormMock.register = methods.register;
-  songFormMock.handleSubmit = ((event) => {
-    event?.preventDefault?.();
-  }) as SongFormHookReturn["handleSubmit"];
-  songFormMock.isEditing = Boolean(songProp?.id);
-  songFormMock.isSaving = false;
-  songFormMock.handleCancel = handleCancel;
-  songFormMock.imageUrl = methods.watch("imageUrl");
-
-  return <SongForm song={songProp} />;
-}
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(() => ({
+    back,
+    push: jest.fn(),
+    replace: jest.fn(),
+    refresh: jest.fn(),
+    forward: jest.fn(),
+    prefetch: jest.fn(),
+  })),
+}));
 
 describe("SongForm", () => {
   beforeEach(() => {
@@ -56,7 +37,7 @@ describe("SongForm", () => {
   });
 
   it("renders create mode labels", () => {
-    render(<SongFormHarness />);
+    render(<SongForm />);
 
     expect(screen.getByText("Capa e recursos")).toBeInTheDocument();
     expect(
@@ -66,20 +47,27 @@ describe("SongForm", () => {
   });
 
   it("renders edit mode submit label", () => {
-    render(<SongFormHarness songProp={song} />);
+    render(<SongForm song={song} />);
 
     expect(
       screen.getByRole("button", { name: "Salvar alterações" }),
     ).toBeInTheDocument();
   });
 
-  it("calls handleCancel from footer", async () => {
+  it("renders folder fields when folders are provided", () => {
+    render(<SongForm folders={folders} />);
+
+    expect(screen.getByText("Pastas")).toBeInTheDocument();
+    expect(screen.getByText("Selecione uma pasta")).toBeInTheDocument();
+  });
+
+  it("calls router.back on cancel", async () => {
     const user = userEvent.setup();
 
-    render(<SongFormHarness />);
+    render(<SongForm />);
 
     await user.click(screen.getByRole("button", { name: "Cancelar" }));
 
-    expect(handleCancel).toHaveBeenCalledTimes(1);
+    expect(back).toHaveBeenCalledTimes(1);
   });
 });

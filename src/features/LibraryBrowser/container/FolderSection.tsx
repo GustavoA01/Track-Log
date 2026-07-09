@@ -28,8 +28,8 @@ export const FolderSection = ({
       />
 
       {folders.map((folder: FolderType) => {
-        const count = songs.filter(
-          (song) => song.folderId === folder.id,
+        const count = songs.filter((song) =>
+          song.folderIds.includes(folder.id),
         ).length;
         const isSelected = selectedFolderId === folder.id;
 

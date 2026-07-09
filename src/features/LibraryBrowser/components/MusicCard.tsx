@@ -19,7 +19,7 @@ export const MusicCard = ({ folders, song, sessionCount }: MusicCardProps) => (
       alt={song.title}
       fallbackColor={
         song.accentColor ??
-        folders.find((f: FolderType) => f.id === song.folderId)?.color
+        folders.find((folder) => song.folderIds.includes(folder.id))?.color
       }
       size="lg"
     />

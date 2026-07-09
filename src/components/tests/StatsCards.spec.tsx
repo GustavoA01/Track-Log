@@ -14,6 +14,7 @@ describe("StatsCards", () => {
       status: "learning",
       createdAt: "2026-01-15",
       notes: "",
+      folderIds: [],
       sessionsTotalTime: 45,
     },
     {
@@ -26,6 +27,7 @@ describe("StatsCards", () => {
       status: "learning",
       createdAt: "2025-11-20",
       notes: "",
+      folderIds: [],
       sessionsTotalTime: 20,
     },
     {
@@ -38,6 +40,7 @@ describe("StatsCards", () => {
       status: "learned",
       createdAt: "2026-06-10",
       notes: "",
+      folderIds: [],
       sessionsTotalTime: 0,
     },
     {
@@ -50,6 +53,7 @@ describe("StatsCards", () => {
       status: "want_to_learn",
       createdAt: "2026-06-01",
       notes: "",
+      folderIds: [],
       sessionsTotalTime: 0,
     },
   ];

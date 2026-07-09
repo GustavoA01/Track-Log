@@ -2,7 +2,7 @@ import type { PracticeSessionType, SongType } from "@/data/types";
 
 export const song: SongType = {
   id: "song-1",
-  folderId: "folder-1",
+  folderIds: ["folder-1"],
   title: "Wonderwall",
   artist: "Oasis",
   genre: "Rock",
@@ -36,6 +36,12 @@ export const sessions: PracticeSessionType[] = [
 ];
 
 export const folder = {
+  id: "folder-1",
   name: "Rock",
   color: "#7c3aed",
 };
+
+export const folders = [
+  folder,
+  { id: "folder-2", name: "Violão", color: "#2563eb" },
+];

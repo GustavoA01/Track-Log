@@ -18,6 +18,7 @@ describe("song-form schema helpers", () => {
       genre: "Rock",
       instrument: "Violão",
       notes: "Focar no refrão",
+      folderIds: ["folder-1"],
     });
   });
 
@@ -34,6 +35,10 @@ describe("song-form schema helpers", () => {
       videoUrl: "",
       tabUrl: "",
     });
+  });
+
+  it("includes empty folderIds in default values", () => {
+    expect(songFormDefaultValues.folderIds).toEqual([]);
   });
 
   it("maps form values to song payload", () => {

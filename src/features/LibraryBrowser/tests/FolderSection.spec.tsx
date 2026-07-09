@@ -35,7 +35,7 @@ describe("FolderSection", () => {
       "Rock (2)",
     );
     expect(screen.getByTestId("folder-card-folder-2")).toHaveTextContent(
-      "Violão (1)",
+      "Violão (2)",
     );
   });
 

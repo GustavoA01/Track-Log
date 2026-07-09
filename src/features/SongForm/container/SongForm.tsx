@@ -4,16 +4,30 @@ import { useEffect } from "react";
 import { FormProvider } from "react-hook-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { songToFormValues } from "@/data/schemas/song-form";
-import type { SongType } from "@/data/types";
+import {
+  songFormDefaultValues,
+  songToFormValues,
+} from "@/data/schemas/song-form";
+import type { FolderType, SongType } from "@/data/types";
 import { FormFieldLabel } from "@/features/SongForm/components/FormFieldLabel";
 import { FormFooter } from "@/features/SongForm/components/FormFooter";
 import { SongImagePreview } from "@/components/SongImagePreview";
 import { useSongForm } from "../hooks/useSongForm";
 import { BasicFields } from "./BasicFields";
 import { ExtraFields } from "./ExtraFields";
+import { FolderFields } from "./FolderFields";
 
-export const SongForm = ({ song }: { song?: SongType | null }) => {
+type SongFormProps = {
+  song?: SongType | null;
+  folders?: FolderType[];
+  initialFolderIds?: string[];
+};
+
+export const SongForm = ({
+  song,
+  folders = [],
+  initialFolderIds,
+}: SongFormProps) => {
   const {
     methods,
     reset,
@@ -23,11 +37,21 @@ export const SongForm = ({ song }: { song?: SongType | null }) => {
     handleCancel,
     imageUrl,
     register,
-  } = useSongForm(song);
+  } = useSongForm(song, initialFolderIds);
 
   useEffect(() => {
-    if (song) reset(songToFormValues(song));
-  }, [song, reset]);
+    if (song) {
+      reset(songToFormValues(song));
+      return;
+    }
+
+    if (initialFolderIds?.length) {
+      reset({
+        ...songFormDefaultValues,
+        folderIds: initialFolderIds,
+      });
+    }
+  }, [song, initialFolderIds, reset]);
 
   return (
     <Card>
@@ -35,6 +59,7 @@ export const SongForm = ({ song }: { song?: SongType | null }) => {
         <form onSubmit={handleSubmit}>
           <CardContent className="mb-2 space-y-8">
             <BasicFields />
+            {folders.length > 0 && <FolderFields folders={folders} />}
 
             <div>
               <h2 className="text-sm font-medium">Capa e recursos</h2>

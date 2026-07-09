@@ -1,4 +1,4 @@
-npm test
 npm run lint
+npm test
 npx prettier --write .
 git add .

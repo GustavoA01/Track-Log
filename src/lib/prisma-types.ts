@@ -2,4 +2,7 @@ import type { Prisma } from "@prisma/client";
 
 export type FolderRecord = Prisma.FolderGetPayload<object>;
 export type SongRecord = Prisma.SongGetPayload<object>;
+export type SongRecordWithFolders = Prisma.SongGetPayload<{
+  include: { folders: { select: { folderId: true } } };
+}>;
 export type PracticeSessionRecord = Prisma.PracticeSessionGetPayload<object>;

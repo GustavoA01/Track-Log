@@ -19,7 +19,7 @@ export const useLibraryBrowser = ({ songs }: UseLibraryBrowserProps) => {
 
   const filteredSongs = useMemo(() => {
     let result = selectedFolderId
-      ? songs.filter((song) => song.folderId === selectedFolderId)
+      ? songs.filter((song) => song.folderIds.includes(selectedFolderId))
       : songs;
 
     if (normalizedQuery) {
