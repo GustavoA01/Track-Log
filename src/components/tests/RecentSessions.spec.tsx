@@ -14,6 +14,7 @@ describe("RecentSessions", () => {
     createdAt: "2026-01-15",
     notes: "",
     sessionsTotalTime: 45,
+    folderIds: [],
   };
 
   const session: PracticeSessionType = {
