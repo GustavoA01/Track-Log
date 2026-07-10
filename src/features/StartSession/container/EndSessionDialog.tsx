@@ -45,8 +45,8 @@ export const EndSessionDialog = ({
           </form>
         </FormProvider>
         <EndSessionFormFooter
-          isSubmitting={isSubmitting || methods.formState.isSubmitting}
           onDiscard={handleDiscard}
+          isSubmitting={isSubmitting || methods.formState.isSubmitting}
         />
       </DialogContent>
     </Dialog>

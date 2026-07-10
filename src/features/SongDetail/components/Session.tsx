@@ -2,7 +2,8 @@ import type { PracticeSessionType } from "@/data/types";
 import { Calendar } from "lucide-react";
 import { formatDateOnly } from "@/lib/dates";
 import { Separator } from "@/components/ui/separator";
-import { SessionActions } from "./SessionActions";
+import { SessionActionsDropDown } from "./SessionActionsDropD";
+import { SessionsActionsSheet } from "./SessionsActionsSheet";
 
 type SessionProps = {
   session: PracticeSessionType;
@@ -33,7 +34,11 @@ export const Session = ({
 
       <div className="flex shrink-0 items-center gap-1">
         <p className="text-sm font-medium">{session.minutes} min</p>
-        <SessionActions
+        <SessionActionsDropDown
+          onEdit={() => onEdit(session)}
+          onDelete={() => onDelete(session)}
+        />
+        <SessionsActionsSheet
           onEdit={() => onEdit(session)}
           onDelete={() => onDelete(session)}
         />

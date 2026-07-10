@@ -1,5 +1,4 @@
 import { BookOpen, Clock, Music2, TrendingUp } from "lucide-react";
-
 import {
   Card,
   CardContent,

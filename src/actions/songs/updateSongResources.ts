@@ -21,8 +21,8 @@ export const updateSongResources = async (
   const song = await prisma.song.update({
     where: { id },
     data: {
-      videoUrl: data.videoUrl ?? null,
-      tabUrl: data.tabUrl ?? null,
+      ...(data.videoUrl !== undefined ? { videoUrl: data.videoUrl } : {}),
+      ...(data.tabUrl !== undefined ? { tabUrl: data.tabUrl } : {}),
     },
   });
 

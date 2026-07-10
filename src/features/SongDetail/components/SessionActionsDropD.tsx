@@ -7,19 +7,27 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type SessionActionsProps = {
+type SessionActionsDropDownProps = {
   onEdit: () => void;
   onDelete: () => void;
 };
 
-export const SessionActions = ({ onEdit, onDelete }: SessionActionsProps) => (
+export const SessionActionsDropDown = ({
+  onEdit,
+  onDelete,
+}: SessionActionsDropDownProps) => (
   <DropdownMenu>
     <DropdownMenuTrigger
       render={
-        <Button variant="ghost" size="icon-sm" aria-label="Opções da sessão" />
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          className="hidden size-7 shrink-0 sm:inline-flex"
+          aria-label="Opções da sessão"
+        />
       }
     >
-      <Ellipsis />
+      <Ellipsis className="size-4" />
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end" className="w-auto min-w-max">
       <DropdownMenuItem className="gap-2" onClick={onEdit}>

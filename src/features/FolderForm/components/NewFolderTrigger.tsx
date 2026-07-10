@@ -3,12 +3,8 @@ import { Button } from "@/components/ui/button";
 import { DialogTrigger } from "@/components/ui/dialog";
 
 export const NewFolderTrigger = () => (
-  <DialogTrigger
-    render={
-      <Button variant="outline" size="sm" className="hidden sm:inline-flex" />
-    }
-  >
+  <DialogTrigger render={<Button variant="outline" size="sm" />}>
     <FolderPlus data-icon="inline-start" />
-    Nova pasta
+    <span className="max-sm:sr-only">Nova pasta</span>
   </DialogTrigger>
 );

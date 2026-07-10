@@ -1,3 +1,4 @@
+import { ExternalLink, PlayCircle } from "lucide-react";
 import type { SongStatusType } from "./types";
 
 type SongStatusConfig = {
@@ -41,3 +42,20 @@ export const bottomNavigationLinks = [
   { href: "/", label: "Início" },
   { href: "/historico", label: "Histórico" },
 ];
+
+export const videoResourceDefaults = {
+  title: "Vídeo de referência",
+  description: "Assista a uma performance ou aula para guiar seu estudo.",
+  emptyLabel: "Nenhum vídeo adicionado ainda.",
+  linkLabel: "Abrir vídeo",
+  icon: PlayCircle,
+};
+
+export const tabResourceDefaults = {
+  title: "Tablatura",
+  description:
+    "Guarde o link da cifra ou tab para consultar durante a prática.",
+  emptyLabel: "Nenhuma tablatura adicionada ainda.",
+  linkLabel: "Abrir tablatura",
+  icon: ExternalLink,
+};

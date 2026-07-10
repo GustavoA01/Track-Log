@@ -18,21 +18,19 @@ const NewSongPage = async ({
   if (songId && !song) notFound();
 
   const isEditing = Boolean(song);
+  const title = isEditing ? "Editar música" : "Nova música";
+  const description = isEditing
+    ? "Atualize os dados da faixa."
+    : "Cadastre uma faixa para acompanhar seu progresso.";
+  const backHref = isEditing ? undefined : "/";
+  const initialFolderIds = folderId ? [folderId] : undefined;
 
   return (
-    <SongFormLayout
-      title={isEditing ? "Editar música" : "Nova música"}
-      description={
-        isEditing
-          ? "Atualize os dados da faixa."
-          : "Cadastre uma faixa para acompanhar seu progresso."
-      }
-      backHref={isEditing ? undefined : "/"}
-    >
+    <SongFormLayout title={title} description={description} backHref={backHref}>
       <SongForm
         song={song}
         folders={folders}
-        initialFolderIds={folderId ? [folderId] : undefined}
+        initialFolderIds={initialFolderIds}
       />
     </SongFormLayout>
   );

@@ -1,12 +1,10 @@
 "use client";
 import { updateSongResources } from "@/actions/songs/updateSongResources";
+import type { UpdateSongResourcesInput } from "@/actions/songs/types";
+import { tabResourceDefaults, videoResourceDefaults } from "@/data/constants";
 import type { FolderType, PracticeSessionType, SongType } from "@/data/types";
 import { SongMetadata } from "@/features/SongDetail/components/SongMetadata";
-import {
-  SongResourceCard,
-  tabResourceDefaults,
-  videoResourceDefaults,
-} from "@/features/SongDetail/container/SongResourceCard";
+import { SongResourceCard } from "@/features/SongDetail/container/SongResourceCard";
 import { SongSessions } from "@/features/SongDetail/components/SongSessions";
 import { ActiveSessionBar } from "@/features/StartSession/components/ActiveSessionBar";
 import { EndSessionDialog } from "@/features/StartSession/container/EndSessionDialog";
@@ -62,6 +60,15 @@ export const SongDetailContent = ({
     handleEndSession();
   };
 
+  const onChangeMedia = async (mediaUrl: UpdateSongResourcesInput) => {
+    const updated = await updateSongResources(song.id, mediaUrl);
+    setSong(updated);
+  };
+
+  const transformedFolders = folders
+    .filter((folder) => song.folderIds.includes(folder.id))
+    .map(({ id, name, color }) => ({ id, name, color }));
+
   return (
     <div className="min-h-full bg-background">
       <SongHeader
@@ -80,9 +87,7 @@ export const SongDetailContent = ({
       <main className="pb-20">
         <HeroSection
           song={song}
-          folders={folders
-            .filter((folder) => song.folderIds.includes(folder.id))
-            .map(({ id, name, color }) => ({ id, name, color }))}
+          folders={transformedFolders}
           sessionCount={sessionCount}
           totalMinutes={totalMinutes}
           onStartSession={handleStartSession}
@@ -121,35 +126,15 @@ export const SongDetailContent = ({
                 embedUrl={
                   song.videoUrl ? getYouTubeEmbedUrl(song.videoUrl) : null
                 }
-                onSave={async (videoUrl) => {
-                  const updated = await updateSongResources(song.id, {
-                    videoUrl,
-                  });
-                  setSong(updated);
-                }}
-                onRemove={async () => {
-                  const updated = await updateSongResources(song.id, {
-                    videoUrl: null,
-                  });
-                  setSong(updated);
-                }}
+                onSave={(videoUrl) => onChangeMedia({ videoUrl })}
+                onRemove={() => onChangeMedia({ videoUrl: null })}
               />
 
               <SongResourceCard
                 {...tabResourceDefaults}
                 url={song.tabUrl}
-                onSave={async (tabUrl) => {
-                  const updated = await updateSongResources(song.id, {
-                    tabUrl,
-                  });
-                  setSong(updated);
-                }}
-                onRemove={async () => {
-                  const updated = await updateSongResources(song.id, {
-                    tabUrl: null,
-                  });
-                  setSong(updated);
-                }}
+                onSave={(tabUrl) => onChangeMedia({ tabUrl })}
+                onRemove={() => onChangeMedia({ tabUrl: null })}
               />
             </div>
           </section>

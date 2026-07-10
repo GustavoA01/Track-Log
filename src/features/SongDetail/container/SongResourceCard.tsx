@@ -1,11 +1,6 @@
-import {
-  ExternalLink,
-  Link2,
-  Pencil,
-  PlayCircle,
-  Plus,
-  Trash2,
-} from "lucide-react";
+"use client";
+
+import { ExternalLink, Link2, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -30,23 +25,6 @@ type SongResourceCardProps = {
   embedUrl?: string | null;
 };
 
-export const videoResourceDefaults = {
-  title: "Vídeo de referência",
-  description: "Assista a uma performance ou aula para guiar seu estudo.",
-  emptyLabel: "Nenhum vídeo adicionado ainda.",
-  linkLabel: "Abrir vídeo",
-  icon: PlayCircle,
-};
-
-export const tabResourceDefaults = {
-  title: "Tablatura",
-  description:
-    "Guarde o link da cifra ou tab para consultar durante a prática.",
-  emptyLabel: "Nenhuma tablatura adicionada ainda.",
-  linkLabel: "Abrir tablatura",
-  icon: ExternalLink,
-};
-
 export const SongResourceCard = ({
   title,
   description,
@@ -61,24 +39,29 @@ export const SongResourceCard = ({
   const [isAdding, setIsAdding] = useState(false);
   const [draftUrl, setDraftUrl] = useState(url ?? "");
 
-  function handleSave() {
+  const handleSave = () => {
     const trimmed = draftUrl.trim();
     if (!trimmed) return;
 
     onSave(trimmed);
     setIsAdding(false);
-  }
+  };
 
-  function handleRemove() {
+  const handleRemove = () => {
     onRemove();
     setDraftUrl("");
     setIsAdding(false);
-  }
+  };
 
-  function handleStartEdit() {
+  const handleStartEdit = () => {
     setDraftUrl(url ?? "");
     setIsAdding(true);
-  }
+  };
+
+  const handleCancel = () => {
+    setIsAdding(false);
+    setDraftUrl(url ?? "");
+  };
 
   return (
     <Card className="flex h-full flex-col">
@@ -96,11 +79,11 @@ export const SongResourceCard = ({
             {embedUrl && (
               <div className="aspect-video overflow-hidden rounded-lg border bg-muted/30">
                 <iframe
-                  src={embedUrl}
                   title={title}
+                  src={embedUrl}
+                  allowFullScreen
                   className="size-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
                 />
               </div>
             )}
@@ -156,14 +139,7 @@ export const SongResourceCard = ({
                   {url ? "Salvar" : "Adicionar"}
                 </Button>
                 {(url || isAdding) && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      setIsAdding(false);
-                      setDraftUrl(url ?? "");
-                    }}
-                  >
+                  <Button size="sm" variant="ghost" onClick={handleCancel}>
                     Cancelar
                   </Button>
                 )}
