@@ -10,7 +10,7 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { PracticeSessionType, SongType } from "@/data/types";
-import { SessionHistoryList } from "./SessionHistoryList";
+import { SessionHistoryList } from "@/components/SessionHistoryList";
 
 type RecentSessionsProps = {
   songs: SongType[];

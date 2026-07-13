@@ -1,4 +1,4 @@
-import { HomeHeader } from "@/components/HomeHeader";
+import { HomeHeader } from "@/features/Home/container/HomeHeader";
 import { SessionHistoryList } from "@/components/SessionHistoryList";
 import { getAllSessions } from "@/actions/sessions/getAllSessions";
 import { getPracticeStats } from "@/actions/sessions/getPracticeStats";

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { usePathname } from "next/navigation";
-import { DesktopNav } from "@/components/DesktopNav";
+import { DesktopNav } from "@/features/Home/container/DesktopNav";
 
 const mockUsePathname = usePathname as jest.Mock;
 

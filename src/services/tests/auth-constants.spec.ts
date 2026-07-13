@@ -11,6 +11,7 @@ describe("auth path helpers", () => {
     expect(isAuthPublicPath("/")).toBe(true);
     expect(isAuthPublicPath("/login")).toBe(true);
     expect(isAuthPublicPath("/cadastrar")).toBe(true);
+    expect(isAuthPublicPath("/esqueci-senha")).toBe(true);
     expect(isAuthPublicPath("/historico")).toBe(false);
     expect(isAuthPublicPath("/musica/nova")).toBe(false);
   });
@@ -18,6 +19,7 @@ describe("auth path helpers", () => {
   it("marks only auth forms as guest-only", () => {
     expect(isAuthGuestOnlyPath("/login")).toBe(true);
     expect(isAuthGuestOnlyPath("/cadastrar")).toBe(true);
+    expect(isAuthGuestOnlyPath("/esqueci-senha")).toBe(true);
     expect(isAuthGuestOnlyPath("/")).toBe(false);
     expect(isAuthGuestOnlyPath("/historico")).toBe(false);
   });

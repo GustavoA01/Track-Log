@@ -1,14 +1,8 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { History, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const tabs = [
-  { href: "/", label: "Início", icon: Home },
-  { href: "/historico", label: "Histórico", icon: History },
-] as const;
+import { tabsNavigation } from "@/data/constants";
 
 export const MobileBottomNav = () => {
   const pathname = usePathname();
@@ -16,7 +10,7 @@ export const MobileBottomNav = () => {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-50 border-t bg-background/95 backdrop-blur-sm sm:hidden">
       <div className="mx-auto flex h-16 max-w-6xl">
-        {tabs.map(({ href, label, icon: Icon }) => {
+        {tabsNavigation.map(({ href, label, icon: Icon }) => {
           const isActive =
             href === "/" ? pathname === "/" : pathname.startsWith(href);
 

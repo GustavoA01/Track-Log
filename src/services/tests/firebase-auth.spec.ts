@@ -3,10 +3,12 @@ import {
   getFirebaseAuthErrorMessage,
   loginWithEmail,
   registerWithEmail,
+  sendPasswordReset,
 } from "@/services/firebase/email-auth";
 
 const createUserWithEmailAndPassword = jest.fn();
 const signInWithEmailAndPassword = jest.fn();
+const sendPasswordResetEmail = jest.fn();
 const updateProfile = jest.fn();
 const getIdToken = jest.fn();
 const getFirebaseAuth = jest.fn(() => ({ currentUser: null }));
@@ -25,6 +27,8 @@ jest.mock("firebase/auth", () => ({
     createUserWithEmailAndPassword(...args),
   signInWithEmailAndPassword: (...args: unknown[]) =>
     signInWithEmailAndPassword(...args),
+  sendPasswordResetEmail: (...args: unknown[]) =>
+    sendPasswordResetEmail(...args),
   updateProfile: (...args: unknown[]) => updateProfile(...args),
   signOut: jest.fn(),
 }));
@@ -87,5 +91,24 @@ describe("firebase email auth helpers", () => {
         new FirebaseError("auth/invalid-credential", "bad"),
       ),
     ).toBe("E-mail ou senha incorretos.");
+  });
+
+  it("sends password reset email", async () => {
+    sendPasswordResetEmail.mockResolvedValue(undefined);
+
+    await sendPasswordReset("ana@email.com");
+
+    expect(sendPasswordResetEmail).toHaveBeenCalledWith(
+      expect.anything(),
+      "ana@email.com",
+    );
+  });
+
+  it("swallows user-not-found on password reset", async () => {
+    sendPasswordResetEmail.mockRejectedValue(
+      new FirebaseError("auth/user-not-found", "missing"),
+    );
+
+    await expect(sendPasswordReset("ana@email.com")).resolves.toBeUndefined();
   });
 });

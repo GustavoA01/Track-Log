@@ -11,7 +11,7 @@ type AuthGuardProps = {
 
 export const AuthGuard = ({ children, mode }: AuthGuardProps) => {
   const { isAuthenticated, isLoading } = useAuth();
-  const router = useRouter();
+  const { replace } = useRouter();
   const pathname = usePathname();
 
   const authenticatedGuest = mode === "guest" && isAuthenticated;
@@ -21,13 +21,13 @@ export const AuthGuard = ({ children, mode }: AuthGuardProps) => {
     if (isLoading) return;
 
     if (notAuthenticatedGuest) {
-      const next = encodeURIComponent(pathname);
-      router.replace(`/login?next=${next}`);
+      const nextRoute = encodeURIComponent(pathname);
+      replace(`/login?next=${nextRoute}`);
       return;
     }
 
-    if (authenticatedGuest) router.replace("/");
-  }, [authenticatedGuest, notAuthenticatedGuest, isLoading, pathname, router]);
+    if (authenticatedGuest) replace("/");
+  }, [authenticatedGuest, notAuthenticatedGuest, isLoading, pathname, replace]);
 
   if (isLoading) return <AuthLoading />;
   if (notAuthenticatedGuest) return <AuthLoading />;

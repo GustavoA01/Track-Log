@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Lock, Mail } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { FieldError } from "@/components/FieldError";
@@ -29,9 +30,17 @@ export const LoginFormFields = () => {
       </div>
 
       <div className="space-y-2">
-        <FormFieldLabel htmlFor="login-password" icon={Lock}>
-          Senha
-        </FormFieldLabel>
+        <div className="flex items-center justify-between gap-3">
+          <FormFieldLabel htmlFor="login-password" icon={Lock}>
+            Senha
+          </FormFieldLabel>
+          <Link
+            href="/esqueci-senha"
+            className="text-xs font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+          >
+            Esqueci a senha
+          </Link>
+        </div>
         <Input
           id="login-password"
           type="password"

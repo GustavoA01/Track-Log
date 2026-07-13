@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { RecentSessions } from "@/components/RecentSessions";
+import { RecentSessions } from "@/features/Home/components/RecentSessions";
 import type { PracticeSessionType, SongType } from "@/data/types";
 
 describe("RecentSessions", () => {

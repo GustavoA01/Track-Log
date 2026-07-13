@@ -1,4 +1,9 @@
-import { ExternalLink, PlayCircle } from "lucide-react";
+import {
+  ExternalLink,
+  History as HistoryIcon,
+  Home,
+  PlayCircle,
+} from "lucide-react";
 import type { SongStatusType } from "./types";
 
 type SongStatusConfig = {
@@ -42,6 +47,11 @@ export const bottomNavigationLinks = [
   { href: "/", label: "Início" },
   { href: "/historico", label: "Histórico" },
 ];
+
+export const tabsNavigation = [
+  { href: "/", label: "Início", icon: Home },
+  { href: "/historico", label: "Histórico", icon: HistoryIcon },
+] as const;
 
 export const videoResourceDefaults = {
   title: "Vídeo de referência",

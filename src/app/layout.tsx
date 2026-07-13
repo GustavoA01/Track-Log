@@ -32,9 +32,9 @@ const RootLayout = ({
   >
     <body className="min-h-full font-sans">
       <ThemeProvider
+        enableSystem
         attribute="class"
         defaultTheme="system"
-        enableSystem
         disableTransitionOnChange
       >
         <AppProviders>{children}</AppProviders>

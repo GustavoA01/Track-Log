@@ -29,8 +29,9 @@ export const LogoutButton = () => {
       variant="ghost"
       aria-label="Sair"
       onClick={handleLogout}
+      className="max-sm:rounded-full w-full"
     >
-      <LogOut className="size-4" />
+      <LogOut className="size-4 text-destructive" />
     </Button>
   );
 };

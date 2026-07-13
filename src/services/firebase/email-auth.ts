@@ -1,6 +1,7 @@
 import { FirebaseError } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -56,6 +57,19 @@ export const logout = async () => {
   const auth = getFirebaseAuth();
   await signOut(auth);
   await syncAuthSession(null);
+};
+
+export const sendPasswordReset = async (email: string) => {
+  const auth = getFirebaseAuth();
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+  } catch (error) {
+    const userNotFound =
+      error instanceof FirebaseError && error.code === "auth/user-not-found";
+    if (userNotFound) return;
+    throw error;
+  }
 };
 
 export const getFirebaseAuthErrorMessage = (error: unknown) => {

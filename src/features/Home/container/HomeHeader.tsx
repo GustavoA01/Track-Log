@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Music } from "lucide-react";
-import { DesktopNav } from "@/components/DesktopNav";
-import { HomeHeaderActions } from "@/components/HomeHeaderActions";
+import { DesktopNav } from "@/features/Home/container/DesktopNav";
+import { HomeHeaderActions } from "@/features/Home/container/HomeHeaderActions";
 
 export const HomeHeader = () => (
   <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
