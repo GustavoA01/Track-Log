@@ -4,10 +4,9 @@ import type { SongStatusType, SongType } from "@/data/types";
 const optionalUrl = z
   .string()
   .trim()
-  .refine(
-    (value) => value === "" || z.string().url().safeParse(value).success,
-    { message: "Informe uma URL válida" },
-  );
+  .refine((value) => value === "" || z.url().safeParse(value).success, {
+    message: "Informe uma URL válida",
+  });
 
 export const songStatusValues: SongStatusType[] = [
   "learning",
