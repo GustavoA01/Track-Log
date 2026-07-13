@@ -2,12 +2,14 @@ import { FirebaseError } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
   updateProfile,
   type User,
 } from "firebase/auth";
 import type { LoginFormValuesType } from "@/data/schemas/login-form";
 import type { RegisterFormValuesType } from "@/data/schemas/register-form";
 import { getFirebaseAuth } from "./config";
+import { syncAuthSession } from "./session";
 
 const authErrorMessages = {
   "auth/email-already-in-use": "Este e-mail já está em uso.",
@@ -33,6 +35,8 @@ export const registerWithEmail = async ({
   );
 
   await updateProfile(credential.user, { displayName: name });
+  const token = await credential.user.getIdToken();
+  await syncAuthSession(token);
 
   return credential.user;
 };
@@ -43,7 +47,15 @@ export const loginWithEmail = async ({
 }: LoginFormValuesType): Promise<User> => {
   const auth = getFirebaseAuth();
   const credential = await signInWithEmailAndPassword(auth, email, password);
+  const token = await credential.user.getIdToken();
+  await syncAuthSession(token);
   return credential.user;
+};
+
+export const logout = async () => {
+  const auth = getFirebaseAuth();
+  await signOut(auth);
+  await syncAuthSession(null);
 };
 
 export const getFirebaseAuthErrorMessage = (error: unknown) => {

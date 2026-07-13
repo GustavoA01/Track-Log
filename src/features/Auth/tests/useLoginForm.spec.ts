@@ -9,6 +9,7 @@ const loginWithEmail = jest.fn();
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({ push, refresh }),
+  useSearchParams: () => new URLSearchParams(),
 }));
 
 jest.mock("sonner", () => ({

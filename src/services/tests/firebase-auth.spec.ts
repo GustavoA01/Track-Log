@@ -8,10 +8,16 @@ import {
 const createUserWithEmailAndPassword = jest.fn();
 const signInWithEmailAndPassword = jest.fn();
 const updateProfile = jest.fn();
+const getIdToken = jest.fn();
 const getFirebaseAuth = jest.fn(() => ({ currentUser: null }));
+const syncAuthSession = jest.fn();
 
 jest.mock("@/services/firebase/config", () => ({
   getFirebaseAuth: () => getFirebaseAuth(),
+}));
+
+jest.mock("@/services/firebase/session", () => ({
+  syncAuthSession: (...args: unknown[]) => syncAuthSession(...args),
 }));
 
 jest.mock("firebase/auth", () => ({
@@ -20,15 +26,18 @@ jest.mock("firebase/auth", () => ({
   signInWithEmailAndPassword: (...args: unknown[]) =>
     signInWithEmailAndPassword(...args),
   updateProfile: (...args: unknown[]) => updateProfile(...args),
+  signOut: jest.fn(),
 }));
 
 describe("firebase email auth helpers", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    getIdToken.mockResolvedValue("token-123");
+    syncAuthSession.mockResolvedValue(undefined);
   });
 
-  it("registers a user and updates display name", async () => {
-    const user = { uid: "user-1" };
+  it("registers a user, updates display name and syncs session", async () => {
+    const user = { uid: "user-1", getIdToken };
     createUserWithEmailAndPassword.mockResolvedValue({ user });
     updateProfile.mockResolvedValue(undefined);
 
@@ -44,11 +53,12 @@ describe("firebase email auth helpers", () => {
       "senha123",
     );
     expect(updateProfile).toHaveBeenCalledWith(user, { displayName: "Ana" });
+    expect(syncAuthSession).toHaveBeenCalledWith("token-123");
     expect(result).toBe(user);
   });
 
-  it("logs in a user", async () => {
-    const user = { uid: "user-1" };
+  it("logs in a user and syncs session", async () => {
+    const user = { uid: "user-1", getIdToken };
     signInWithEmailAndPassword.mockResolvedValue({ user });
 
     const result = await loginWithEmail({
@@ -61,6 +71,7 @@ describe("firebase email auth helpers", () => {
       "ana@email.com",
       "senha123",
     );
+    expect(syncAuthSession).toHaveBeenCalledWith("token-123");
     expect(result).toBe(user);
   });
 

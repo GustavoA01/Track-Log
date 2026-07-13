@@ -1,10 +1,7 @@
 import Link from "next/link";
-import { Music, Plus } from "lucide-react";
+import { Music } from "lucide-react";
 import { DesktopNav } from "@/components/DesktopNav";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { FolderDialog } from "@/features/FolderForm/container/FolderDialog";
+import { HomeHeaderActions } from "@/components/HomeHeaderActions";
 
 export const HomeHeader = () => (
   <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-sm">
@@ -27,17 +24,7 @@ export const HomeHeader = () => (
         <DesktopNav />
       </div>
 
-      <div className="flex shrink-0 items-center gap-1">
-        <ThemeToggle />
-        <FolderDialog />
-        <Link
-          href="/musica/nova"
-          className={cn(buttonVariants({ size: "sm" }))}
-        >
-          <Plus data-icon="inline-start" />
-          Nova música
-        </Link>
-      </div>
+      <HomeHeaderActions />
     </div>
   </header>
 );

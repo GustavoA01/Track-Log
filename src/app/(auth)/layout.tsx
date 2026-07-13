@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuthGuard } from "@/features/Auth/container/AuthGuard";
 
 export const metadata: Metadata = {
   title: "Track Log · Conta",
@@ -6,7 +7,9 @@ export const metadata: Metadata = {
 };
 
 const AuthGroupLayout = ({ children }: { children: React.ReactNode }) => (
-  <div className="min-h-full">{children}</div>
+  <AuthGuard mode="guest">
+    <div className="min-h-full">{children}</div>
+  </AuthGuard>
 );
 
 export default AuthGroupLayout;

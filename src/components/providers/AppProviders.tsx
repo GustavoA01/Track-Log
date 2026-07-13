@@ -1,5 +1,6 @@
 "use client";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/components/providers/useAuthProvider";
 import { QueryProvider } from "./QueryProvider";
 
 type AppProvidersProps = {
@@ -8,7 +9,9 @@ type AppProvidersProps = {
 
 export const AppProviders = ({ children }: AppProvidersProps) => (
   <QueryProvider>
-    {children}
-    <Toaster position="top-right" />
+    <AuthProvider>
+      {children}
+      <Toaster position="top-right" />
+    </AuthProvider>
   </QueryProvider>
 );

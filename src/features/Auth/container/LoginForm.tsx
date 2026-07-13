@@ -1,5 +1,5 @@
 "use client";
-
+import { Suspense } from "react";
 import { FormProvider } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { LoginFormFields } from "../components/LoginFormFields";
@@ -9,17 +9,19 @@ export const LoginForm = () => {
   const { methods, onSubmit, isSubmitting } = useLoginForm();
 
   return (
-    <FormProvider {...methods}>
-      <form
-        className="space-y-6"
-        onSubmit={methods.handleSubmit(onSubmit)}
-        noValidate
-      >
-        <LoginFormFields />
-        <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Entrando..." : "Entrar"}
-        </Button>
-      </form>
-    </FormProvider>
+    <Suspense fallback={null}>
+      <FormProvider {...methods}>
+        <form
+          className="space-y-6"
+          onSubmit={methods.handleSubmit(onSubmit)}
+          noValidate
+        >
+          <LoginFormFields />
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? "Entrando..." : "Entrar"}
+          </Button>
+        </form>
+      </FormProvider>
+    </Suspense>
   );
 };

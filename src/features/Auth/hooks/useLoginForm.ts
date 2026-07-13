@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -15,6 +15,7 @@ import {
 
 export const useLoginForm = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const methods = useForm<LoginFormValuesType>({
     resolver: zodResolver(loginFormSchema),
@@ -27,7 +28,8 @@ export const useLoginForm = () => {
     try {
       await loginWithEmail(values);
       toast.success("Login realizado!");
-      router.push("/");
+      const next = searchParams.get("next");
+      router.push(next && next.startsWith("/") ? next : "/");
       router.refresh();
     } catch (error) {
       toast.error(getFirebaseAuthErrorMessage(error));

@@ -1,7 +1,5 @@
 "use server";
-
 import { revalidatePath } from "next/cache";
-
 import { folderFormSchema } from "@/data/schemas/folder-form";
 import type { FolderFormValuesType } from "@/data/schemas/folder-form";
 import { getCurrentUserId } from "@/lib/auth";
