@@ -1,12 +1,17 @@
 import { FirebaseError } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  updateEmail,
+  updatePassword,
   updateProfile,
   type User,
 } from "firebase/auth";
+import type { EditAccountFormValuesType } from "@/data/schemas/register-form";
 import type { LoginFormValuesType } from "@/data/schemas/login-form";
 import type { RegisterFormValuesType } from "@/data/schemas/register-form";
 import { getFirebaseAuth } from "./config";
@@ -19,6 +24,7 @@ const authErrorMessages = {
   "auth/wrong-password": "E-mail ou senha incorretos.",
   "auth/user-not-found": "E-mail ou senha incorretos.",
   "auth/weak-password": "A senha é muito fraca.",
+  "auth/requires-recent-login": "Informe sua senha atual para continuar.",
   "auth/too-many-requests":
     "Muitas tentativas. Aguarde um momento e tente novamente.",
 };
@@ -27,7 +33,10 @@ export const registerWithEmail = async ({
   name,
   email,
   password,
-}: RegisterFormValuesType): Promise<User> => {
+}: Pick<
+  RegisterFormValuesType,
+  "name" | "email" | "password"
+>): Promise<User> => {
   const auth = getFirebaseAuth();
   const credential = await createUserWithEmailAndPassword(
     auth,
@@ -70,6 +79,45 @@ export const sendPasswordReset = async (email: string) => {
     if (userNotFound) return;
     throw error;
   }
+};
+
+export const updateAccount = async ({
+  name,
+  email,
+  password,
+  currentPassword,
+}: EditAccountFormValuesType): Promise<User> => {
+  const auth = getFirebaseAuth();
+  const user = auth.currentUser;
+
+  if (!user?.email) throw new Error("Não autenticado");
+
+  const emailChanged = email !== user.email;
+  const passwordChanged = password.length > 0;
+  const needsReauth = emailChanged || passwordChanged;
+  const isNameChanged = name !== (user.displayName ?? "");
+
+  if (needsReauth) {
+    if (!currentPassword) {
+      throw new Error("Informe a senha atual para alterar e-mail ou senha.");
+    }
+
+    const credential = EmailAuthProvider.credential(
+      user.email,
+      currentPassword,
+    );
+
+    await reauthenticateWithCredential(user, credential);
+  }
+
+  if (isNameChanged) await updateProfile(user, { displayName: name });
+  if (emailChanged) await updateEmail(user, email);
+  if (passwordChanged) await updatePassword(user, password);
+
+  const token = await user.getIdToken(true);
+  await syncAuthSession(token);
+
+  return user;
 };
 
 export const getFirebaseAuthErrorMessage = (error: unknown) => {

@@ -4,14 +4,24 @@ import {
   loginWithEmail,
   registerWithEmail,
   sendPasswordReset,
+  updateAccount,
 } from "@/services/firebase/email-auth";
 
 const createUserWithEmailAndPassword = jest.fn();
 const signInWithEmailAndPassword = jest.fn();
 const sendPasswordResetEmail = jest.fn();
 const updateProfile = jest.fn();
+const updateEmail = jest.fn();
+const updatePassword = jest.fn();
+const reauthenticateWithCredential = jest.fn();
 const getIdToken = jest.fn();
-const getFirebaseAuth = jest.fn(() => ({ currentUser: null }));
+const getFirebaseAuth = jest.fn(() => ({
+  currentUser: null as null | {
+    email: string;
+    displayName: string;
+    getIdToken: jest.Mock;
+  },
+}));
 const syncAuthSession = jest.fn();
 
 jest.mock("@/services/firebase/config", () => ({
@@ -30,6 +40,13 @@ jest.mock("firebase/auth", () => ({
   sendPasswordResetEmail: (...args: unknown[]) =>
     sendPasswordResetEmail(...args),
   updateProfile: (...args: unknown[]) => updateProfile(...args),
+  updateEmail: (...args: unknown[]) => updateEmail(...args),
+  updatePassword: (...args: unknown[]) => updatePassword(...args),
+  reauthenticateWithCredential: (...args: unknown[]) =>
+    reauthenticateWithCredential(...args),
+  EmailAuthProvider: {
+    credential: (email: string, password: string) => ({ email, password }),
+  },
   signOut: jest.fn(),
 }));
 
@@ -110,5 +127,34 @@ describe("firebase email auth helpers", () => {
     );
 
     await expect(sendPasswordReset("ana@email.com")).resolves.toBeUndefined();
+  });
+
+  it("updates account profile and reauthenticates when needed", async () => {
+    const user = {
+      email: "ana@email.com",
+      displayName: "Ana",
+      getIdToken,
+    };
+    getFirebaseAuth.mockReturnValue({ currentUser: user });
+    reauthenticateWithCredential.mockResolvedValue(undefined);
+    updateProfile.mockResolvedValue(undefined);
+    updateEmail.mockResolvedValue(undefined);
+    updatePassword.mockResolvedValue(undefined);
+    getIdToken.mockResolvedValue("token-456");
+
+    await updateAccount({
+      name: "Ana Clara",
+      email: "nova@email.com",
+      password: "senha456",
+      currentPassword: "senha123",
+    });
+
+    expect(reauthenticateWithCredential).toHaveBeenCalled();
+    expect(updateProfile).toHaveBeenCalledWith(user, {
+      displayName: "Ana Clara",
+    });
+    expect(updateEmail).toHaveBeenCalledWith(user, "nova@email.com");
+    expect(updatePassword).toHaveBeenCalledWith(user, "senha456");
+    expect(syncAuthSession).toHaveBeenCalledWith("token-456");
   });
 });

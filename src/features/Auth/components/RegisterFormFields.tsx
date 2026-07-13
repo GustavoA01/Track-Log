@@ -2,14 +2,20 @@ import { Lock, Mail, User } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { FieldError } from "@/components/FieldError";
 import { Input } from "@/components/ui/input";
-import type { RegisterFormValuesType } from "@/data/schemas/register-form";
+import type { AccountFormValuesType } from "@/data/schemas/register-form";
 import { FormFieldLabel } from "@/features/SongForm/components/FormFieldLabel";
 
-export const RegisterFormFields = () => {
+type RegisterFormFieldsProps = {
+  isEdit?: boolean;
+};
+
+export const RegisterFormFields = ({
+  isEdit = false,
+}: RegisterFormFieldsProps) => {
   const {
     register,
     formState: { errors },
-  } = useFormContext<RegisterFormValuesType>();
+  } = useFormContext<AccountFormValuesType>();
 
   return (
     <div className="space-y-4">
@@ -43,15 +49,34 @@ export const RegisterFormFields = () => {
         <FieldError message={errors.email?.message} />
       </div>
 
+      {isEdit && (
+        <div className="space-y-2">
+          <FormFieldLabel htmlFor="register-current-password" icon={Lock}>
+            Senha atual
+          </FormFieldLabel>
+          <Input
+            id="register-current-password"
+            type="password"
+            autoComplete="current-password"
+            placeholder="Necessária para mudar e-mail ou senha"
+            aria-invalid={!!errors.currentPassword}
+            {...register("currentPassword")}
+          />
+          <FieldError message={errors.currentPassword?.message} />
+        </div>
+      )}
+
       <div className="space-y-2">
         <FormFieldLabel htmlFor="register-password" icon={Lock}>
-          Senha
+          {isEdit ? "Nova senha" : "Senha"}
         </FormFieldLabel>
         <Input
           id="register-password"
           type="password"
-          autoComplete="new-password"
-          placeholder="Mínimo 6 caracteres"
+          autoComplete={isEdit ? "new-password" : "new-password"}
+          placeholder={
+            isEdit ? "Deixe em branco para manter" : "Mínimo 6 caracteres"
+          }
           aria-invalid={!!errors.password}
           {...register("password")}
         />

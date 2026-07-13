@@ -1,11 +1,20 @@
 "use client";
 import { FormProvider } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { AuthLoading } from "../components/AuthLoading";
 import { RegisterFormFields } from "../components/RegisterFormFields";
 import { useRegisterForm } from "../hooks/useRegisterForm";
 
-export const RegisterForm = () => {
-  const { methods, onSubmit, isSubmitting } = useRegisterForm();
+type RegisterFormProps = {
+  isEdit?: boolean;
+};
+
+export const RegisterForm = ({ isEdit = false }: RegisterFormProps) => {
+  const { methods, onSubmit, isSubmitting, isLoadingUser } = useRegisterForm({
+    isEdit,
+  });
+
+  if (isLoadingUser) return <AuthLoading />;
 
   return (
     <FormProvider {...methods}>
@@ -14,9 +23,15 @@ export const RegisterForm = () => {
         onSubmit={methods.handleSubmit(onSubmit)}
         noValidate
       >
-        <RegisterFormFields />
+        <RegisterFormFields isEdit={isEdit} />
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Criando conta..." : "Criar conta"}
+          {isSubmitting
+            ? isEdit
+              ? "Salvando..."
+              : "Criando conta..."
+            : isEdit
+              ? "Salvar alterações"
+              : "Criar conta"}
         </Button>
       </form>
     </FormProvider>

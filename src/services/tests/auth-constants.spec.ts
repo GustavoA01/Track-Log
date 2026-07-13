@@ -1,6 +1,3 @@
-/**
- * @jest-environment node
- */
 import {
   isAuthGuestOnlyPath,
   isAuthPublicPath,
@@ -18,7 +15,7 @@ describe("auth path helpers", () => {
 
   it("marks only auth forms as guest-only", () => {
     expect(isAuthGuestOnlyPath("/login")).toBe(true);
-    expect(isAuthGuestOnlyPath("/cadastrar")).toBe(true);
+    expect(isAuthGuestOnlyPath("/cadastrar")).toBe(false);
     expect(isAuthGuestOnlyPath("/esqueci-senha")).toBe(true);
     expect(isAuthGuestOnlyPath("/")).toBe(false);
     expect(isAuthGuestOnlyPath("/historico")).toBe(false);

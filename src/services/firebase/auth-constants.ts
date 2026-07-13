@@ -5,11 +5,8 @@ export const AUTH_PUBLIC_PATHS = [
   "/cadastrar",
   "/esqueci-senha",
 ] as const;
-export const AUTH_GUEST_ONLY_PATHS = [
-  "/login",
-  "/cadastrar",
-  "/esqueci-senha",
-] as const;
+
+export const AUTH_GUEST_ONLY_PATHS = ["/login", "/esqueci-senha"] as const;
 
 const matchesPath = (pathname: string, path: string) =>
   pathname === path || (path !== "/" && pathname.startsWith(`${path}/`));

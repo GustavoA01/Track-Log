@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { RegisterForm } from "../container/RegisterForm";
 
 const registerWithEmail = jest.fn();
+const updateAccount = jest.fn();
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({ push: jest.fn(), refresh: jest.fn() }),
@@ -12,8 +13,17 @@ jest.mock("sonner", () => ({
   toast: { success: jest.fn(), error: jest.fn() },
 }));
 
+jest.mock("@/components/providers/useAuthProvider", () => ({
+  useAuth: () => ({
+    user: null,
+    isLoading: false,
+    isAuthenticated: false,
+  }),
+}));
+
 jest.mock("@/services/firebase/email-auth", () => ({
   registerWithEmail: (...args: unknown[]) => registerWithEmail(...args),
+  updateAccount: (...args: unknown[]) => updateAccount(...args),
   getFirebaseAuthErrorMessage: () => "Erro",
 }));
 

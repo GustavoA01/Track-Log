@@ -1,4 +1,7 @@
-import { registerFormSchema } from "@/data/schemas/register-form";
+import {
+  editAccountFormSchema,
+  registerFormSchema,
+} from "@/data/schemas/register-form";
 
 describe("registerFormSchema", () => {
   it("accepts valid registration data", () => {
@@ -16,6 +19,30 @@ describe("registerFormSchema", () => {
       name: "Ana",
       email: "ana@email.com",
       password: "123",
+    });
+
+    expect(result.success).toBe(false);
+  });
+});
+
+describe("editAccountFormSchema", () => {
+  it("allows empty password to keep the current one", () => {
+    const result = editAccountFormSchema.safeParse({
+      name: "Ana",
+      email: "ana@email.com",
+      password: "",
+      currentPassword: "",
+    });
+
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects short new passwords", () => {
+    const result = editAccountFormSchema.safeParse({
+      name: "Ana",
+      email: "ana@email.com",
+      password: "123",
+      currentPassword: "senha123",
     });
 
     expect(result.success).toBe(false);
