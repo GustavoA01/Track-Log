@@ -10,13 +10,13 @@ type AccountContentProps = {
 
 export const AccountContent = ({ name }: AccountContentProps) => (
   <>
-    <p>{name}</p>
+    <p className="text-lg font-montserrat">{name}</p>
     <Separator className="my-2" />
     <Link
       href="/cadastrar?edit=true"
       className={cn(
         "max-sm:rounded-full w-full",
-        buttonVariants({ size: "sm", variant: "ghost" }),
+        buttonVariants({ size: "lg" }),
       )}
     >
       Alterar dados
