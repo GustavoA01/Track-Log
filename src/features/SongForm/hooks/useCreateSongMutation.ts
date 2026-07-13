@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { createSong } from "@/actions/songs/createSong";
 import type { CreateSongInput } from "@/actions/songs/types";
-import { songKeys } from "@/lib/query/song-keys";
+import { songKeys } from "@/services/query/song-keys";
 import { useRouter } from "next/navigation";
 
 export const useCreateSongMutation = () => {

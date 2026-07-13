@@ -26,9 +26,9 @@ export const resolveSongAccentColor = async (
 ): Promise<string | null> => {
   if (!imageUrl) return null;
 
-  if (imageUrl === previousImageUrl && previousAccentColor) {
-    return previousAccentColor;
-  }
+  const isPrevious = imageUrl === previousImageUrl && previousAccentColor;
+
+  if (isPrevious) return previousAccentColor;
 
   return extractAccentColorFromImageUrl(imageUrl);
 };

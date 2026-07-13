@@ -1,4 +1,4 @@
-import { formatDateOnly, toDateOnlyString } from "@/lib/dates";
+import { formatDateOnly, toDateOnlyString } from "@/utils/dates";
 
 describe("dates", () => {
   it("formats date to yyyy-MM-dd", () => {

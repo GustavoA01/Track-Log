@@ -7,7 +7,7 @@ import {
   type UpdateSessionInput,
 } from "@/data/schemas/edit-session";
 import { getCurrentUserId } from "@/lib/auth";
-import { toPracticeSessionType } from "@/lib/mappers";
+import { toPracticeSessionType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
 
 const sessionDateSchema = z

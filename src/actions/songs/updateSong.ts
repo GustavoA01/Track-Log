@@ -4,9 +4,9 @@ import {
   formValuesToSongPayload,
   songFormSchema,
 } from "@/data/schemas/song-form";
-import { resolveSongAccentColor } from "@/lib/accent-color";
+import { resolveSongAccentColor } from "@/utils/accent-color";
 import { getCurrentUserId } from "@/lib/auth";
-import { toSongType } from "@/lib/mappers";
+import { toSongType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
 import {
   getSongFolderIds,

@@ -1,7 +1,7 @@
 "use server";
 
 import { getCurrentUserId } from "@/lib/auth";
-import { toFolderType } from "@/lib/mappers";
+import { toFolderType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
 
 export const getFolders = async () => {

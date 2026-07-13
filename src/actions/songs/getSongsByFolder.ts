@@ -1,6 +1,6 @@
 "use server";
 import { getCurrentUserId } from "@/lib/auth";
-import { toSongType } from "@/lib/mappers";
+import { toSongType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
 
 export const getSongsByFolder = async (folderId: string) => {

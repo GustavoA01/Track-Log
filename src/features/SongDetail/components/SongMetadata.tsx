@@ -1,7 +1,7 @@
 import { Calendar, Guitar, Music2, Star } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { SongType } from "@/data/types";
-import { formatDateOnly } from "@/lib/dates";
+import { formatDateOnly } from "@/utils/dates";
 
 type SongMetadataProps = {
   song: SongType;

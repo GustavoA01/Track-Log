@@ -3,7 +3,7 @@ import { getFolders } from "@/actions/folders/getFolders";
 import { getSessionsBySongId } from "@/actions/sessions/getSessionsBySongId";
 import { getSongById } from "@/actions/songs/getSongById";
 import { SongDetailContent } from "@/features/SongDetail/container/SongDetailContent";
-import { getSongDetailBackHref } from "@/lib/navigation";
+import { getSongDetailBackHref } from "@/utils/navigation";
 
 type MusicPageProps = {
   params: Promise<{ id: string }>;

@@ -4,7 +4,7 @@ import { toast } from "sonner";
 
 import { updateSong } from "@/actions/songs/updateSong";
 import type { SongFormValuesType } from "@/data/schemas/song-form";
-import { songKeys } from "@/lib/query/song-keys";
+import { songKeys } from "@/services/query/song-keys";
 
 type UpdateSongVariables = {
   songId: string;

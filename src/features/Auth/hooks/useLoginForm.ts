@@ -1,24 +1,44 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import {
   loginFormDefaultValues,
   loginFormSchema,
   type LoginFormValuesType,
 } from "@/data/schemas/login-form";
+import {
+  getFirebaseAuthErrorMessage,
+  loginWithEmail,
+} from "@/services/firebase/email-auth";
 
 export const useLoginForm = () => {
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const methods = useForm<LoginFormValuesType>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: loginFormDefaultValues,
   });
 
-  const onSubmit = (values: LoginFormValuesType) => {
-    console.log("login submit", values);
+  const onSubmit = async (values: LoginFormValuesType) => {
+    setIsSubmitting(true);
+
+    try {
+      await loginWithEmail(values);
+      toast.success("Login realizado!");
+      router.push("/");
+      router.refresh();
+    } catch (error) {
+      toast.error(getFirebaseAuthErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return {
     methods,
     onSubmit,
-    isSubmitting: methods.formState.isSubmitting,
+    isSubmitting,
   };
 };

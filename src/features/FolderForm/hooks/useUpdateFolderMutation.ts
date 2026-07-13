@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { updateFolder } from "@/actions/folders/updateFolder";
 import type { FolderFormValuesType } from "@/data/schemas/folder-form";
-import { folderKeys } from "@/lib/query/folder-keys";
+import { folderKeys } from "@/services/query/folder-keys";
 
 type UpdateFolderInput = {
   id: string;

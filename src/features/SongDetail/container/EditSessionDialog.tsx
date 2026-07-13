@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { formatDateOnly } from "@/lib/dates";
+import { formatDateOnly } from "@/utils/dates";
 import { EditSessionFormFields } from "../components/EditSessionFormFields";
 import { useEditSessionDialog } from "../hooks/useEditSessionDialog";
 

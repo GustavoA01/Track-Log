@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import type { PracticeSessionType } from "@/data/types";
-import { formatDateOnly } from "@/lib/dates";
+import { formatDateOnly } from "@/utils/dates";
 
 type DeleteSessionDialogProps = {
   open: boolean;

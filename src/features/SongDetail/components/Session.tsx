@@ -1,6 +1,6 @@
 import type { PracticeSessionType } from "@/data/types";
 import { Calendar } from "lucide-react";
-import { formatDateOnly } from "@/lib/dates";
+import { formatDateOnly } from "@/utils/dates";
 import { Separator } from "@/components/ui/separator";
 import { SessionActionsDropDown } from "./SessionActionsDropD";
 import { SessionsActionsSheet } from "./SessionsActionsSheet";

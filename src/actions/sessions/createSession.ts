@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createSessionSchema } from "@/data/schemas/create-session";
 import { getCurrentUserId } from "@/lib/auth";
-import { toPracticeSessionType } from "@/lib/mappers";
+import { toPracticeSessionType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
 import type { CreateSessionInput } from "@/data/schemas/create-session";
 

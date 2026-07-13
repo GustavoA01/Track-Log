@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { getCurrentUserId } from "@/lib/auth";
-import { toSongType } from "@/lib/mappers";
+import { toSongType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
 import { getSongFolderIds } from "@/actions/songs/folder-utils";
 import { UpdateSongResourcesInput } from "./types";

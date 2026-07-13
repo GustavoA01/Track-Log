@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { deleteSong } from "@/actions/songs/deleteSong";
-import { songKeys } from "@/lib/query/song-keys";
+import { songKeys } from "@/services/query/song-keys";
 import { useRouter } from "next/navigation";
 
 export const useDeleteSongMutation = () => {

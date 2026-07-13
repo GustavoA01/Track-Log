@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { createSession } from "@/actions/sessions/createSession";
 import type { CreateSessionInput } from "@/data/schemas/create-session";
-import { sessionKeys } from "@/lib/query/session-keys";
+import { sessionKeys } from "@/services/query/session-keys";
 
 export const useCreateSessionMutation = (songId: string) => {
   const queryClient = useQueryClient();

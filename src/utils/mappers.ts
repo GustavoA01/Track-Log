@@ -9,7 +9,7 @@ import type {
   SongStatusType,
   SongType,
 } from "@/data/types";
-import { toDateOnlyString } from "@/lib/dates";
+import { toDateOnlyString } from "@/utils/dates";
 
 export const toFolderType = (folder: FolderRecord): FolderType => ({
   id: folder.id,

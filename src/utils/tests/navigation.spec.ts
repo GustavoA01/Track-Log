@@ -2,7 +2,7 @@ import {
   getSongDetailBackHref,
   getSongDetailHref,
   songDetailFrom,
-} from "@/lib/navigation";
+} from "@/utils/navigation";
 
 describe("navigation", () => {
   it("builds song detail href without source", () => {

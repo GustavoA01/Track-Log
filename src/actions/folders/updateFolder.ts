@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { folderFormSchema } from "@/data/schemas/folder-form";
 import type { FolderFormValuesType } from "@/data/schemas/folder-form";
 import { getCurrentUserId } from "@/lib/auth";
-import { toFolderType } from "@/lib/mappers";
+import { toFolderType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
 
 export const updateFolder = async (id: string, input: FolderFormValuesType) => {

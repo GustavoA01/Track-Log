@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { updateSession } from "@/actions/sessions/updateSession";
 import type { UpdateSessionInput } from "@/data/schemas/edit-session";
-import { sessionKeys } from "@/lib/query/session-keys";
+import { sessionKeys } from "@/services/query/session-keys";
 
 type UpdateSessionVariables = {
   sessionId: string;

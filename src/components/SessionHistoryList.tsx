@@ -1,5 +1,5 @@
 import type { PracticeSessionType, SongType } from "@/data/types";
-import type { SongDetailFrom } from "@/lib/navigation";
+import type { SongDetailFrom } from "@/utils/navigation";
 import { SessionHistoryItem } from "./SessionHistoryItem";
 
 type SessionHistoryListProps = {

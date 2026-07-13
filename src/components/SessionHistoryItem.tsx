@@ -1,8 +1,8 @@
 import { Calendar, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import type { PracticeSessionType, SongType } from "@/data/types";
-import { formatDateOnly } from "@/lib/dates";
-import { getSongDetailHref, type SongDetailFrom } from "@/lib/navigation";
+import { formatDateOnly } from "@/utils/dates";
+import { getSongDetailHref, type SongDetailFrom } from "@/utils/navigation";
 
 type SessionHistoryItemProps = {
   session: PracticeSessionType;

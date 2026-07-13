@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { deleteSessionsBySongId } from "@/actions/sessions/deleteSessionsBySongId";
-import { sessionKeys } from "@/lib/query/session-keys";
+import { sessionKeys } from "@/services/query/session-keys";
 
 export const useClearSessionsMutation = (songId: string) => {
   const queryClient = useQueryClient();

@@ -1,7 +1,7 @@
 "use server";
 
 import { getCurrentUserId } from "@/lib/auth";
-import { toPracticeSessionType } from "@/lib/mappers";
+import { toPracticeSessionType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
 
 export const getAllSessions = async () => {

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { addSongToFolder } from "@/actions/songs/addSongToFolder";
 import { removeSongFromFolder } from "@/actions/songs/removeSongFromFolder";
-import { songKeys } from "@/lib/query/song-keys";
+import { songKeys } from "@/services/query/song-keys";
 
 export const useAddSongToFolderMutation = (songId: string) => {
   const queryClient = useQueryClient();

@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { deleteFolder } from "@/actions/folders/deleteFolder";
-import { folderKeys } from "@/lib/query/folder-keys";
+import { folderKeys } from "@/services/query/folder-keys";
 
 export const useDeleteFolderMutation = () => {
   const queryClient = useQueryClient();
