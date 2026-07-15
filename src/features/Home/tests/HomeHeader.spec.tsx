@@ -1,3 +1,7 @@
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { HomeHeader } from "@/features/Home/container/HomeHeader";
+
 jest.mock("@/features/FolderForm/container/FolderDialog", () => ({
   FolderDialog: () => <div data-testid="folder-dialog">Nova pasta</div>,
 }));
@@ -11,10 +15,6 @@ const useAuth = jest.fn();
 jest.mock("@/components/providers/useAuthProvider", () => ({
   useAuth: () => useAuth(),
 }));
-
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { HomeHeader } from "@/features/Home/container/HomeHeader";
 
 describe("HomeHeader", () => {
   beforeEach(() => {
@@ -43,9 +43,6 @@ describe("HomeHeader", () => {
       "/musica/nova",
     );
     expect(screen.getByTestId("folder-dialog")).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Alternar tema" }),
-    ).toBeInTheDocument();
     expect(screen.getAllByText("A").length).toBeGreaterThan(0);
 
     const accountTriggers = screen.getAllByRole("button", {

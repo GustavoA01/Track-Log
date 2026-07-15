@@ -1,9 +1,9 @@
+import { render, screen } from "@testing-library/react";
+import { AccountContent } from "@/features/Home/components/AccountContent";
+
 jest.mock("@/features/Home/container/LogoutButton", () => ({
   LogoutButton: () => <button type="button">Sair</button>,
 }));
-
-import { render, screen } from "@testing-library/react";
-import { AccountContent } from "@/features/Home/components/AccountContent";
 
 describe("AccountContent", () => {
   it("renders account name, edit link and logout", () => {

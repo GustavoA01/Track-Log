@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { buttonVariants } from "@/components/ui/button";
 import { useAuth } from "@/components/providers/useAuthProvider";
 import { cn } from "@/lib/utils";
@@ -11,7 +10,6 @@ export const HomeHeaderActions = () => {
 
   return (
     <div className="flex shrink-0 items-center gap-1">
-      <ThemeToggle />
       {isLoading ? null : !isAuthenticated ? (
         <>
           <Link

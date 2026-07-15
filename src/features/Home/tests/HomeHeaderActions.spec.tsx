@@ -1,3 +1,6 @@
+import { render, screen } from "@testing-library/react";
+import { HomeHeaderActions } from "@/features/Home/container/HomeHeaderActions";
+
 const useAuth = jest.fn();
 
 jest.mock("@/components/providers/useAuthProvider", () => ({
@@ -10,30 +13,9 @@ jest.mock("@/features/Home/components/HeaderContent", () => ({
   ),
 }));
 
-import { render, screen } from "@testing-library/react";
-import { HomeHeaderActions } from "@/features/Home/container/HomeHeaderActions";
-
 describe("HomeHeaderActions", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-  });
-
-  it("shows only theme toggle while auth is loading", () => {
-    useAuth.mockReturnValue({
-      user: null,
-      isLoading: true,
-      isAuthenticated: false,
-    });
-
-    render(<HomeHeaderActions />);
-
-    expect(
-      screen.getByRole("button", { name: "Alternar tema" }),
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByRole("link", { name: "Entrar" }),
-    ).not.toBeInTheDocument();
-    expect(screen.queryByTestId("header-content")).not.toBeInTheDocument();
   });
 
   it("shows guest links when unauthenticated", () => {

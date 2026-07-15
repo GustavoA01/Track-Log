@@ -3,6 +3,7 @@ import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { LogoutButton } from "@/features/Home/container/LogoutButton";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 type AccountContentProps = {
   name: string | undefined | null;
@@ -10,7 +11,10 @@ type AccountContentProps = {
 
 export const AccountContent = ({ name }: AccountContentProps) => (
   <>
-    <p className="text-lg font-montserrat">{name}</p>
+    <div className="flex justify-between">
+      <p className="text-lg font-montserrat">{name}</p>
+      <ThemeToggle />
+    </div>
     <Separator className="my-2" />
     <Link
       href="/cadastrar?edit=true"
