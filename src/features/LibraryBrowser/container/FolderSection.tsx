@@ -20,7 +20,7 @@ export const FolderSection = ({
       setSelectedFolderId={setSelectedFolderId}
     />
 
-    <div className="flex gap-3 overflow-x-auto pb-1">
+    <div className="flex min-w-0 max-w-full gap-3 overflow-x-auto pb-1">
       <AllMusicCard
         songs={songs}
         selectedFolderId={selectedFolderId}
