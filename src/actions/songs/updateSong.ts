@@ -12,8 +12,8 @@ import {
   getSongFolderIds,
   syncSongFolders,
   validateSongFolderIds,
-} from "@/actions/songs/folder-utils";
-import type { UpdateSongInput } from "./types";
+} from "@/actions/songs/folderUtils";
+import type { UpdateSongInput } from "../../data/types/actions";
 
 export const updateSong = async (id: string, input: UpdateSongInput) => {
   const userId = await getCurrentUserId();

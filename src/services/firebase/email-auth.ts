@@ -16,18 +16,7 @@ import type { LoginFormValuesType } from "@/data/schemas/login-form";
 import type { RegisterFormValuesType } from "@/data/schemas/register-form";
 import { getFirebaseAuth } from "./config";
 import { syncAuthSession } from "./session";
-
-const authErrorMessages = {
-  "auth/email-already-in-use": "Este e-mail já está em uso.",
-  "auth/invalid-email": "E-mail inválido.",
-  "auth/invalid-credential": "E-mail ou senha incorretos.",
-  "auth/wrong-password": "E-mail ou senha incorretos.",
-  "auth/user-not-found": "E-mail ou senha incorretos.",
-  "auth/weak-password": "A senha é muito fraca.",
-  "auth/requires-recent-login": "Informe sua senha atual para continuar.",
-  "auth/too-many-requests":
-    "Muitas tentativas. Aguarde um momento e tente novamente.",
-};
+import { authErrorMessages } from "@/data/constants";
 
 export const registerWithEmail = async ({
   name,

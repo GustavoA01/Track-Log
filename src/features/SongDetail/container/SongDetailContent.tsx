@@ -1,6 +1,6 @@
 "use client";
 import { updateSongResources } from "@/actions/songs/updateSongResources";
-import type { UpdateSongResourcesInput } from "@/actions/songs/types";
+import type { UpdateSongResourcesInput } from "@/data/types/actions";
 import { tabResourceDefaults, videoResourceDefaults } from "@/data/constants";
 import type { FolderType, PracticeSessionType, SongType } from "@/data/types";
 import { SongMetadata } from "@/features/SongDetail/components/SongMetadata";

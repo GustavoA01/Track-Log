@@ -36,3 +36,9 @@ export interface PracticeSessionType {
   minutes: number;
   notes: string;
 }
+
+export type SongStatusConfig = {
+  label: string;
+  badgeClassName: string;
+  selectTriggerClassName: string;
+};

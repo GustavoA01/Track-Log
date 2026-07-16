@@ -1,11 +1,11 @@
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { HomeHeader } from "@/features/Home/container/HomeHeader";
 
-type ShellLayoutProps = {
+type MainLayoutProps = {
   children: React.ReactNode;
 };
 
-const ShellLayout = ({ children }: ShellLayoutProps) => (
+const MainLayout = ({ children }: MainLayoutProps) => (
   <>
     <div className="min-h-full bg-background pb-16 sm:pb-0">
       <HomeHeader />
@@ -15,4 +15,4 @@ const ShellLayout = ({ children }: ShellLayoutProps) => (
   </>
 );
 
-export default ShellLayout;
+export default MainLayout;

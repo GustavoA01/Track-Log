@@ -56,7 +56,7 @@ export const StatsCards = ({ songs, practiceStats }: StatsCardsProps) => {
               <CardDescription>{stat.label}</CardDescription>
               <stat.icon className="size-4 text-muted-foreground" />
             </div>
-            <CardTitle className="text-2xl font-semibold tabular-nums">
+            <CardTitle className="text-2xl text-primary font-semibold tabular-nums">
               {stat.value}
             </CardTitle>
           </CardHeader>

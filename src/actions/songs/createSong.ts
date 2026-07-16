@@ -8,8 +8,8 @@ import { resolveSongAccentColor } from "@/utils/accent-color";
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
-import { validateSongFolderIds } from "@/actions/songs/folder-utils";
-import type { CreateSongInput } from "./types";
+import { validateSongFolderIds } from "@/actions/songs/folderUtils";
+import { CreateSongInput } from "@/data/types/actions";
 
 export const createSong = async (data: CreateSongInput) => {
   const userId = await getCurrentUserId();

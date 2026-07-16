@@ -9,7 +9,7 @@ import { LibraryBrowser } from "@/features/LibraryBrowser/container/LibraryBrows
 import { getOptionalCurrentUserId } from "@/lib/auth";
 import { GuestHome } from "@/features/Home/components/GuestHome";
 
-const Home = async () => {
+const HomePage = async () => {
   const userId = await getOptionalCurrentUserId();
 
   if (!userId) return <GuestHome />;
@@ -50,4 +50,4 @@ const Home = async () => {
   );
 };
 
-export default Home;
+export default HomePage;

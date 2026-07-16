@@ -4,13 +4,7 @@ import {
   Home,
   PlayCircle,
 } from "lucide-react";
-import type { SongStatusType } from "./types";
-
-type SongStatusConfig = {
-  label: string;
-  badgeClassName: string;
-  selectTriggerClassName: string;
-};
+import type { SongStatusConfig, SongStatusType } from "./types";
 
 export const songStatusConfig: Record<SongStatusType, SongStatusConfig> = {
   learning: {
@@ -46,7 +40,7 @@ export const songStatusConfig: Record<SongStatusType, SongStatusConfig> = {
 export const bottomNavigationLinks = [
   { href: "/", label: "Início" },
   { href: "/historico", label: "Histórico" },
-];
+] as const;
 
 export const tabsNavigation = [
   { href: "/", label: "Início", icon: Home },
@@ -68,4 +62,16 @@ export const tabResourceDefaults = {
   emptyLabel: "Nenhuma tablatura adicionada ainda.",
   linkLabel: "Abrir tablatura",
   icon: ExternalLink,
+};
+
+export const authErrorMessages = {
+  "auth/email-already-in-use": "Este e-mail já está em uso.",
+  "auth/invalid-email": "E-mail inválido.",
+  "auth/invalid-credential": "E-mail ou senha incorretos.",
+  "auth/wrong-password": "E-mail ou senha incorretos.",
+  "auth/user-not-found": "E-mail ou senha incorretos.",
+  "auth/weak-password": "A senha é muito fraca.",
+  "auth/requires-recent-login": "Informe sua senha atual para continuar.",
+  "auth/too-many-requests":
+    "Muitas tentativas. Aguarde um momento e tente novamente.",
 };

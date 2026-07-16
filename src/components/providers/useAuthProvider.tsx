@@ -7,17 +7,17 @@ import {
 } from "@/services/firebase/config";
 import { syncAuthSession } from "@/services/firebase/session";
 
-type AuthContextValue = {
+type AuthContextValueType = {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
 };
 
-const AuthContext = createContext<AuthContextValue | null>(null);
-
 type AuthProviderProps = {
   children: React.ReactNode;
 };
+
+const AuthContext = createContext<AuthContextValueType | null>(null);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const firebaseReady = isFirebaseConfigured();
@@ -61,9 +61,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
 
-  if (!context) {
-    throw new Error("useAuth deve ser usado dentro de AuthProvider");
-  }
+  if (!context) throw new Error("useAuth deve ser usado dentro do provider");
 
   return context;
 };
