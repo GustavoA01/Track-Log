@@ -31,7 +31,7 @@ export const AuthGuard = ({ children, mode }: AuthGuardProps) => {
 
   if (isLoading) return <AuthLoading />;
   if (notAuthenticatedGuest) return <AuthLoading />;
-  if (authenticatedGuest) return <AuthLoading />;
+  if (authenticatedGuest) return null;
 
   return <>{children}</>;
 };

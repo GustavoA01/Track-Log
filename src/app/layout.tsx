@@ -45,17 +45,28 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
+  icons: {
+    icon: "/logo.jpg",
+    apple: "/logo.jpg",
+  },
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: appName,
     title: appName,
     description: appDescription,
+    images: [
+      {
+        url: "/logo.jpg",
+        alt: appName,
+      },
+    ],
   },
   twitter: {
     card: "summary",
     title: appName,
     description: appDescription,
+    images: ["/logo.jpg"],
   },
   robots: {
     index: true,

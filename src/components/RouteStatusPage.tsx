@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Music } from "lucide-react";
+import Image from "next/image";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -22,9 +22,14 @@ export const RouteStatusPage = ({
 }: RouteStatusPageProps) => (
   <div className="flex min-h-full flex-col items-center justify-center bg-background px-4 py-16">
     <div className="flex w-full max-w-md flex-col items-center text-center">
-      <div className="mb-6 flex size-12 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-        <Music className="size-5" />
-      </div>
+      <Image
+        src="/logo.jpg"
+        alt="Track Log"
+        width={48}
+        height={48}
+        className="mb-6 rounded-xl"
+        priority
+      />
 
       {code && (
         <p className="mb-2 font-montserrat text-sm font-semibold tracking-widest text-muted-foreground uppercase">

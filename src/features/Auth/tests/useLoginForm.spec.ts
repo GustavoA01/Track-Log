@@ -1,7 +1,7 @@
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { useLoginForm } from "../hooks/useLoginForm";
 
-const push = jest.fn();
+const replace = jest.fn();
 const refresh = jest.fn();
 const toastSuccess = jest.fn();
 const toastError = jest.fn();
@@ -9,7 +9,7 @@ const loginWithEmail = jest.fn();
 let searchParams = new URLSearchParams();
 
 jest.mock("next/navigation", () => ({
-  useRouter: () => ({ push, refresh }),
+  useRouter: () => ({ replace, refresh }),
   useSearchParams: () => searchParams,
 }));
 
@@ -46,8 +46,8 @@ describe("useLoginForm", () => {
       email: "ana@email.com",
       password: "senha123",
     });
-    expect(toastSuccess).toHaveBeenCalledWith("Login realizado!");
-    expect(push).toHaveBeenCalledWith("/");
+    expect(toastSuccess).toHaveBeenCalledWith("Seja Bem-vindo!");
+    expect(replace).toHaveBeenCalledWith("/");
     expect(refresh).toHaveBeenCalled();
   });
 
@@ -63,7 +63,7 @@ describe("useLoginForm", () => {
       });
     });
 
-    expect(push).toHaveBeenCalledWith("/historico");
+    expect(replace).toHaveBeenCalledWith("/historico");
   });
 
   it("ignores unsafe next paths", async () => {
@@ -78,7 +78,7 @@ describe("useLoginForm", () => {
       });
     });
 
-    expect(push).toHaveBeenCalledWith("/");
+    expect(replace).toHaveBeenCalledWith("/");
   });
 
   it("shows error toast on failure", async () => {
@@ -95,6 +95,6 @@ describe("useLoginForm", () => {
     await waitFor(() => {
       expect(toastError).toHaveBeenCalledWith("E-mail ou senha incorretos.");
     });
-    expect(push).not.toHaveBeenCalled();
+    expect(replace).not.toHaveBeenCalled();
   });
 });

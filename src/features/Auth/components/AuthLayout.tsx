@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Music } from "lucide-react";
+import Image from "next/image";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 type AuthLayoutProps = {
@@ -23,12 +23,15 @@ export const AuthLayout = ({
     <div className="flex flex-1 flex-col items-center justify-center px-4 py-12">
       <div className="w-full max-w-sm space-y-8">
         <div className="flex flex-col items-center text-center">
-          <Link
-            href="/"
-            className="mb-6 flex size-12 items-center justify-center rounded-xl bg-primary text-primary-foreground transition-opacity hover:opacity-90"
-          >
-            <Music className="size-5" />
-            <span className="sr-only">Track Log</span>
+          <Link href="/" className="mb-6 transition-opacity hover:opacity-90">
+            <Image
+              priority
+              width={56}
+              height={56}
+              src="/logo.jpg"
+              alt="Track Log"
+              className="rounded-xl"
+            />
           </Link>
           <p className="font-montserrat text-sm font-semibold tracking-wide text-primary">
             Track Log

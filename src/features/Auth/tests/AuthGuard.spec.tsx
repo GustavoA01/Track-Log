@@ -24,16 +24,14 @@ describe("AuthGuard", () => {
       isLoading: true,
     });
 
-    const { container } = render(
+    render(
       <AuthGuard mode="protected">
         <p>Conteúdo</p>
       </AuthGuard>,
     );
 
     expect(screen.queryByText("Conteúdo")).not.toBeInTheDocument();
-    expect(container.querySelectorAll(".animate-pulse").length).toBeGreaterThan(
-      0,
-    );
+    expect(screen.getByText("Carregando...")).toBeInTheDocument();
   });
 
   it("renders children when protected and authenticated", () => {

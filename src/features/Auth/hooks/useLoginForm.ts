@@ -27,13 +27,12 @@ export const useLoginForm = () => {
 
     try {
       await loginWithEmail(values);
-      toast.success("Login realizado!");
+      toast.success("Seja Bem-vindo!");
       const next = searchParams.get("next");
-      router.push(next && next.startsWith("/") ? next : "/");
+      router.replace(next && next.startsWith("/") ? next : "/");
       router.refresh();
     } catch (error) {
       toast.error(getFirebaseAuthErrorMessage(error));
-    } finally {
       setIsSubmitting(false);
     }
   };
