@@ -1,7 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { HeroSection } from "../container/HeroSection";
 import { folder, song } from "./test-data";
+
+const handleMarkAsLearned = jest.fn();
 
 jest.mock("../../StartSession/components/StartSessionTrigger", () => ({
   StartSessionTrigger: ({
@@ -15,7 +17,40 @@ jest.mock("../../StartSession/components/StartSessionTrigger", () => ({
   ),
 }));
 
+jest.mock("../hooks/useUpdateSongStatusMutation", () => ({
+  useUpdateSongStatusMutation: ({
+    status,
+    onStatusChange,
+  }: {
+    status: string;
+    onStatusChange: (status: string) => void;
+  }) => {
+    if (status === "learned") {
+      return {
+        handleMarkAsLearned,
+        isPending: false,
+        showSuccess: false,
+        shouldRender: false,
+      };
+    }
+
+    return {
+      handleMarkAsLearned: async () => {
+        handleMarkAsLearned();
+        onStatusChange("learned");
+      },
+      isPending: false,
+      showSuccess: false,
+      shouldRender: true,
+    };
+  },
+}));
+
 describe("HeroSection", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("renders song info, folder badge and session stats", () => {
     render(
       <HeroSection
@@ -24,6 +59,7 @@ describe("HeroSection", () => {
         sessionCount={2}
         totalMinutes={75}
         onStartSession={jest.fn()}
+        onStatusChange={jest.fn()}
       />,
     );
 
@@ -47,6 +83,7 @@ describe("HeroSection", () => {
         sessionCount={2}
         totalMinutes={75}
         onStartSession={jest.fn()}
+        onStatusChange={jest.fn()}
       />,
     );
 
@@ -61,6 +98,7 @@ describe("HeroSection", () => {
         sessionCount={1}
         totalMinutes={30}
         onStartSession={jest.fn()}
+        onStatusChange={jest.fn()}
       />,
     );
 
@@ -79,11 +117,52 @@ describe("HeroSection", () => {
         sessionCount={0}
         totalMinutes={0}
         onStartSession={onStartSession}
+        onStatusChange={jest.fn()}
       />,
     );
 
     await user.click(screen.getByRole("button", { name: /iniciar sessão/i }));
 
     expect(onStartSession).toHaveBeenCalledWith(25);
+  });
+
+  it("marks song as learned", async () => {
+    const onStatusChange = jest.fn();
+    const user = userEvent.setup();
+
+    render(
+      <HeroSection
+        song={song}
+        sessionCount={0}
+        totalMinutes={0}
+        onStartSession={jest.fn()}
+        onStatusChange={onStatusChange}
+      />,
+    );
+
+    await user.click(
+      screen.getByRole("button", { name: /marcar como aprendida/i }),
+    );
+
+    await waitFor(() => {
+      expect(handleMarkAsLearned).toHaveBeenCalled();
+      expect(onStatusChange).toHaveBeenCalledWith("learned");
+    });
+  });
+
+  it("hides mark as learned button when already learned", () => {
+    render(
+      <HeroSection
+        song={{ ...song, status: "learned" }}
+        sessionCount={0}
+        totalMinutes={0}
+        onStartSession={jest.fn()}
+        onStatusChange={jest.fn()}
+      />,
+    );
+
+    expect(
+      screen.queryByRole("button", { name: /marcar como aprendida/i }),
+    ).not.toBeInTheDocument();
   });
 });

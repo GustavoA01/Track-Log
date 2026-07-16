@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { playTimerEndSound } from "../utils/playTimerEndSound";
 
 export const usePracticeSessionTimer = () => {
   const [isTimerActive, setIsTimerActive] = useState(false);
@@ -6,6 +7,7 @@ export const usePracticeSessionTimer = () => {
   const [isEndSessionOpen, setIsEndSessionOpen] = useState(false);
   const [sessionDurationSeconds, setSessionDurationSeconds] = useState(0);
   const [remainingSeconds, setRemainingSeconds] = useState(0);
+  const remainingSecondsRef = useRef(0);
 
   const formatRemainingTime = (totalSeconds: number) => {
     const minutes = Math.floor(totalSeconds / 60);
@@ -22,15 +24,20 @@ export const usePracticeSessionTimer = () => {
     if (!isTimerActive || isPaused || isEndSessionOpen) return;
 
     const interval = setInterval(() => {
-      setRemainingSeconds((current) => {
-        if (current <= 1) {
-          setIsTimerActive(false);
-          setIsPaused(false);
-          return 0;
-        }
+      const nextRemaining = remainingSecondsRef.current - 1;
 
-        return current - 1;
-      });
+      if (nextRemaining <= 0) {
+        remainingSecondsRef.current = 0;
+        setRemainingSeconds(0);
+        setIsTimerActive(false);
+        setIsPaused(false);
+        setIsEndSessionOpen(true);
+        playTimerEndSound();
+        return;
+      }
+
+      remainingSecondsRef.current = nextRemaining;
+      setRemainingSeconds(nextRemaining);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -39,6 +46,7 @@ export const usePracticeSessionTimer = () => {
   const handleStartSession = (minutes: number) => {
     const totalSeconds = minutes * 60;
 
+    remainingSecondsRef.current = totalSeconds;
     setSessionDurationSeconds(totalSeconds);
     setRemainingSeconds(totalSeconds);
     setIsPaused(false);
@@ -52,6 +60,7 @@ export const usePracticeSessionTimer = () => {
   };
 
   const handleEndSession = () => {
+    remainingSecondsRef.current = 0;
     setIsEndSessionOpen(false);
     setIsTimerActive(false);
     setIsPaused(false);
@@ -66,8 +75,7 @@ export const usePracticeSessionTimer = () => {
 
   const sessionProgress =
     sessionDurationSeconds > 0
-      ? ((sessionDurationSeconds - remainingSeconds) / sessionDurationSeconds) *
-        100
+      ? (elapsedSeconds / sessionDurationSeconds) * 100
       : 0;
 
   return {

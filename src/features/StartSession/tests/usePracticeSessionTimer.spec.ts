@@ -1,8 +1,15 @@
 import { act, renderHook } from "@testing-library/react";
 import { usePracticeSessionTimer } from "../hooks/usePracticeSessionTimer";
 
+const playTimerEndSound = jest.fn();
+
+jest.mock("../utils/playTimerEndSound", () => ({
+  playTimerEndSound: (...args: unknown[]) => playTimerEndSound(...args),
+}));
+
 describe("usePracticeSessionTimer", () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     jest.useFakeTimers();
   });
 
@@ -23,7 +30,7 @@ describe("usePracticeSessionTimer", () => {
     expect(result.current.sessionProgress).toBe(0);
   });
 
-  it("counts down while active", () => {
+  it("counts down while active and signals when finished", () => {
     const { result } = renderHook(() => usePracticeSessionTimer());
 
     act(() => {
@@ -42,6 +49,8 @@ describe("usePracticeSessionTimer", () => {
 
     expect(result.current.remainingTime).toBe("00:00");
     expect(result.current.isTimerActive).toBe(false);
+    expect(result.current.isEndSessionOpen).toBe(true);
+    expect(playTimerEndSound).toHaveBeenCalled();
   });
 
   it("pauses and resumes the timer", () => {
@@ -85,6 +94,7 @@ describe("usePracticeSessionTimer", () => {
     expect(result.current.isPaused).toBe(true);
     expect(result.current.isEndSessionOpen).toBe(true);
     expect(result.current.getElapsedMinutes()).toBeGreaterThanOrEqual(1);
+    expect(playTimerEndSound).not.toHaveBeenCalled();
   });
 
   it("resets timer on end session", () => {
@@ -99,6 +109,7 @@ describe("usePracticeSessionTimer", () => {
     expect(result.current.isEndSessionOpen).toBe(false);
     expect(result.current.remainingTime).toBe("00:00");
     expect(result.current.sessionProgress).toBe(0);
+    expect(playTimerEndSound).not.toHaveBeenCalled();
   });
 
   it("does not toggle pause while end dialog is open", () => {

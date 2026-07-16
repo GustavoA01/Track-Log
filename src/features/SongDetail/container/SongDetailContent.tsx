@@ -1,6 +1,4 @@
 "use client";
-import { updateSongResources } from "@/actions/songs/updateSongResources";
-import type { UpdateSongResourcesInput } from "@/data/types/actions";
 import { tabResourceDefaults, videoResourceDefaults } from "@/data/constants";
 import type { FolderType, PracticeSessionType, SongType } from "@/data/types";
 import { SongMetadata } from "@/features/SongDetail/components/SongMetadata";
@@ -37,10 +35,8 @@ export const SongDetailContent = ({
     totalMinutes,
     getYouTubeEmbedUrl,
     setSong,
+    onChangeMedia,
   } = useSongDetailContent({ initialSong, sessions });
-
-  const { mutateAsync: createSession, isPending: isSavingSession } =
-    useCreateSessionMutation(song.id);
 
   const {
     handleStartSession,
@@ -55,14 +51,12 @@ export const SongDetailContent = ({
     sessionProgress,
   } = usePracticeSessionTimer();
 
+  const { mutateAsync: createSession, isPending: isSavingSession } =
+    useCreateSessionMutation(song.id);
+
   const handleSaveSessionNotes = async (notes: string) => {
     await createSession({ minutes: getElapsedMinutes(), notes });
     handleEndSession();
-  };
-
-  const onChangeMedia = async (mediaUrl: UpdateSongResourcesInput) => {
-    const updated = await updateSongResources(song.id, mediaUrl);
-    setSong(updated);
   };
 
   const transformedFolders = folders
@@ -77,13 +71,6 @@ export const SongDetailContent = ({
         onDelete={() => setDeleteDialogOpen(true)}
       />
 
-      <DeleteSongDialog
-        open={deleteDialogOpen}
-        onOpenChange={setDeleteDialogOpen}
-        songId={song.id}
-        songTitle={song.title}
-      />
-
       <main className="pb-20">
         <HeroSection
           song={song}
@@ -91,6 +78,9 @@ export const SongDetailContent = ({
           sessionCount={sessionCount}
           totalMinutes={totalMinutes}
           onStartSession={handleStartSession}
+          onStatusChange={(status) =>
+            setSong((currentSong) => ({ ...currentSong, status }))
+          }
         />
 
         <div className="container mx-auto space-y-8 px-4 pt-8 sm:px-6">
@@ -102,6 +92,7 @@ export const SongDetailContent = ({
               setSong((currentSong) => ({ ...currentSong, folderIds }))
             }
           />
+
           {song.notes && (
             <div className="rounded-xl border bg-muted/30 p-4">
               <p className="mb-1 text-xs font-medium text-muted-foreground">
@@ -163,6 +154,13 @@ export const SongDetailContent = ({
         isSubmitting={isSavingSession}
         onSave={handleSaveSessionNotes}
         onDiscard={handleEndSession}
+      />
+
+      <DeleteSongDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        songId={song.id}
+        songTitle={song.title}
       />
     </div>
   );

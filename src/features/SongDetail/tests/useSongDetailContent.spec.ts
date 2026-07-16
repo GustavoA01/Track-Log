@@ -2,7 +2,17 @@ import { act, renderHook } from "@testing-library/react";
 import { useSongDetailContent } from "../hooks/useSongDetailContent";
 import { sessions, song } from "./test-data";
 
+const updateSongResources = jest.fn();
+
+jest.mock("@/actions/songs/updateSongResources", () => ({
+  updateSongResources: (...args: unknown[]) => updateSongResources(...args),
+}));
+
 describe("useSongDetailContent", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("initializes song state and session stats", () => {
     const { result } = renderHook(() =>
       useSongDetailContent({ initialSong: song, sessions }),
@@ -36,6 +46,26 @@ describe("useSongDetailContent", () => {
     });
 
     expect(result.current.deleteDialogOpen).toBe(true);
+  });
+
+  it("updates media via onChangeMedia", async () => {
+    const updatedSong = { ...song, videoUrl: "https://youtu.be/new" };
+    updateSongResources.mockResolvedValue(updatedSong);
+
+    const { result } = renderHook(() =>
+      useSongDetailContent({ initialSong: song, sessions }),
+    );
+
+    await act(async () => {
+      await result.current.onChangeMedia({
+        videoUrl: "https://youtu.be/new",
+      });
+    });
+
+    expect(updateSongResources).toHaveBeenCalledWith("song-1", {
+      videoUrl: "https://youtu.be/new",
+    });
+    expect(result.current.song.videoUrl).toBe("https://youtu.be/new");
   });
 
   it.each([

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import type { PracticeSessionType, SongType } from "@/data/types";
+import { updateSongResources } from "@/actions/songs/updateSongResources";
+import { UpdateSongResourcesInput } from "@/data/types/actions";
 
 type UseSongDetailContentProps = {
   initialSong: SongType;
@@ -42,6 +44,11 @@ export const useSongDetailContent = ({
     return null;
   };
 
+  const onChangeMedia = async (mediaUrl: UpdateSongResourcesInput) => {
+    const updated = await updateSongResources(song.id, mediaUrl);
+    setSong(updated);
+  };
+
   return {
     song,
     deleteDialogOpen,
@@ -50,5 +57,6 @@ export const useSongDetailContent = ({
     totalMinutes,
     getYouTubeEmbedUrl,
     setSong,
+    onChangeMedia,
   };
 };

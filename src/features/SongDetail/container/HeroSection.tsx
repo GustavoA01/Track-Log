@@ -1,20 +1,20 @@
-"use client";
 import { SongStatusBadge } from "@/components/SongStatusBadge";
 import { SongCover } from "../components/SongCover";
-import { SongType } from "@/data/types";
-import { FolderType } from "@/data/types";
+import type { FolderType, SongStatusType, SongType } from "@/data/types";
 import { Badge } from "@/components/ui/badge";
 import { StartSessionTrigger } from "@/features/StartSession/components/StartSessionTrigger";
+import { MarkAsLearnedButton } from "./MarkAsLearnedButton";
 
 type HeroSectionProps = {
   song: Pick<
     SongType,
-    "title" | "imageUrl" | "status" | "artist" | "accentColor"
+    "id" | "title" | "imageUrl" | "status" | "artist" | "accentColor"
   >;
   folders?: Pick<FolderType, "id" | "name" | "color">[];
   sessionCount: number;
   totalMinutes: number;
   onStartSession: (minutes: number) => void;
+  onStatusChange: (status: SongStatusType) => void;
 };
 
 export const HeroSection = ({
@@ -23,6 +23,7 @@ export const HeroSection = ({
   sessionCount,
   totalMinutes,
   onStartSession,
+  onStatusChange,
 }: HeroSectionProps) => {
   const accentColor = song.accentColor ?? "var(--primary)";
 
@@ -65,7 +66,14 @@ export const HeroSection = ({
               {totalMinutes} min praticados
             </p>
 
-            <StartSessionTrigger onStart={onStartSession} />
+            <div className="flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+              <StartSessionTrigger onStart={onStartSession} />
+              <MarkAsLearnedButton
+                songId={song.id}
+                status={song.status}
+                onStatusChange={onStatusChange}
+              />
+            </div>
           </div>
         </div>
       </div>
