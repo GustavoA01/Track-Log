@@ -11,7 +11,7 @@ Track Log é uma aplicação web para músicos organizarem seu repertório e aco
 - **Pastas (Folders)**: organização das músicas em pastas personalizadas, com cor e imagem de capa
 - **Sessões de prática**: início e término de sessões com cronômetro, registro de duração e observações
 - **Histórico**: listagem completa das sessões de prática já realizadas
-- **Estatísticas**: cards com indicadores de progresso,tempo total praticado, número de sessões, etc.
+- **Estatísticas**: cards com indicadores de progresso, tempo total praticado, número de sessões, etc.
 - **Busca e filtros** na biblioteca de músicas
 - **Tema claro e escuro**
 - **Layout responsivo**
