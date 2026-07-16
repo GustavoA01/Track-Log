@@ -8,10 +8,10 @@ export const ThemeToggle = () => {
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="icon"
       aria-label="Alternar tema"
-      className="max-sm:rounded-full"
+      className="rounded-full"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >
       <Sun className="size-4 dark:hidden" />

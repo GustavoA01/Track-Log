@@ -12,19 +12,21 @@ type AccountContentProps = {
 export const AccountContent = ({ name }: AccountContentProps) => (
   <>
     <div className="flex justify-between">
-      <p className="text-lg font-montserrat">{name}</p>
+      <p className="max-sm:text-lg font-montserrat">{name}</p>
       <ThemeToggle />
     </div>
     <Separator className="my-2" />
-    <Link
-      href="/cadastrar?edit=true"
-      className={cn(
-        "max-sm:rounded-full w-full",
-        buttonVariants({ size: "lg" }),
-      )}
-    >
-      Alterar dados
-    </Link>
-    <LogoutButton />
+    <div className="flex flex-col gap-2">
+      <Link
+        href="/cadastrar?edit=true"
+        className={cn(
+          "max-sm:rounded-full w-full",
+          buttonVariants({ size: "lg" }),
+        )}
+      >
+        Alterar dados
+      </Link>
+      <LogoutButton />
+    </div>
   </>
 );

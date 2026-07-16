@@ -1,6 +1,6 @@
 import { Vibrant } from "node-vibrant/node";
 
-const FALLBACK_ACCENT_COLOR = "#7c3aed";
+const FALLBACK_ACCENT_COLOR = "#0d9488";
 
 export const extractAccentColorFromImageUrl = async (
   imageUrl: string,

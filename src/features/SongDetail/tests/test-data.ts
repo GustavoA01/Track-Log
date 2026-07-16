@@ -14,7 +14,7 @@ export const song: SongType = {
   imageUrl: "https://example.com/wonderwall.jpg",
   videoUrl: "https://www.youtube.com/watch?v=6hzrDe2EK-g",
   tabUrl: "https://example.com/tab",
-  accentColor: "#7c3aed",
+  accentColor: "#0d9488",
   sessionsTotalTime: 90,
 };
 
@@ -38,7 +38,7 @@ export const sessions: PracticeSessionType[] = [
 export const folder = {
   id: "folder-1",
   name: "Rock",
-  color: "#7c3aed",
+  color: "#0d9488",
 };
 
 export const folders = [

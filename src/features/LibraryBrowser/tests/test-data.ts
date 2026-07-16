@@ -1,7 +1,7 @@
 import type { FolderType, SongType } from "@/data/types";
 
 export const folders: FolderType[] = [
-  { id: "folder-1", name: "Rock", color: "#7c3aed" },
+  { id: "folder-1", name: "Rock", color: "#0d9488" },
   {
     id: "folder-2",
     name: "Violão",

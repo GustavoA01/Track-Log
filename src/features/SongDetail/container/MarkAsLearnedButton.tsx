@@ -48,12 +48,12 @@ export const MarkAsLearnedButton = ({
 
   return (
     <Button
-      size="sm"
+      size="lg"
       type="button"
       variant="outline"
       disabled={isPending}
       onClick={handleMarkAsLearned}
-      className="gap-1.5 rounded-full"
+      className="w-full gap-1.5 rounded-full sm:w-auto"
     >
       {isPending ? (
         <LoaderCircle className="size-4 animate-spin" />

@@ -10,9 +10,9 @@ export const songStatusConfig: Record<SongStatusType, SongStatusConfig> = {
   learning: {
     label: "Aprendendo",
     badgeClassName:
-      "border-violet-300/80 bg-violet-100 text-violet-800 dark:border-violet-400/40 dark:bg-violet-500/20 dark:text-violet-200",
+      "border-teal-300/80 bg-teal-100 text-teal-800 dark:border-teal-400/40 dark:bg-teal-500/20 dark:text-teal-200",
     selectTriggerClassName:
-      "border-violet-300/60 bg-violet-50/80 dark:border-violet-400/30 dark:bg-violet-500/10",
+      "border-teal-300/60 bg-teal-50/80 dark:border-teal-400/30 dark:bg-teal-500/10",
   },
   want_to_learn: {
     label: "Quero aprender",

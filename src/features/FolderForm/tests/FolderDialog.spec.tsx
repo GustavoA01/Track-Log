@@ -65,7 +65,7 @@ describe("FolderDialog", () => {
       id: "folder-1",
       name: "Rock",
       imageUrl: "https://example.com/cover.jpg",
-      color: "#7c3aed",
+      color: "#0d9488",
       userId: "user-1",
       createdAt: new Date(),
       updatedAt: new Date(),

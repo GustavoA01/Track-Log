@@ -19,7 +19,7 @@ describe("CoverImage", () => {
 
   it("renders music fallback when src is missing", () => {
     const { container } = render(
-      <CoverImage alt="Wonderwall" fallbackColor="#7c3aed" />,
+      <CoverImage alt="Wonderwall" fallbackColor="#0d9488" />,
     );
 
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
@@ -36,7 +36,7 @@ describe("CoverImage", () => {
 
   it("applies size class for small covers", () => {
     const { container } = render(
-      <CoverImage alt="Wonderwall" size="sm" fallbackColor="#7c3aed" />,
+      <CoverImage alt="Wonderwall" size="sm" fallbackColor="#0d9488" />,
     );
 
     expect(container.firstChild).toHaveClass("size-10");

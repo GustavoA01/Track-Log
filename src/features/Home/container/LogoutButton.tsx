@@ -9,7 +9,7 @@ export const LogoutButton = () => {
     <Button
       size="icon"
       type="button"
-      variant="ghost"
+      variant="outline"
       aria-label="Sair"
       onClick={handleLogout}
       className="max-sm:rounded-full w-full flex items-center gap-1 text-sm"

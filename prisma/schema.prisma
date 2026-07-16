@@ -18,7 +18,7 @@ model Folder {
   id        String       @id @default(cuid())
   userId    String
   name      String
-  color     String       @default("#7c3aed")
+  color     String       @default("#0d9488")
   imageUrl  String?
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt

@@ -8,7 +8,7 @@ describe("FolderBadge", () => {
 
     render(
       <FolderBadge
-        folder={{ name: "Rock", color: "#7c3aed" }}
+        folder={{ name: "Rock", color: "#0d9488" }}
         onRemoveFolder={onRemoveFolder}
       />,
     );
@@ -25,7 +25,7 @@ describe("FolderBadge", () => {
 
     render(
       <FolderBadge
-        folder={{ name: "Rock", color: "#7c3aed" }}
+        folder={{ name: "Rock", color: "#0d9488" }}
         onRemoveFolder={onRemoveFolder}
       />,
     );

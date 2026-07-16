@@ -10,7 +10,7 @@ describe("mappers", () => {
       toFolderType({
         id: "folder-1",
         name: "Rock",
-        color: "#7c3aed",
+        color: "#0d9488",
         imageUrl: null,
         userId: "user-1",
         createdAt: new Date("2026-01-01"),
@@ -19,7 +19,7 @@ describe("mappers", () => {
     ).toEqual({
       id: "folder-1",
       name: "Rock",
-      color: "#7c3aed",
+      color: "#0d9488",
       imageUrl: undefined,
     });
   });
