@@ -15,7 +15,7 @@ describe("FolderCardMenuSheet", () => {
     );
 
     expect(screen.getByText("Rock")).toBeInTheDocument();
-    expect(screen.getByText("Ações da pasta")).toBeInTheDocument();
+    expect(screen.getByText("Gerenciar pasta")).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /editar pasta/i }),
     ).toBeInTheDocument();

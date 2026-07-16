@@ -15,9 +15,52 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
 });
 
+const appName = "Track Log";
+const appDescription =
+  "Organize suas músicas, registre sessões de prática e acompanhe sua evolução musical.";
+
 export const metadata: Metadata = {
-  title: "Track Log",
-  description: "Acompanhe suas músicas, sessões de estudo e evolução musical",
+  title: {
+    default: appName,
+    template: `%s · ${appName}`,
+  },
+  description: appDescription,
+  applicationName: appName,
+  keywords: [
+    "prática musical",
+    "estudo de música",
+    "sessões de prática",
+    "repertório",
+    "violão",
+    "guitarra",
+    "piano",
+    "track log",
+  ],
+  authors: [{ name: "Gustavo Aguiar" }],
+  creator: "Gustavo Aguiar",
+  publisher: appName,
+  category: "music",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: appName,
+    title: appName,
+    description: appDescription,
+  },
+  twitter: {
+    card: "summary",
+    title: appName,
+    description: appDescription,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 const RootLayout = ({

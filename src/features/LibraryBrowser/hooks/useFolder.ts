@@ -14,11 +14,11 @@ export const useFolder = ({
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
+  const openDeleteDialog = () => setDeleteOpen(true);
+  const openEditDialog = () => setEditOpen(true);
   const handleDeleted = () => {
     if (isSelected) setSelectedFolderId(null);
   };
-  const openDeleteDialog = () => setDeleteOpen(true);
-  const openEditDialog = () => setEditOpen(true);
 
   const toggleSelection = () =>
     setSelectedFolderId(isSelected ? null : folderId);

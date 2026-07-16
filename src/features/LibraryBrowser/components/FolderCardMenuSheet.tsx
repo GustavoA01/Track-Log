@@ -28,7 +28,7 @@ export const FolderCardMenuSheet = ({
     <SheetContent showCloseButton>
       <SheetHeader>
         <SheetTitle>{folderName}</SheetTitle>
-        <SheetDescription>Ações da pasta</SheetDescription>
+        <SheetDescription>Gerenciar pasta</SheetDescription>
       </SheetHeader>
       <SheetFooter>
         <Button

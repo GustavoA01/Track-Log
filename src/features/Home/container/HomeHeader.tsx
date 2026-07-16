@@ -12,10 +12,13 @@ export const HomeHeader = () => (
           className="flex min-w-0 items-center gap-2.5 transition-opacity hover:opacity-80"
         >
           <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            {/* LOGO */}
             <Music className="size-4" />
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-semibold leading-none">Track Log</p>
+            <p className="text-sm font-semibold font-montserrat leading-none">
+              Track Log
+            </p>
             <p className="text-xs text-muted-foreground">
               Seu diário de estudos
             </p>
@@ -23,7 +26,6 @@ export const HomeHeader = () => (
         </Link>
         <DesktopNav />
       </div>
-
       <HomeHeaderActions />
     </div>
   </header>
