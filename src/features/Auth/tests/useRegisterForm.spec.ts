@@ -100,6 +100,33 @@ describe("useRegisterForm", () => {
     expect(push).toHaveBeenCalledWith("/");
   });
 
+  it("requires current password when changing email in edit mode", async () => {
+    useAuth.mockReturnValue({
+      user: {
+        displayName: "Ana",
+        email: "ana@email.com",
+      },
+      isLoading: false,
+      isAuthenticated: true,
+    });
+
+    const { result } = renderHook(() => useRegisterForm({ isEdit: true }));
+
+    await act(async () => {
+      await result.current.onSubmit({
+        name: "Ana",
+        email: "nova@email.com",
+        password: "",
+        currentPassword: "",
+      });
+    });
+
+    expect(updateAccount).not.toHaveBeenCalled();
+    expect(
+      result.current.methods.formState.errors.currentPassword?.message,
+    ).toBe("Informe a senha atual para alterar e-mail ou senha.");
+  });
+
   it("shows error toast on failure", async () => {
     registerWithEmail.mockRejectedValue(new Error("fail"));
     const { result } = renderHook(() => useRegisterForm());

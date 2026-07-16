@@ -6,10 +6,11 @@ const refresh = jest.fn();
 const toastSuccess = jest.fn();
 const toastError = jest.fn();
 const loginWithEmail = jest.fn();
+let searchParams = new URLSearchParams();
 
 jest.mock("next/navigation", () => ({
   useRouter: () => ({ push, refresh }),
-  useSearchParams: () => new URLSearchParams(),
+  useSearchParams: () => searchParams,
 }));
 
 jest.mock("sonner", () => ({
@@ -27,6 +28,7 @@ jest.mock("@/services/firebase/email-auth", () => ({
 describe("useLoginForm", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    searchParams = new URLSearchParams();
   });
 
   it("logs in and redirects on success", async () => {
@@ -47,6 +49,36 @@ describe("useLoginForm", () => {
     expect(toastSuccess).toHaveBeenCalledWith("Login realizado!");
     expect(push).toHaveBeenCalledWith("/");
     expect(refresh).toHaveBeenCalled();
+  });
+
+  it("redirects to next path after login when present", async () => {
+    searchParams = new URLSearchParams("next=/historico");
+    loginWithEmail.mockResolvedValue({ uid: "user-1" });
+    const { result } = renderHook(() => useLoginForm());
+
+    await act(async () => {
+      await result.current.onSubmit({
+        email: "ana@email.com",
+        password: "senha123",
+      });
+    });
+
+    expect(push).toHaveBeenCalledWith("/historico");
+  });
+
+  it("ignores unsafe next paths", async () => {
+    searchParams = new URLSearchParams("next=https://evil.com");
+    loginWithEmail.mockResolvedValue({ uid: "user-1" });
+    const { result } = renderHook(() => useLoginForm());
+
+    await act(async () => {
+      await result.current.onSubmit({
+        email: "ana@email.com",
+        password: "senha123",
+      });
+    });
+
+    expect(push).toHaveBeenCalledWith("/");
   });
 
   it("shows error toast on failure", async () => {
