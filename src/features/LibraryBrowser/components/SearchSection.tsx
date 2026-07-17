@@ -42,7 +42,11 @@ export const SearchSection = ({
       onValueChange={(value) => setStatusQuery(value!)}
     >
       <SelectTrigger className="w-full sm:min-w-44">
-        <SelectValue placeholder="Status" />
+        <SelectValue placeholder="Status">
+          <span className={statusColors[statusQuery]}>
+            {statusItens.find(({ value }) => value === statusQuery)?.label}
+          </span>
+        </SelectValue>
       </SelectTrigger>
       <SelectContent>
         {statusItens.map(({ label, value }) => (
