@@ -11,7 +11,7 @@ export type StatusLabelType =
   | "Quero aprender";
 
 export type StatusItemType = {
-  label: StatusLabelType | "Todos";
+  label: StatusLabelType | "Todas";
   value: SongStatusType | "all";
 };
 

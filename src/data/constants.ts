@@ -13,7 +13,7 @@ import type {
 } from "./types";
 
 export const statusItens: StatusItemType[] = [
-  { label: "Todos", value: "all" },
+  { label: "Todas", value: "all" },
   { label: "Aprendida", value: "learned" },
   { label: "Aprendendo", value: "learning" },
   { label: "Pausada", value: "paused" },
