@@ -1,12 +1,13 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 
 import { folderFormSchema } from "@/data/schemas/folder-form";
 import type { FolderFormValuesType } from "@/data/schemas/folder-form";
 import { getCurrentUserId } from "@/lib/auth";
 import { toFolderType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
+import { cacheTags } from "@/lib/cache-tags";
 
 export const updateFolder = async (id: string, input: FolderFormValuesType) => {
   const userId = await getCurrentUserId();
@@ -29,6 +30,7 @@ export const updateFolder = async (id: string, input: FolderFormValuesType) => {
   });
 
   revalidatePath("/");
+  updateTag(cacheTags.folders(userId));
 
   return toFolderType(folder);
 };

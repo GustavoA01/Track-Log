@@ -1,5 +1,5 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import {
   formValuesToSongPayload,
   songFormSchema,
@@ -10,6 +10,7 @@ import { toSongType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
 import { validateSongFolderIds } from "@/actions/songs/folderUtils";
 import { CreateSongInput } from "@/data/types/actions";
+import { cacheTags } from "@/lib/cache-tags";
 
 export const createSong = async (data: CreateSongInput) => {
   const userId = await getCurrentUserId();
@@ -53,6 +54,7 @@ export const createSong = async (data: CreateSongInput) => {
 
   revalidatePath("/");
   revalidatePath(`/musica/${song.id}`);
+  updateTag(cacheTags.songs(userId));
 
   return toSongType(
     song,

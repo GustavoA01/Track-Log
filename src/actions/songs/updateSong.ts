@@ -1,5 +1,5 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import {
   formValuesToSongPayload,
   songFormSchema,
@@ -8,6 +8,7 @@ import { resolveSongAccentColor } from "@/utils/accent-color";
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
+import { cacheTags } from "@/lib/cache-tags";
 import {
   getSongFolderIds,
   syncSongFolders,
@@ -70,6 +71,7 @@ export const updateSong = async (id: string, input: UpdateSongInput) => {
 
   revalidatePath("/");
   revalidatePath(`/musica/${song.id}`);
+  updateTag(cacheTags.songs(userId));
 
   return toSongType(song, 0, folderIds);
 };

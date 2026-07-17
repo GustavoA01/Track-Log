@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { AuthLayout } from "@/features/Auth/components/AuthLayout";
 import { LoginForm } from "@/features/Auth/container/LoginForm";
 
@@ -18,7 +19,9 @@ const LoginPage = () => (
       </>
     }
   >
-    <LoginForm />
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   </AuthLayout>
 );
 

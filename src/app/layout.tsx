@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Inter, Montserrat } from "next/font/google";
 import { ThemeProvider } from "@wrksz/themes/next";
 import { AppProviders } from "@/components/providers/AppProviders";
@@ -90,7 +91,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
       >
         <AppProviders>
           {children}
-          <AppBottomNav />
+          <Suspense fallback={null}>
+            <AppBottomNav />
+          </Suspense>
         </AppProviders>
       </ThemeProvider>
     </body>

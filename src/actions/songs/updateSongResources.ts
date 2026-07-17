@@ -1,10 +1,11 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
 import { getSongFolderIds } from "@/actions/songs/folderUtils";
 import { UpdateSongResourcesInput } from "../../data/types/actions";
+import { cacheTags } from "@/lib/cache-tags";
 
 export const updateSongResources = async (
   id: string,
@@ -27,6 +28,7 @@ export const updateSongResources = async (
   });
 
   revalidatePath(`/musica/${song.id}`);
+  updateTag(cacheTags.songs(userId));
 
   const folderIds = await getSongFolderIds(song.id);
 

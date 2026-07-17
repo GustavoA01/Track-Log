@@ -8,6 +8,7 @@ const update = jest.fn();
 const getSongFolderIds = jest.fn();
 const getCurrentUserId = jest.fn();
 const revalidatePath = jest.fn();
+const updateTag = jest.fn();
 
 jest.mock("@/lib/auth", () => ({
   getCurrentUserId: (...args: unknown[]) => getCurrentUserId(...args),
@@ -28,6 +29,7 @@ jest.mock("@/actions/songs/folderUtils", () => ({
 
 jest.mock("next/cache", () => ({
   revalidatePath: (...args: unknown[]) => revalidatePath(...args),
+  updateTag: (...args: unknown[]) => updateTag(...args),
 }));
 
 describe("updateSongStatus", () => {
@@ -65,6 +67,7 @@ describe("updateSongStatus", () => {
     });
     expect(revalidatePath).toHaveBeenCalledWith("/");
     expect(revalidatePath).toHaveBeenCalledWith("/musica/song-1");
+    expect(updateTag).toHaveBeenCalledWith("songs:user-1");
     expect(result.status).toBe("learned");
   });
 

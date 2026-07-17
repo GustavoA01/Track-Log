@@ -2,10 +2,13 @@
 import { getCurrentUserId } from "@/lib/auth";
 import { toSongType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
+import { cacheTag } from "next/cache";
+import { cacheTags } from "@/lib/cache-tags";
 
-export const getSongsByFolder = async (folderId: string) => {
-  const userId = await getCurrentUserId();
+const getCachedSongsByFolder = async (folderId: string, userId: string) => {
+  "use cache";
 
+  cacheTag(cacheTags.songs(userId));
   const songs = await prisma.song.findMany({
     where: {
       userId,
@@ -29,4 +32,9 @@ export const getSongsByFolder = async (folderId: string) => {
       song.folders.map((folder) => folder.folderId),
     ),
   );
+};
+
+export const getSongsByFolder = async (folderId: string) => {
+  const userId = await getCurrentUserId();
+  return getCachedSongsByFolder(folderId, userId);
 };

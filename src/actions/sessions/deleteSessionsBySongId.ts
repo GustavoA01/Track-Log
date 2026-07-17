@@ -1,8 +1,9 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { getCurrentUserId } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { cacheTags } from "@/lib/cache-tags";
 
 export const deleteSessionsBySongId = async (songId: string) => {
   const userId = await getCurrentUserId();
@@ -22,4 +23,5 @@ export const deleteSessionsBySongId = async (songId: string) => {
   revalidatePath("/");
   revalidatePath("/historico");
   revalidatePath(`/musica/${songId}`);
+  updateTag(cacheTags.sessions(userId));
 };

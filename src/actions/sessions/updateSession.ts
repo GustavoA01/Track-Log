@@ -1,6 +1,6 @@
 "use server";
 import { parse } from "date-fns";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { z } from "zod";
 import {
   editSessionSchema,
@@ -9,6 +9,7 @@ import {
 import { getCurrentUserId } from "@/lib/auth";
 import { toPracticeSessionType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
+import { cacheTags } from "@/lib/cache-tags";
 
 const sessionDateSchema = z
   .string()
@@ -52,6 +53,7 @@ export const updateSession = async (
   revalidatePath("/");
   revalidatePath("/historico");
   revalidatePath(`/musica/${session.songId}`);
+  updateTag(cacheTags.sessions(userId));
 
   return toPracticeSessionType(session);
 };

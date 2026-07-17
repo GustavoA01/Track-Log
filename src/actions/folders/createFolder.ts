@@ -1,10 +1,11 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { folderFormSchema } from "@/data/schemas/folder-form";
 import type { FolderFormValuesType } from "@/data/schemas/folder-form";
 import { getCurrentUserId } from "@/lib/auth";
 import { toFolderType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
+import { cacheTags } from "@/lib/cache-tags";
 
 const DEFAULT_FOLDER_COLOR = "#0d9488";
 
@@ -22,6 +23,7 @@ export const createFolder = async (input: FolderFormValuesType) => {
   });
 
   revalidatePath("/");
+  updateTag(cacheTags.folders(userId));
 
   return toFolderType(folder);
 };

@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { z } from "zod";
 import { getCurrentUserId } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -8,6 +8,7 @@ import { toSongType } from "@/utils/mappers";
 import { getSongFolderIds } from "@/actions/songs/folderUtils";
 import { songStatusValues } from "@/data/schemas/song-form";
 import type { SongStatusType } from "@/data/types";
+import { cacheTags } from "@/lib/cache-tags";
 
 const statusSchema = z.enum(songStatusValues);
 
@@ -31,6 +32,7 @@ export const updateSongStatus = async (id: string, status: SongStatusType) => {
 
   revalidatePath("/");
   revalidatePath(`/musica/${song.id}`);
+  updateTag(cacheTags.songs(userId));
 
   return toSongType(song, 0, folderIds);
 };

@@ -1,11 +1,12 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { createSessionSchema } from "@/data/schemas/create-session";
 import { getCurrentUserId } from "@/lib/auth";
 import { toPracticeSessionType } from "@/utils/mappers";
 import { prisma } from "@/lib/prisma";
 import type { CreateSessionInput } from "@/data/schemas/create-session";
+import { cacheTags } from "@/lib/cache-tags";
 
 export const createSession = async (data: CreateSessionInput) => {
   const userId = await getCurrentUserId();
@@ -30,6 +31,7 @@ export const createSession = async (data: CreateSessionInput) => {
   revalidatePath("/");
   revalidatePath("/historico");
   revalidatePath(`/musica/${songId}`);
+  updateTag(cacheTags.sessions(userId));
 
   return toPracticeSessionType(session);
 };

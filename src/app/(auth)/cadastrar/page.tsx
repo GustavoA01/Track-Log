@@ -1,13 +1,15 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { AuthGuard } from "@/features/Auth/container/AuthGuard";
 import { AuthLayout } from "@/features/Auth/components/AuthLayout";
 import { RegisterForm } from "@/features/Auth/container/RegisterForm";
+import { AuthLoading } from "@/features/Home/components/AuthLoading";
 
 type CadastrarPageProps = {
   searchParams: Promise<{ edit?: string }>;
 };
 
-const CadastrarPage = async ({ searchParams }: CadastrarPageProps) => {
+const CadastrarContent = async ({ searchParams }: CadastrarPageProps) => {
   const { edit } = await searchParams;
   const isEdit = edit === "true";
   const description = isEdit
@@ -47,5 +49,11 @@ const CadastrarPage = async ({ searchParams }: CadastrarPageProps) => {
     </AuthGuard>
   );
 };
+
+const CadastrarPage = (props: CadastrarPageProps) => (
+  <Suspense fallback={<AuthLoading />}>
+    <CadastrarContent {...props} />
+  </Suspense>
+);
 
 export default CadastrarPage;
