@@ -25,6 +25,8 @@ describe("mappers", () => {
   });
 
   it("maps song with defaults and optional null fields", () => {
+    const updatedAt = new Date("2026-01-15T00:00:00.000Z");
+
     expect(
       toSongType({
         id: "song-1",
@@ -41,7 +43,7 @@ describe("mappers", () => {
         tabUrl: null,
         accentColor: null,
         userId: "user-1",
-        updatedAt: new Date("2026-01-15"),
+        updatedAt,
       }),
     ).toEqual({
       id: "song-1",
@@ -53,6 +55,7 @@ describe("mappers", () => {
       difficulty: 3,
       status: "learning",
       createdAt: "2026-01-15",
+      updatedAt,
       notes: "Estudo",
       imageUrl: undefined,
       videoUrl: undefined,
@@ -63,6 +66,7 @@ describe("mappers", () => {
   });
 
   it("maps song with folder ids and total session time", () => {
+    const updatedAt = new Date("2026-01-16T12:30:00.000Z");
     const song = toSongType(
       {
         id: "song-1",
@@ -79,7 +83,7 @@ describe("mappers", () => {
         tabUrl: "https://tab.test",
         accentColor: "#111111",
         userId: "user-1",
-        updatedAt: new Date("2026-01-15"),
+        updatedAt,
       },
       45,
       ["folder-1", "folder-2"],
@@ -89,6 +93,7 @@ describe("mappers", () => {
     expect(song.folderIds).toEqual(["folder-1", "folder-2"]);
     expect(song.imageUrl).toBe("https://img.test/song.png");
     expect(song.accentColor).toBe("#111111");
+    expect(song.updatedAt).toBe(updatedAt);
   });
 
   it("maps practice session date to date-only string", () => {

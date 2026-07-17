@@ -4,7 +4,13 @@ import {
   Home,
   PlayCircle,
 } from "lucide-react";
-import type { SongStatusConfig, SongStatusType, StatusItemType } from "./types";
+import type {
+  SongStatusConfig,
+  SongStatusType,
+  SortByLabelType,
+  SortByType,
+  StatusItemType,
+} from "./types";
 
 export const statusItens: StatusItemType[] = [
   { label: "Todos", value: "all" },
@@ -12,6 +18,12 @@ export const statusItens: StatusItemType[] = [
   { label: "Aprendendo", value: "learning" },
   { label: "Pausada", value: "paused" },
   { label: "Quero aprender", value: "want_to_learn" },
+];
+
+export const sortItens: { label: SortByLabelType; value: SortByType }[] = [
+  { label: "Mais recentes", value: "createdAt" },
+  { label: "Atualizadas recentemente", value: "updatedAt" },
+  { label: "Dificuldade", value: "difficulty" },
 ];
 
 export const statusColors: Record<StatusItemType["value"], string> = {

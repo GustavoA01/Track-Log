@@ -2,13 +2,25 @@ import { render, screen } from "@testing-library/react";
 import { MusicsSection } from "../components/MusicsSection";
 import { folders, sessionCounts, songs } from "./test-data";
 
+const sortProps = {
+  reverseSongs: false,
+  setReverseSongs: jest.fn(),
+  sortBy: "createdAt" as const,
+  setSortBy: jest.fn(),
+};
+
 describe("MusicsSection", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("renders songs count in header", () => {
     render(
       <MusicsSection
         folders={folders}
         songs={songs}
         sessionCounts={sessionCounts}
+        {...sortProps}
       />,
     );
 
@@ -22,6 +34,7 @@ describe("MusicsSection", () => {
         folders={folders}
         songs={songs}
         sessionCounts={sessionCounts}
+        {...sortProps}
       />,
     );
 
@@ -30,7 +43,14 @@ describe("MusicsSection", () => {
   });
 
   it("renders empty state when there are no songs", () => {
-    render(<MusicsSection folders={folders} songs={[]} sessionCounts={{}} />);
+    render(
+      <MusicsSection
+        folders={folders}
+        songs={[]}
+        sessionCounts={{}}
+        {...sortProps}
+      />,
+    );
 
     expect(screen.getByText("Nenhuma música encontrada")).toBeInTheDocument();
     expect(screen.getByText("(0)")).toBeInTheDocument();
@@ -43,6 +63,7 @@ describe("MusicsSection", () => {
         songs={songs}
         sessionCounts={sessionCounts}
         selectedFolderId="folder-1"
+        {...sortProps}
       />,
     );
 
@@ -56,6 +77,7 @@ describe("MusicsSection", () => {
         folders={folders}
         songs={songs}
         sessionCounts={sessionCounts}
+        {...sortProps}
       />,
     );
 

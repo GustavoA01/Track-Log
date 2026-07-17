@@ -1,9 +1,12 @@
 import { useState, useMemo } from "react";
-import type { SongType, StatusItemType } from "@/data/types";
+import type { SongType, SortByType, StatusItemType } from "@/data/types";
+import { toTimestamp } from "@/utils/dates";
 
 export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
   const [query, setQuery] = useState("");
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<SortByType>("createdAt");
+  const [reverseSongs, setReverseSongs] = useState(false);
   const [statusQuery, setStatusQuery] =
     useState<StatusItemType["value"]>("all");
 
@@ -18,7 +21,7 @@ export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
   const filteredSongs = useMemo(() => {
     let result = selectedFolderId
       ? songs.filter((song) => song.folderIds.includes(selectedFolderId))
-      : songs;
+      : [...songs];
 
     if (normalizedQuery) {
       result = result.filter(
@@ -32,8 +35,28 @@ export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
       result = result.filter((song) => song.status === statusQuery);
     }
 
+    const sortFunctions: Record<
+      SortByType,
+      (a: SongType, b: SongType) => number
+    > = {
+      difficulty: (a, b) => b.difficulty - a.difficulty,
+      updatedAt: (a, b) => toTimestamp(b.updatedAt) - toTimestamp(a.updatedAt),
+      createdAt: (a, b) => toTimestamp(b.createdAt) - toTimestamp(a.createdAt),
+    };
+
+    result = [...result].sort(sortFunctions[sortBy]);
+
+    if (reverseSongs) result = result.reverse();
+
     return result;
-  }, [normalizedQuery, selectedFolderId, songs, statusQuery]);
+  }, [
+    normalizedQuery,
+    selectedFolderId,
+    songs,
+    statusQuery,
+    sortBy,
+    reverseSongs,
+  ]);
 
   return {
     query,
@@ -43,5 +66,9 @@ export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
     filteredSongs,
     statusQuery,
     setStatusQuery,
+    reverseSongs,
+    setReverseSongs,
+    sortBy,
+    setSortBy,
   };
 };

@@ -20,8 +20,8 @@ describe("useLibraryBrowser", () => {
 
     expect(result.current.filteredSongs).toHaveLength(2);
     expect(result.current.filteredSongs.map((song) => song.id)).toEqual([
-      "song-1",
       "song-3",
+      "song-1",
     ]);
   });
 
@@ -78,8 +78,8 @@ describe("useLibraryBrowser", () => {
     });
 
     expect(result.current.filteredSongs.map((song) => song.id)).toEqual([
-      "song-2",
       "song-3",
+      "song-2",
     ]);
   });
 });

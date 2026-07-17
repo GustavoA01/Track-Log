@@ -32,6 +32,7 @@ export const toSongType = (
   difficulty: song.difficulty,
   status: song.status as SongStatusType,
   createdAt: toDateOnlyString(song.createdAt),
+  updatedAt: song.updatedAt,
   notes: song.notes,
   imageUrl: song.imageUrl ?? undefined,
   videoUrl: song.videoUrl ?? undefined,

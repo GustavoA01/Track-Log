@@ -24,6 +24,10 @@ export const LibraryBrowser = ({
     filteredSongs,
     setStatusQuery,
     statusQuery,
+    reverseSongs,
+    setReverseSongs,
+    sortBy,
+    setSortBy,
   } = useLibraryBrowser({ songs });
 
   return (
@@ -45,6 +49,10 @@ export const LibraryBrowser = ({
         songs={filteredSongs}
         sessionCounts={sessionCounts}
         selectedFolderId={selectedFolderId}
+        reverseSongs={reverseSongs}
+        setReverseSongs={setReverseSongs}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
       />
     </div>
   );

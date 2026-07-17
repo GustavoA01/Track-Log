@@ -15,6 +15,13 @@ export type StatusItemType = {
   value: SongStatusType | "all";
 };
 
+export type SortByType = "createdAt" | "updatedAt" | "difficulty";
+
+export type SortByLabelType =
+  | "Mais recentes"
+  | "Atualizadas recentemente"
+  | "Dificuldade";
+
 export interface FolderType {
   id: string;
   name: string;
@@ -32,6 +39,7 @@ export interface SongType {
   difficulty: number;
   status: SongStatusType;
   createdAt: string;
+  updatedAt: Date;
   notes: string;
   imageUrl?: string;
   videoUrl?: string;

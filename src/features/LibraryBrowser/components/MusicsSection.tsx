@@ -1,16 +1,17 @@
-import type { FolderType, SongType } from "@/data/types";
-import Link from "next/link";
-import { Plus } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import type { FolderType, SortByType, SongType } from "@/data/types";
 import { MusicCard } from "./MusicCard";
 import { MusicListItem } from "./MusicListItem";
+import { MusicSectionHeader } from "./MusicSectionHeader";
 
 type MusicsSectionProps = {
   folders: FolderType[];
   songs: SongType[];
   sessionCounts: Record<string, number>;
   selectedFolderId?: string | null;
+  reverseSongs: boolean;
+  setReverseSongs: (reverse: boolean) => void;
+  sortBy: SortByType;
+  setSortBy: (sortBy: SortByType) => void;
 };
 
 export const MusicsSection = ({
@@ -18,6 +19,10 @@ export const MusicsSection = ({
   songs,
   sessionCounts,
   selectedFolderId,
+  reverseSongs,
+  setReverseSongs,
+  sortBy,
+  setSortBy,
 }: MusicsSectionProps) => {
   const selectedFolder = folders.find(
     (folder) => folder.id === selectedFolderId,
@@ -25,24 +30,15 @@ export const MusicsSection = ({
 
   return (
     <section className="space-y-3">
-      <header className="flex items-center justify-between gap-3">
-        <div className="flex items-center">
-          <h2 className="text-sm font-medium">Músicas</h2>
-          <span className="ml-1.5 font-normal text-muted-foreground">
-            ({songs.length})
-          </span>
-        </div>
-
-        {selectedFolder && (
-          <Link
-            href={`/musica/nova?folderId=${selectedFolder.id}`}
-            className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
-          >
-            <Plus data-icon="inline-start" />
-            Nova música em {selectedFolder.name}
-          </Link>
-        )}
-      </header>
+      <MusicSectionHeader
+        songsLength={songs.length}
+        selectedFolderId={selectedFolderId || null}
+        selectedFolderName={selectedFolder?.name ?? ""}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        reverseSongs={reverseSongs}
+        setReverseSongs={setReverseSongs}
+      />
 
       {songs.length > 0 ? (
         <>
