@@ -1,7 +1,7 @@
 "use client";
 import { FormProvider } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { AuthLoading } from "../components/AuthLoading";
+import { AuthLoading } from "../../../components/skeletons/AuthLoading";
 import { RegisterFormFields } from "../components/RegisterFormFields";
 import { useRegisterForm } from "../hooks/useRegisterForm";
 

@@ -8,6 +8,8 @@ import { getSongs } from "@/actions/songs/getSongs";
 import { LibraryBrowser } from "@/features/LibraryBrowser/container/LibraryBrowser";
 import { getOptionalCurrentUserId } from "@/lib/auth";
 import { GuestHome } from "@/features/Home/components/GuestHome";
+import { Suspense } from "react";
+import { HomeSkeleton } from "@/components/skeletons";
 
 const HomePage = async () => {
   const userId = await getOptionalCurrentUserId();
@@ -24,29 +26,33 @@ const HomePage = async () => {
     ]);
 
   return (
-    <main className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
-      <section className="space-y-1">
-        <h1 className="text-2xl font-semibold tracking-tight">Olá, músico!</h1>
-        <p className="text-muted-foreground">
-          Veja seu progresso e continue evoluindo nas suas músicas.
-        </p>
-      </section>
+    <Suspense fallback={<HomeSkeleton />}>
+      <main className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
+        <section className="space-y-1">
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Olá, músico!
+          </h1>
+          <p className="text-muted-foreground">
+            Veja seu progresso e continue evoluindo nas suas músicas.
+          </p>
+        </section>
 
-      <StatsCards songs={songs} practiceStats={practiceStats} />
+        <StatsCards songs={songs} practiceStats={practiceStats} />
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="min-w-0 lg:col-span-2">
-          <LibraryBrowser
-            songs={songs}
-            folders={folders}
-            sessionCounts={sessionCounts}
-          />
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="min-w-0 lg:col-span-2">
+            <LibraryBrowser
+              songs={songs}
+              folders={folders}
+              sessionCounts={sessionCounts}
+            />
+          </div>
+          <div className="hidden lg:block">
+            <RecentSessions songs={songs} sessions={sessions} />
+          </div>
         </div>
-        <div className="hidden lg:block">
-          <RecentSessions songs={songs} sessions={sessions} />
-        </div>
-      </div>
-    </main>
+      </main>
+    </Suspense>
   );
 };
 

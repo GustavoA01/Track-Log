@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-const Loading = () => (
+const DetailsLoading = () => (
   <div className="min-h-full bg-background" aria-busy="true" aria-live="polite">
     <div className="border-b bg-background/80">
       <div className="container mx-auto flex h-14 items-center gap-3 px-4 sm:px-6">
@@ -38,4 +38,4 @@ const Loading = () => (
   </div>
 );
 
-export default Loading;
+export default DetailsLoading;

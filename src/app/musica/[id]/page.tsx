@@ -4,6 +4,8 @@ import { getSessionsBySongId } from "@/actions/sessions/getSessionsBySongId";
 import { getSongById } from "@/actions/songs/getSongById";
 import { SongDetailContent } from "@/features/SongDetail/container/SongDetailContent";
 import { getSongDetailBackHref } from "@/utils/navigation";
+import { Suspense } from "react";
+import DetailsLoading from "./loading";
 
 type MusicPageProps = {
   params: Promise<{ id: string }>;
@@ -22,12 +24,14 @@ const MusicPage = async ({ params, searchParams }: MusicPageProps) => {
   if (!song) notFound();
 
   return (
-    <SongDetailContent
-      song={song}
-      sessions={sessions}
-      folders={folders}
-      backHref={getSongDetailBackHref(from)}
-    />
+    <Suspense fallback={<DetailsLoading />}>
+      <SongDetailContent
+        song={song}
+        sessions={sessions}
+        folders={folders}
+        backHref={getSongDetailBackHref(from)}
+      />
+    </Suspense>
   );
 };
 
