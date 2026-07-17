@@ -4,13 +4,16 @@ import { buttonVariants } from "@/components/ui/button";
 import { useAuth } from "@/components/providers/useAuthProvider";
 import { cn } from "@/lib/utils";
 import { HeaderContent } from "@/features/Home/components/HeaderContent";
+import { HeaderActionsSkeleton } from "@/features/Home/components/HeaderActionsSkeleton";
 
 export const HomeHeaderActions = () => {
   const { isAuthenticated, isLoading, user } = useAuth();
 
+  if (isLoading) return <HeaderActionsSkeleton />;
+
   return (
     <div className="flex shrink-0 items-center gap-1">
-      {isLoading ? null : !isAuthenticated ? (
+      {!isAuthenticated ? (
         <>
           <Link
             href="/login"

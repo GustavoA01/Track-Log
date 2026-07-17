@@ -18,6 +18,23 @@ describe("HomeHeaderActions", () => {
     jest.clearAllMocks();
   });
 
+  it("shows skeleton while authentication loads", () => {
+    useAuth.mockReturnValue({
+      user: null,
+      isLoading: true,
+      isAuthenticated: false,
+    });
+
+    render(<HomeHeaderActions />);
+
+    expect(
+      screen.getByRole("status", {
+        name: "Carregando ações do cabeçalho",
+      }),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+  });
+
   it("shows guest links when unauthenticated", () => {
     useAuth.mockReturnValue({
       user: null,

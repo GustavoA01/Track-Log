@@ -31,15 +31,15 @@ export const MusicSectionHeader = ({
   reverseSongs,
   setReverseSongs,
 }: MusicSectionHeaderProps) => (
-  <header className="flex items-center justify-between gap-3">
-    <div className="flex items-center">
+  <header className="flex min-w-0 items-center justify-between gap-3">
+    <div className="flex shrink-0 items-center">
       <h2 className="text-sm font-medium">Músicas</h2>
       <span className="ml-1.5 font-normal text-muted-foreground">
         ({songsLength})
       </span>
     </div>
 
-    <div className="flex items-center gap-2">
+    <div className="flex min-w-0 flex-1 items-center justify-end gap-2">
       {selectedFolderId && (
         <Link
           href={`/musica/nova?folderId=${selectedFolderId}`}
@@ -63,9 +63,9 @@ export const MusicSectionHeader = ({
             {sortItens.find((item) => item.value === sortBy)?.label}
           </SelectValue>
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="min-w-56">
           {sortItens.map(({ label, value }) => (
-            <SelectItem key={value} value={value}>
+            <SelectItem className="w-full" key={value} value={value}>
               {label}
             </SelectItem>
           ))}
