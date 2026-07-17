@@ -24,7 +24,7 @@ export const ActiveSessionBar = ({
     role="status"
     aria-live="polite"
     className={cn(
-      "fixed bottom-4 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2",
+      "fixed bottom-4 max-sm:bottom-20 left-1/2 z-50 w-[calc(100%-2rem)] max-w-md -translate-x-1/2",
       className,
     )}
   >
