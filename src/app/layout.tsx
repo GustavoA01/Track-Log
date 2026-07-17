@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import { ThemeProvider } from "@wrksz/themes/next";
 import { AppProviders } from "@/components/providers/AppProviders";
+import { AppBottomNav } from "@/components/AppBottomNav";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
@@ -87,7 +88,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
         defaultTheme="system"
         disableTransitionOnChange
       >
-        <AppProviders>{children}</AppProviders>
+        <AppProviders>
+          {children}
+          <AppBottomNav />
+        </AppProviders>
       </ThemeProvider>
     </body>
   </html>

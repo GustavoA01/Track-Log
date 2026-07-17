@@ -1,4 +1,3 @@
-import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { AuthGuard } from "@/features/Auth/container/AuthGuard";
 
 type MusicLayoutProps = {
@@ -7,8 +6,7 @@ type MusicLayoutProps = {
 
 const MusicLayout = ({ children }: MusicLayoutProps) => (
   <AuthGuard mode="protected">
-    <div className="pb-16 sm:pb-0">{children}</div>
-    <MobileBottomNav />
+    <div className="min-h-full pb-16 sm:pb-0">{children}</div>
   </AuthGuard>
 );
 
