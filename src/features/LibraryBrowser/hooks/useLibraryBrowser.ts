@@ -1,13 +1,11 @@
 import { useState, useMemo } from "react";
-import type { SongType } from "@/data/types";
+import type { SongType, StatusItemType } from "@/data/types";
 
-type UseLibraryBrowserProps = {
-  songs: SongType[];
-};
-
-export const useLibraryBrowser = ({ songs }: UseLibraryBrowserProps) => {
+export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
   const [query, setQuery] = useState("");
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
+  const [statusQuery, setStatusQuery] =
+    useState<StatusItemType["value"]>("all");
 
   const normalize = (text: string) =>
     text
@@ -30,8 +28,12 @@ export const useLibraryBrowser = ({ songs }: UseLibraryBrowserProps) => {
       );
     }
 
+    if (statusQuery !== "all") {
+      result = result.filter((song) => song.status === statusQuery);
+    }
+
     return result;
-  }, [normalizedQuery, selectedFolderId, songs]);
+  }, [normalizedQuery, selectedFolderId, songs, statusQuery]);
 
   return {
     query,
@@ -39,5 +41,7 @@ export const useLibraryBrowser = ({ songs }: UseLibraryBrowserProps) => {
     selectedFolderId,
     setSelectedFolderId,
     filteredSongs,
+    statusQuery,
+    setStatusQuery,
   };
 };

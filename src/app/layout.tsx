@@ -74,17 +74,13 @@ export const metadata: Metadata = {
   },
 };
 
-const RootLayout = ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => (
+const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html
     lang="pt-BR"
     suppressHydrationWarning
     className={cn("h-full antialiased", inter.variable, montserrat.variable)}
   >
-    <body className="min-h-full font-sans">
+    <body className="min-h-full font-sans overflow-x-hidden">
       <ThemeProvider
         enableSystem
         attribute="class"

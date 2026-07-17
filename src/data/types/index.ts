@@ -4,6 +4,17 @@ export type SongStatusType =
   | "learned"
   | "paused";
 
+export type StatusLabelType =
+  | "Aprendida"
+  | "Aprendendo"
+  | "Pausada"
+  | "Quero aprender";
+
+export type StatusItemType = {
+  label: StatusLabelType | "Todos";
+  value: SongStatusType | "all";
+};
+
 export interface FolderType {
   id: string;
   name: string;
@@ -38,7 +49,7 @@ export interface PracticeSessionType {
 }
 
 export type SongStatusConfig = {
-  label: string;
+  label: StatusLabelType;
   badgeClassName: string;
   selectTriggerClassName: string;
 };

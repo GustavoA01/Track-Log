@@ -22,11 +22,18 @@ export const LibraryBrowser = ({
     selectedFolderId,
     setSelectedFolderId,
     filteredSongs,
+    setStatusQuery,
+    statusQuery,
   } = useLibraryBrowser({ songs });
 
   return (
     <div className="min-w-0 space-y-6">
-      <SearchSection query={query} setQuery={setQuery} />
+      <SearchSection
+        query={query}
+        setQuery={setQuery}
+        statusQuery={statusQuery}
+        setStatusQuery={setStatusQuery}
+      />
       <FolderSection
         folders={folders}
         songs={songs}
