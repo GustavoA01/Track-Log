@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/components/providers/useAuthProvider";
-import { AuthLoading } from "../../../components/skeletons/AuthLoading";
+import { AuthLoading } from "@/features/Home/components/AuthLoading";
 
 type AuthGuardProps = {
   children: React.ReactNode;

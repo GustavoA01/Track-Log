@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const HomeSkeleton = () => (
+const HomeLoading = () => (
   <main
     className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6 sm:py-8"
     aria-busy="true"
@@ -35,3 +35,5 @@ export const HomeSkeleton = () => (
     </div>
   </main>
 );
+
+export default HomeLoading;
