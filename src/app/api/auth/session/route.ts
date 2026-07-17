@@ -16,13 +16,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Token inválido" }, { status: 401 });
   }
 
+  const oneHour = 60 * 60;
+  const oneDay = oneHour * 24;
+
   const response = NextResponse.json({ ok: true });
   response.cookies.set(AUTH_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60, // 1 hour
+    maxAge: oneDay * 7,
   });
 
   return response;
