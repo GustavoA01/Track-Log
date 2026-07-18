@@ -1,4 +1,4 @@
-import { SessionHistoryList } from "@/components/SessionHistoryList";
+import { HistorySessions } from "@/features/Home/components/HistorySessions";
 import { getAllSessions } from "@/actions/sessions/getAllSessions";
 import { getPracticeStats } from "@/actions/sessions/getPracticeStats";
 import { getSongs } from "@/actions/songs/getSongs";
@@ -26,7 +26,7 @@ export const HistoryContent = async () => {
         </p>
       </section>
 
-      <SessionHistoryList
+      <HistorySessions
         sessions={sessions}
         songs={songs}
         from={songDetailFrom.historico}

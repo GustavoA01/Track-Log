@@ -20,18 +20,25 @@ export const createSession = async (data: CreateSessionInput) => {
     throw new Error("Música não encontrada");
   }
 
-  const session = await prisma.practiceSession.create({
-    data: {
-      songId,
-      minutes,
-      notes,
-    },
-  });
+  const [session] = await prisma.$transaction([
+    prisma.practiceSession.create({
+      data: {
+        songId,
+        minutes,
+        notes,
+      },
+    }),
+    prisma.song.update({
+      where: { id: songId },
+      data: { updatedAt: new Date() },
+    }),
+  ]);
 
   revalidatePath("/");
   revalidatePath("/historico");
   revalidatePath(`/musica/${songId}`);
   updateTag(cacheTags.sessions(userId));
+  updateTag(cacheTags.songs(userId));
 
   return toPracticeSessionType(session);
 };

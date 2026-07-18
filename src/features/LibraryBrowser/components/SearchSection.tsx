@@ -1,5 +1,3 @@
-import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -9,7 +7,7 @@ import {
 } from "@/components/ui/select";
 import type { StatusItemType } from "@/data/types";
 import { statusColors, statusItens } from "@/data/constants";
-import { ChangeEvent } from "react";
+import { SearchInput } from "@/components/SearchInput";
 
 type SearchSectionProps = {
   query: string;
@@ -25,18 +23,7 @@ export const SearchSection = ({
   setStatusQuery,
 }: SearchSectionProps) => (
   <div className="flex flex-col sm:flex-row gap-4">
-    <section className="relative flex-1">
-      <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-      <Input
-        type="search"
-        value={query}
-        className="pl-9"
-        placeholder="Buscar músicas, artistas ou pastas..."
-        onChange={(event: ChangeEvent<HTMLInputElement>) =>
-          setQuery(event.target.value)
-        }
-      />
-    </section>
+    <SearchInput query={query} setQuery={setQuery} />
     <Select
       value={statusQuery}
       onValueChange={(value) => setStatusQuery(value!)}

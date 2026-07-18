@@ -5,7 +5,7 @@ import { toTimestamp } from "@/utils/dates";
 export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
   const [query, setQuery] = useState("");
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<SortByType>("createdAt");
+  const [sortBy, setSortBy] = useState<SortByType>("updatedAt");
   const [reverseSongs, setReverseSongs] = useState(false);
   const [statusQuery, setStatusQuery] =
     useState<StatusItemType["value"]>("all");

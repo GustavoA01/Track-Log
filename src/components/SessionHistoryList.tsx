@@ -7,6 +7,7 @@ type SessionHistoryListProps = {
   songs: SongType[];
   limit?: number;
   from?: SongDetailFrom;
+  emptyMessage?: string;
 };
 
 export const SessionHistoryList = ({
@@ -14,13 +15,14 @@ export const SessionHistoryList = ({
   songs,
   limit,
   from,
+  emptyMessage = "Nenhuma sessão registrada ainda.",
 }: SessionHistoryListProps) => {
   const displayed = limit ? sessions.slice(0, limit) : sessions;
 
   if (displayed.length === 0) {
     return (
       <p className="py-12 text-center text-sm text-muted-foreground">
-        Nenhuma sessão registrada ainda.
+        {emptyMessage}
       </p>
     );
   }
