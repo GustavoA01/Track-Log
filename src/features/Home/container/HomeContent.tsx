@@ -8,6 +8,7 @@ import { getSongs } from "@/actions/songs/getSongs";
 import { LibraryBrowser } from "@/features/LibraryBrowser/container/LibraryBrowser";
 import { getOptionalCurrentUserId } from "@/lib/auth";
 import { GuestHome } from "@/features/Home/components/GuestHome";
+import { ScrollUpButton } from "@/components/ScrollUpButton";
 
 export const HomeContent = async () => {
   const userId = await getOptionalCurrentUserId();
@@ -46,6 +47,8 @@ export const HomeContent = async () => {
           <RecentSessions songs={songs} sessions={sessions} />
         </div>
       </div>
+
+      <ScrollUpButton />
     </main>
   );
 };

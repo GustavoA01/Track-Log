@@ -1,14 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import { usePathname } from "next/navigation";
-import { MobileBottomNav } from "@/components/MobileBottomNav";
+import { BottomNav } from "@/components/BottomNav";
 
 const mockUsePathname = usePathname as jest.Mock;
 
-describe("MobileBottomNav", () => {
+describe("BottomNav", () => {
   it("renders mobile navigation tabs", () => {
     mockUsePathname.mockReturnValue("/");
 
-    render(<MobileBottomNav />);
+    render(<BottomNav />);
 
     expect(screen.getByRole("link", { name: "Início" })).toHaveAttribute(
       "href",
@@ -23,7 +23,7 @@ describe("MobileBottomNav", () => {
   it("applies active style to the matching tab", () => {
     mockUsePathname.mockReturnValue("/historico");
 
-    render(<MobileBottomNav />);
+    render(<BottomNav />);
 
     expect(screen.getByRole("link", { name: "Histórico" })).toHaveClass(
       "text-primary",
@@ -31,5 +31,13 @@ describe("MobileBottomNav", () => {
     expect(screen.getByRole("link", { name: "Início" })).toHaveClass(
       "text-muted-foreground",
     );
+  });
+
+  it("hides on auth routes", () => {
+    mockUsePathname.mockReturnValue("/login");
+
+    const { container } = render(<BottomNav />);
+
+    expect(container).toBeEmptyDOMElement();
   });
 });

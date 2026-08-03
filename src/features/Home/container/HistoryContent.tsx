@@ -3,6 +3,7 @@ import { getAllSessions } from "@/actions/sessions/getAllSessions";
 import { getPracticeStats } from "@/actions/sessions/getPracticeStats";
 import { getSongs } from "@/actions/songs/getSongs";
 import { songDetailFrom } from "@/utils/navigation";
+import { ScrollUpButton } from "@/components/ScrollUpButton";
 
 export const HistoryContent = async () => {
   const [songs, sessions, practiceStats] = await Promise.all([
@@ -31,6 +32,7 @@ export const HistoryContent = async () => {
         songs={songs}
         from={songDetailFrom.historico}
       />
+      <ScrollUpButton />
     </main>
   );
 };
