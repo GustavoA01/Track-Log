@@ -16,7 +16,7 @@ import type { LoginFormValuesType } from "@/data/schemas/login-form";
 import type { RegisterFormValuesType } from "@/data/schemas/register-form";
 import { getFirebaseAuth } from "./config";
 import { syncAuthSession } from "./session";
-import { authErrorMessages } from "@/data/constants";
+import { authErrorMessages } from "./auth-constants";
 
 export const registerWithEmail = async ({
   name,

@@ -16,3 +16,15 @@ export const isAuthPublicPath = (pathname: string) =>
 
 export const isAuthGuestOnlyPath = (pathname: string) =>
   AUTH_GUEST_ONLY_PATHS.some((path) => matchesPath(pathname, path));
+
+export const authErrorMessages = {
+  "auth/email-already-in-use": "Este e-mail já está em uso.",
+  "auth/invalid-email": "E-mail inválido.",
+  "auth/invalid-credential": "E-mail ou senha incorretos.",
+  "auth/wrong-password": "E-mail ou senha incorretos.",
+  "auth/user-not-found": "E-mail ou senha incorretos.",
+  "auth/weak-password": "A senha é muito fraca.",
+  "auth/requires-recent-login": "Informe sua senha atual para continuar.",
+  "auth/too-many-requests":
+    "Muitas tentativas. Aguarde um momento e tente novamente.",
+};

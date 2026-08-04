@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { HomeContent } from "@/features/Home/container/HomeContent";
-import HomeLoading from "./loading";
+import { HomeLoading } from "@/features/Home/components/HomeLoading";
 
 const HomePage = () => (
   <Suspense fallback={<HomeLoading />}>

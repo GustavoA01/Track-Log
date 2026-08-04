@@ -9,11 +9,18 @@ import { LibraryBrowser } from "@/features/LibraryBrowser/container/LibraryBrows
 import { getOptionalCurrentUserId } from "@/lib/auth";
 import { GuestHome } from "@/features/Home/components/GuestHome";
 import { ScrollUpButton } from "@/components/ScrollUpButton";
+import { HomeGuard } from "@/features/Home/container/HomeGuard";
 
 export const HomeContent = async () => {
   const userId = await getOptionalCurrentUserId();
 
-  if (!userId) return <GuestHome />;
+  if (!userId) {
+    return (
+      <HomeGuard isServerAuthenticated={false}>
+        <GuestHome />
+      </HomeGuard>
+    );
+  }
 
   const [folders, songs, practiceStats, sessionCounts, sessions] =
     await Promise.all([
@@ -25,30 +32,34 @@ export const HomeContent = async () => {
     ]);
 
   return (
-    <main className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
-      <section className="space-y-1">
-        <h1 className="text-2xl font-semibold tracking-tight">Olá, músico!</h1>
-        <p className="text-muted-foreground">
-          Veja seu progresso e continue evoluindo nas suas músicas.
-        </p>
-      </section>
+    <HomeGuard isServerAuthenticated>
+      <main className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
+        <section className="space-y-1">
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Olá, músico!
+          </h1>
+          <p className="text-muted-foreground">
+            Veja seu progresso e continue evoluindo nas suas músicas.
+          </p>
+        </section>
 
-      <StatsCards songs={songs} practiceStats={practiceStats} />
+        <StatsCards songs={songs} practiceStats={practiceStats} />
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="min-w-0 lg:col-span-2">
-          <LibraryBrowser
-            songs={songs}
-            folders={folders}
-            sessionCounts={sessionCounts}
-          />
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="min-w-0 lg:col-span-2">
+            <LibraryBrowser
+              songs={songs}
+              folders={folders}
+              sessionCounts={sessionCounts}
+            />
+          </div>
+          <div className="hidden lg:block">
+            <RecentSessions songs={songs} sessions={sessions} />
+          </div>
         </div>
-        <div className="hidden lg:block">
-          <RecentSessions songs={songs} sessions={sessions} />
-        </div>
-      </div>
 
-      <ScrollUpButton />
-    </main>
+        <ScrollUpButton />
+      </main>
+    </HomeGuard>
   );
 };
