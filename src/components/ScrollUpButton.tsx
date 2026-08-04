@@ -23,12 +23,12 @@ export const ScrollUpButton = () => {
 
   return (
     <Button
-      size="icon"
+      size="icon-lg"
       variant="outline"
       onClick={handleScrollUp}
       aria-label="Voltar ao topo"
       className={cn(
-        "fixed right-4 bottom-20 z-40 rounded-full sm:bottom-4",
+        "fixed right-4 bottom-20 z-40 rounded-full bg-background sm:bottom-4",
         "transition-all duration-200",
         isVisible
           ? "scale-100 opacity-100"
