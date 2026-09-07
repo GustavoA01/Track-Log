@@ -24,15 +24,19 @@ export const useUpdateSongStatusMutation = ({
   const [showSuccess, setShowSuccess] = useState(false);
   const queryClient = useQueryClient();
 
-  const { mutateAsync: updateStatusFn, isPending } = useMutation({
+  const {
+    mutateAsync: updateStatusFn,
+    isPending,
+    variables,
+  } = useMutation({
     mutationFn: ({ songId, status }: UpdateSongStatusVariables) =>
       updateSongStatus(songId, status),
     onSuccess: (song: SongType) => {
       queryClient.invalidateQueries({ queryKey: songKeys.all });
       queryClient.invalidateQueries({ queryKey: songKeys.detail(song.id) });
       toast.success("Status atualizado!");
-      setShowSuccess(true);
-      onStatusChange("learned");
+      if (song.status === "learned") setShowSuccess(true);
+      onStatusChange(song.status);
     },
     onError: (error) => {
       toast.error(
@@ -43,15 +47,19 @@ export const useUpdateSongStatusMutation = ({
     },
   });
 
-  const handleMarkAsLearned = async () => {
-    if (isPending || showSuccess) return;
+  const handleUpdateStatus = async (nextStatus: SongStatusType) => {
+    if (isPending || showSuccess || nextStatus === status) return;
     try {
-      await updateStatusFn({ songId, status: "learned" });
+      await updateStatusFn({ songId, status: nextStatus });
     } catch {}
   };
 
+  const handleMarkAsLearned = () => handleUpdateStatus("learned");
+
   return {
     isPending,
+    pendingStatus: isPending ? variables?.status : undefined,
+    handleUpdateStatus,
     handleMarkAsLearned,
     showSuccess,
     shouldRender: status !== "learned" || showSuccess,

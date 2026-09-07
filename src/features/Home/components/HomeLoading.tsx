@@ -21,7 +21,7 @@ export const HomeLoading = () => (
       <div className="space-y-4 lg:col-span-2">
         <Skeleton className="h-10 w-full rounded-xl" />
         <div className="flex gap-3 overflow-hidden">
-          {Array.from({ length: 4 }).map((_, index) => (
+          {Array.from({ length: 6 }).map((_, index) => (
             <Skeleton key={index} className="h-36 w-28 shrink-0 rounded-xl" />
           ))}
         </div>
