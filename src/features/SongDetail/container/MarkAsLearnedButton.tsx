@@ -28,9 +28,9 @@ export const MarkAsLearnedButton = ({
     status,
     onStatusChange,
   });
-
-  const showPause = status !== "paused" && !showSuccess;
-  const showLearning = status !== "learning" && !showSuccess;
+  const notLearned = status !== "learned";
+  const showPause = status !== "paused" && notLearned && !showSuccess;
+  const showLearning = status !== "learning" && notLearned && !showSuccess;
   const hasActions = shouldRender || showPause || showLearning;
 
   if (!hasActions) return null;

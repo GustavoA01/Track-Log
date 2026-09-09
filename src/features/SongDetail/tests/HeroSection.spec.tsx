@@ -163,10 +163,12 @@ describe("HeroSection", () => {
     expect(
       screen.queryByRole("button", { name: /marcar como aprendida/i }),
     ).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Pausar" })).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Aprendendo" }),
-    ).toBeInTheDocument();
+      screen.queryByRole("button", { name: "Pausar" }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Aprendendo" }),
+    ).not.toBeInTheDocument();
   });
 
   it("hides the action for the current status", () => {
