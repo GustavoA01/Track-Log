@@ -7,9 +7,9 @@ import { SongForm } from "@/features/SongForm/container/SongForm";
 const NewSongPage = async ({
   searchParams,
 }: {
-  searchParams: Promise<{ songId?: string; folderId?: string }>;
+  searchParams: Promise<{ songId?: string; folderId?: string; focus?: string }>;
 }) => {
-  const { songId, folderId } = await searchParams;
+  const { songId, folderId, focus } = await searchParams;
   const [song, folders] = await Promise.all([
     songId ? getSongById(songId) : Promise.resolve(null),
     getFolders(),
@@ -31,6 +31,7 @@ const NewSongPage = async ({
         song={song}
         folders={folders}
         initialFolderIds={initialFolderIds}
+        focusNotes={isEditing && focus === "notes"}
       />
     </SongFormLayout>
   );

@@ -61,6 +61,19 @@ describe("SongForm", () => {
     expect(screen.getByText("Selecione uma pasta")).toBeInTheDocument();
   });
 
+  it("focuses the notes field without clearing existing notes when requested", () => {
+    render(<SongForm song={song} focusNotes />);
+
+    expect(screen.getByLabelText("Anotações")).toHaveFocus();
+    expect(screen.getByLabelText("Anotações")).toHaveValue(song.notes);
+  });
+
+  it("does not focus notes during regular editing", () => {
+    render(<SongForm song={song} />);
+
+    expect(screen.getByLabelText("Anotações")).not.toHaveFocus();
+  });
+
   it("calls router.back on cancel", async () => {
     const user = userEvent.setup();
 

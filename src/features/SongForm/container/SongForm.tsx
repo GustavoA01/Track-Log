@@ -21,12 +21,14 @@ type SongFormProps = {
   song?: SongType | null;
   folders?: FolderType[];
   initialFolderIds?: string[];
+  focusNotes?: boolean;
 };
 
 export const SongForm = ({
   song,
   folders = [],
   initialFolderIds,
+  focusNotes = false,
 }: SongFormProps) => {
   const {
     methods,
@@ -83,6 +85,8 @@ export const SongForm = ({
               </FormFieldLabel>
               <Textarea
                 id="notes"
+                autoFocus={focusNotes}
+                className="scroll-mt-20"
                 placeholder="Observações sobre o que praticar, dificuldades..."
                 rows={4}
                 {...register("notes")}

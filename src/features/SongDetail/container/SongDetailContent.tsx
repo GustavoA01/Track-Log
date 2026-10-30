@@ -2,6 +2,7 @@
 import { tabResourceDefaults, videoResourceDefaults } from "@/data/constants";
 import type { FolderType, PracticeSessionType, SongType } from "@/data/types";
 import { SongMetadata } from "@/features/SongDetail/components/SongMetadata";
+import { SongNotes } from "@/features/SongDetail/components/SongNotes";
 import { SongResourceCard } from "@/features/SongDetail/container/SongResourceCard";
 import { SongSessions } from "@/features/SongDetail/components/SongSessions";
 import { ActiveSessionBar } from "@/features/StartSession/components/ActiveSessionBar";
@@ -93,14 +94,7 @@ export const SongDetailContent = ({
             }
           />
 
-          {song.notes && (
-            <div className="rounded-xl border bg-muted/30 p-4">
-              <p className="mb-1 text-xs font-medium text-muted-foreground">
-                Anotações
-              </p>
-              <p className="text-sm">{song.notes}</p>
-            </div>
-          )}
+          <SongNotes songId={song.id} notes={song.notes} />
 
           <section className="space-y-4">
             <div>
