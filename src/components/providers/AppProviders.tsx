@@ -11,7 +11,7 @@ export const AppProviders = ({ children }: AppProvidersProps) => (
   <QueryProvider>
     <AuthProvider>
       {children}
-      <Toaster position="top-right" />
+      <Toaster position="top-center" />
     </AuthProvider>
   </QueryProvider>
 );
