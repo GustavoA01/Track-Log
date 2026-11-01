@@ -23,6 +23,11 @@ export const EndSessionFormFields = () => {
         aria-invalid={!!errors.notes}
         autoFocus
         {...register("notes")}
+        onKeyDown={(event) => {
+          if (event.key !== "Enter" || event.shiftKey) return;
+          event.preventDefault();
+          event.currentTarget.form?.requestSubmit();
+        }}
       />
       <FieldError message={errors.notes?.message} />
     </div>

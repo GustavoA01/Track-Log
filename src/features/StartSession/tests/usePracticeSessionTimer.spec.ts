@@ -97,6 +97,26 @@ describe("usePracticeSessionTimer", () => {
     expect(playTimerEndSound).not.toHaveBeenCalled();
   });
 
+  it.each([
+    [0, 1],
+    [1, 1],
+    [60, 1],
+    [61, 2],
+    [900, 15],
+  ])("returns %i elapsed seconds as %i minutes", (seconds, minutes) => {
+    const { result } = renderHook(() => usePracticeSessionTimer());
+
+    act(() => {
+      result.current.handleStartSession(15);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(seconds * 1000);
+    });
+
+    expect(result.current.getElapsedMinutes()).toBe(minutes);
+  });
+
   it("resets timer on end session", () => {
     const { result } = renderHook(() => usePracticeSessionTimer());
 

@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { playTimerEndSound } from "../utils/playTimerEndSound";
+import {
+  formatRemainingTime,
+  getElapsedMinutes as calculateElapsedMinutes,
+} from "../utils/timeFormatter";
 
 export const usePracticeSessionTimer = () => {
   const [isTimerActive, setIsTimerActive] = useState(false);
@@ -9,16 +13,8 @@ export const usePracticeSessionTimer = () => {
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const remainingSecondsRef = useRef(0);
 
-  const formatRemainingTime = (totalSeconds: number) => {
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-  };
-
   const elapsedSeconds = sessionDurationSeconds - remainingSeconds;
-
-  const getElapsedMinutes = () => Math.max(1, Math.ceil(elapsedSeconds / 60));
+  const getElapsedMinutes = () => calculateElapsedMinutes(elapsedSeconds);
 
   useEffect(() => {
     if (!isTimerActive || isPaused || isEndSessionOpen) return;
