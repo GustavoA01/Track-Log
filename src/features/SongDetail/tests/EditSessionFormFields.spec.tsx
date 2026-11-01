@@ -13,9 +13,11 @@ import { sessions } from "./test-data";
 function EditSessionFormHarness({
   dateUnlocked = false,
   onToggleDateUnlocked = jest.fn(),
+  onSubmit = jest.fn(),
 }: {
   dateUnlocked?: boolean;
   onToggleDateUnlocked?: () => void;
+  onSubmit?: (values: EditSessionValuesType) => void;
 }) {
   const methods = useForm<EditSessionValuesType>({
     resolver: zodResolver(editSessionSchema),
@@ -24,7 +26,7 @@ function EditSessionFormHarness({
 
   return (
     <FormProvider {...methods}>
-      <form>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
         <EditSessionFormFields
           dateUnlocked={dateUnlocked}
           onToggleDateUnlocked={onToggleDateUnlocked}
@@ -72,5 +74,34 @@ describe("EditSessionFormFields", () => {
     expect(screen.getByLabelText("Duração (min)")).toBeInTheDocument();
     expect(screen.getByLabelText("Anotações")).toBeInTheDocument();
     expect(screen.getByDisplayValue("Trabalhei acordes")).toBeInTheDocument();
+  });
+  it("submits notes on Enter", async () => {
+    const onSubmit = jest.fn();
+    const user = userEvent.setup();
+
+    render(<EditSessionFormHarness onSubmit={onSubmit} />);
+
+    const notes = screen.getByLabelText("Anotações");
+    await user.clear(notes);
+    await user.type(notes, "Pratiquei escalas{Enter}");
+
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(onSubmit.mock.calls[0][0]).toEqual(
+      expect.objectContaining({ notes: "Pratiquei escalas" }),
+    );
+  });
+
+  it("inserts a line break on Shift+Enter without submitting", async () => {
+    const onSubmit = jest.fn();
+    const user = userEvent.setup();
+
+    render(<EditSessionFormHarness onSubmit={onSubmit} />);
+
+    const notes = screen.getByLabelText("Anotações");
+    await user.clear(notes);
+    await user.type(notes, "Escalas{Shift>}{Enter}{/Shift}Acordes");
+
+    expect(notes).toHaveValue("Escalas\nAcordes");
+    expect(onSubmit).not.toHaveBeenCalled();
   });
 });

@@ -80,6 +80,11 @@ export const EditSessionFormFields = ({
           rows={4}
           aria-invalid={!!errors.notes}
           {...register("notes")}
+          onKeyDown={(event) => {
+            if (event.key !== "Enter" || event.shiftKey) return;
+            event.preventDefault();
+            event.currentTarget.form?.requestSubmit();
+          }}
         />
         <FieldError message={errors.notes?.message} />
       </div>
