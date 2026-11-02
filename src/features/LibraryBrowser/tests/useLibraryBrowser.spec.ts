@@ -82,4 +82,21 @@ describe("useLibraryBrowser", () => {
       "song-2",
     ]);
   });
+
+  it("returns unique instrument options", () => {
+    const { result } = renderHook(() => useLibraryBrowser({ songs }));
+
+    expect(result.current.instrumentOptions).toEqual(["Guitarra", "Violão"]);
+  });
+
+  it("filters songs by instrument", () => {
+    const { result } = renderHook(() => useLibraryBrowser({ songs }));
+
+    act(() => {
+      result.current.setInstrumentQuery("Guitarra");
+    });
+
+    expect(result.current.filteredSongs).toHaveLength(1);
+    expect(result.current.filteredSongs[0]?.id).toBe("song-2");
+  });
 });

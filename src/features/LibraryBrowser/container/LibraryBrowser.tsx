@@ -24,6 +24,9 @@ export const LibraryBrowser = ({
     filteredSongs,
     setStatusQuery,
     statusQuery,
+    instrumentQuery,
+    setInstrumentQuery,
+    instrumentOptions,
     reverseSongs,
     setReverseSongs,
     sortBy,
@@ -37,6 +40,9 @@ export const LibraryBrowser = ({
         setQuery={setQuery}
         statusQuery={statusQuery}
         setStatusQuery={setStatusQuery}
+        instrumentQuery={instrumentQuery}
+        setInstrumentQuery={setInstrumentQuery}
+        instrumentOptions={instrumentOptions}
       />
       <FolderSection
         folders={folders}

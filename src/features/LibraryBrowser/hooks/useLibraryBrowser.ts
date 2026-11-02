@@ -2,6 +2,12 @@ import { useState, useMemo } from "react";
 import type { SongType, SortByType, StatusItemType } from "@/data/types";
 import { toTimestamp } from "@/utils/dates";
 
+const normalize = (text: string) =>
+  text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
 export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
   const [query, setQuery] = useState("");
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
@@ -9,14 +15,23 @@ export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
   const [reverseSongs, setReverseSongs] = useState(false);
   const [statusQuery, setStatusQuery] =
     useState<StatusItemType["value"]>("all");
-
-  const normalize = (text: string) =>
-    text
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase();
+  const [instrumentQuery, setInstrumentQuery] = useState("all");
 
   const normalizedQuery = normalize(query.trim());
+
+  const instrumentOptions = useMemo(() => {
+    const unique = new Map<string, string>();
+
+    for (const song of songs) {
+      const instrument = song.instrument.trim();
+      if (!instrument) continue;
+
+      const key = normalize(instrument);
+      if (!unique.has(key)) unique.set(key, instrument);
+    }
+
+    return [...unique.values()].sort((a, b) => a.localeCompare(b, "pt"));
+  }, [songs]);
 
   const filteredSongs = useMemo(() => {
     let result = selectedFolderId
@@ -33,6 +48,12 @@ export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
 
     if (statusQuery !== "all") {
       result = result.filter((song) => song.status === statusQuery);
+    }
+
+    if (instrumentQuery !== "all") {
+      result = result.filter(
+        (song) => normalize(song.instrument) === normalize(instrumentQuery),
+      );
     }
 
     const sortFunctions: Record<
@@ -54,6 +75,7 @@ export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
     selectedFolderId,
     songs,
     statusQuery,
+    instrumentQuery,
     sortBy,
     reverseSongs,
   ]);
@@ -66,6 +88,9 @@ export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
     filteredSongs,
     statusQuery,
     setStatusQuery,
+    instrumentQuery,
+    setInstrumentQuery,
+    instrumentOptions,
     reverseSongs,
     setReverseSongs,
     sortBy,

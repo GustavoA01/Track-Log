@@ -31,7 +31,7 @@ export const songs: SongType[] = [
     title: "Black",
     artist: "Pearl Jam",
     genre: "Rock",
-    instrument: "Violão",
+    instrument: "Guitarra",
     difficulty: 3,
     status: "learned",
     createdAt: "2026-01-02",
