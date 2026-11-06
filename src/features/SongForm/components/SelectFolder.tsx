@@ -30,7 +30,7 @@ export const SelectFolder = ({
         availableFolders.map((folder) => [folder.id, folder.name]),
       )}
     >
-      <SelectTrigger className="w-full sm:flex-1">
+      <SelectTrigger aria-label="Selecionar pasta" className="w-full sm:flex-1">
         <SelectValue placeholder="Selecione uma pasta" />
       </SelectTrigger>
       <SelectContent>

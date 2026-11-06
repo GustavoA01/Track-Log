@@ -7,19 +7,22 @@ type FormFooterProps = {
   handleCancel: () => void;
 };
 
+const submitButtonClassName = "h-11 w-full sm:h-8 sm:w-auto rounded-full";
+
 export const FormFooter = ({
   isSaving,
   submitLabel = "Salvar",
   handleCancel,
 }: FormFooterProps) => (
-  <CardFooter className="gap-2">
-    <Button type="submit" disabled={isSaving}>
+  <CardFooter className="flex-col gap-2 sm:flex-row">
+    <Button type="submit" disabled={isSaving} className={submitButtonClassName}>
       {isSaving ? "Salvando..." : submitLabel}
     </Button>
     <Button
       type="button"
       disabled={isSaving}
-      variant="ghost"
+      variant="outline"
+      className={submitButtonClassName}
       onClick={handleCancel}
     >
       Cancelar

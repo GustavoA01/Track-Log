@@ -14,9 +14,9 @@ import type {
 
 export const statusItens: StatusItemType[] = [
   { label: "Todas", value: "all" },
-  { label: "Aprendida", value: "learned" },
+  { label: "Aprendidas", value: "learned" },
   { label: "Aprendendo", value: "learning" },
-  { label: "Pausada", value: "paused" },
+  { label: "Pausadas", value: "paused" },
   { label: "Quero aprender", value: "want_to_learn" },
 ];
 

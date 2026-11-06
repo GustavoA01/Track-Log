@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { EditSessionDialog } from "../container/EditSessionDialog";
 import { useEditSessionDialog } from "../hooks/useEditSessionDialog";
 import { sessions } from "./test-data";
@@ -22,13 +22,14 @@ jest.mock("../hooks/useUpdateSessionMutation", () => ({
 function EditSessionDialogHarness() {
   const dialog = useEditSessionDialog("song-1");
 
-  useEffect(() => {
-    dialog.openDialog(sessions[0]!);
-  }, []);
-
-  if (!dialog.open) return null;
-
-  return <EditSessionDialog dialog={dialog} />;
+  return (
+    <>
+      <button type="button" onClick={() => dialog.openDialog(sessions[0]!)}>
+        Abrir edição
+      </button>
+      <EditSessionDialog dialog={dialog} />
+    </>
+  );
 }
 
 describe("EditSessionDialog", () => {
@@ -37,8 +38,11 @@ describe("EditSessionDialog", () => {
     mutateAsync.mockResolvedValue(undefined);
   });
 
-  it("renders edit form with locked date field", () => {
+  it("renders edit form with locked date field", async () => {
+    const user = userEvent.setup();
     render(<EditSessionDialogHarness />);
+
+    await user.click(screen.getByRole("button", { name: "Abrir edição" }));
 
     expect(screen.getByText("Editar sessão")).toBeInTheDocument();
     expect(screen.getByLabelText("Data")).toBeDisabled();

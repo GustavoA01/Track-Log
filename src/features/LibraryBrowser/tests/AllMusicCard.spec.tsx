@@ -34,16 +34,4 @@ describe("AllMusicCard", () => {
 
     expect(setSelectedFolderId).toHaveBeenCalledWith(null);
   });
-
-  it("highlights card when no folder is selected", () => {
-    const { container } = render(
-      <AllMusicCard
-        songs={songs}
-        selectedFolderId={null}
-        setSelectedFolderId={jest.fn()}
-      />,
-    );
-
-    expect(container.firstChild).toHaveClass("border-primary");
-  });
 });

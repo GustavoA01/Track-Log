@@ -20,14 +20,13 @@ export const BottomNav = () => {
       <div className="mx-auto flex h-16 max-w-6xl">
         {tabsNavigation.map(({ href, label, icon: Icon }) => {
           const isActive = verifyPath(href);
-
           return (
             <Link
               key={href}
               href={href}
               className={cn(
-                "flex flex-1 flex-col items-center justify-center gap-1 text-xs transition-colors",
-                isActive ? "text-primary" : "text-muted-foreground",
+                "flex flex-1 flex-col items-center justify-center gap-1 text-xs transition-all",
+                isActive && "text-muted-foreground",
               )}
             >
               <Icon className="size-5" />

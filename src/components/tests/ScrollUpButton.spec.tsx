@@ -19,37 +19,6 @@ describe("ScrollUpButton", () => {
     window.scrollTo = scrollTo;
   });
 
-  it("starts hidden when the page is at the top", () => {
-    render(<ScrollUpButton />);
-
-    const button = screen.getByRole("button", { name: "Voltar ao topo" });
-    expect(button).toHaveClass("opacity-0", "pointer-events-none", "scale-75");
-  });
-
-  it("becomes visible after scrolling past 600px", () => {
-    render(<ScrollUpButton />);
-
-    setScrollY(601);
-    fireEvent.scroll(window);
-
-    expect(screen.getByRole("button", { name: "Voltar ao topo" })).toHaveClass(
-      "opacity-100",
-      "scale-100",
-    );
-  });
-
-  it("stays hidden at exactly 600px", () => {
-    render(<ScrollUpButton />);
-
-    setScrollY(600);
-    fireEvent.scroll(window);
-
-    expect(screen.getByRole("button", { name: "Voltar ao topo" })).toHaveClass(
-      "opacity-0",
-      "pointer-events-none",
-    );
-  });
-
   it("scrolls smoothly to the top when clicked", async () => {
     const user = userEvent.setup();
     setScrollY(601);

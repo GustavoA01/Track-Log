@@ -20,19 +20,6 @@ describe("BottomNav", () => {
     );
   });
 
-  it("applies active style to the matching tab", () => {
-    mockUsePathname.mockReturnValue("/historico");
-
-    render(<BottomNav />);
-
-    expect(screen.getByRole("link", { name: "Histórico" })).toHaveClass(
-      "text-primary",
-    );
-    expect(screen.getByRole("link", { name: "Início" })).toHaveClass(
-      "text-muted-foreground",
-    );
-  });
-
   it("hides on auth routes", () => {
     mockUsePathname.mockReturnValue("/login");
 

@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import {
   startSessionSchema,
   type StartSessionValuesType,
@@ -18,10 +18,12 @@ function DurationPresetsHarness({
     defaultValues,
   });
 
+  const minutes = useWatch({ control: methods.control, name: "minutes" });
+
   return (
     <FormProvider {...methods}>
       <DurationPresets />
-      <output data-testid="minutes">{methods.watch("minutes")}</output>
+      <output data-testid="minutes">{minutes}</output>
     </FormProvider>
   );
 }

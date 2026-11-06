@@ -71,7 +71,7 @@ export const SongForm = ({
             </div>
 
             <div className="grid gap-6 lg:grid-cols-[180px_minmax(0,1fr)] lg:items-start">
-              <div className="mx-auto w-full max-w-[180px] space-y-2 lg:mx-0">
+              <div className="mx-auto w-full max-w-45 space-y-2 lg:mx-0">
                 <FormFieldLabel icon={ImageIcon}>Prévia da capa</FormFieldLabel>
                 <SongImagePreview imageUrl={imageUrl || undefined} />
               </div>

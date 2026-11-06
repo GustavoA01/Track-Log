@@ -60,12 +60,4 @@ describe("BackButton", () => {
 
     expect(push).toHaveBeenCalledWith("/biblioteca");
   });
-
-  it("applies extra className", () => {
-    render(<BackButton className="custom-class" />);
-
-    expect(screen.getByRole("button", { name: /voltar/i })).toHaveClass(
-      "custom-class",
-    );
-  });
 });

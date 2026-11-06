@@ -16,6 +16,12 @@ export const RegisterForm = ({ isEdit = false }: RegisterFormProps) => {
 
   if (isLoadingUser) return <AuthLoading />;
 
+  const submitLabel = (() => {
+    if (isSubmitting) return "Salvando...";
+    if (isEdit) return "Salvar alterações";
+    return "Criar conta";
+  })();
+
   return (
     <FormProvider {...methods}>
       <form
@@ -25,13 +31,7 @@ export const RegisterForm = ({ isEdit = false }: RegisterFormProps) => {
       >
         <RegisterFormFields isEdit={isEdit} />
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting
-            ? isEdit
-              ? "Salvando..."
-              : "Criando conta..."
-            : isEdit
-              ? "Salvar alterações"
-              : "Criar conta"}
+          {submitLabel}
         </Button>
       </form>
     </FormProvider>

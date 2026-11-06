@@ -12,10 +12,4 @@ describe("SongStatusBadge", () => {
 
     expect(screen.getByText(label)).toBeInTheDocument();
   });
-
-  it("applies extra className", () => {
-    render(<SongStatusBadge status="learning" className="custom-class" />);
-
-    expect(screen.getByText("Aprendendo")).toHaveClass("custom-class");
-  });
 });

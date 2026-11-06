@@ -23,7 +23,7 @@ export const HomeHeader = () => (
             <p className="text-sm font-semibold font-montserrat leading-none">
               Track Log
             </p>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground hidden sm:block">
               Seu diário de estudos
             </p>
           </div>

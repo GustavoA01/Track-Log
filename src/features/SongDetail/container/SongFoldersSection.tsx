@@ -102,7 +102,10 @@ export const SongFoldersSection = ({
             value={selectedFolderId}
             onValueChange={(value) => setSelectedFolderId(value ?? "")}
           >
-            <SelectTrigger className="w-full sm:max-w-xs">
+            <SelectTrigger
+              aria-label="Adicionar música a uma pasta"
+              className="w-full sm:max-w-xs"
+            >
               <SelectValue placeholder="Selecione uma pasta" />
             </SelectTrigger>
             <SelectContent>

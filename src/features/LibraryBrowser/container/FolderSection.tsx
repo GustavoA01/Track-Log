@@ -20,7 +20,12 @@ export const FolderSection = ({
       setSelectedFolderId={setSelectedFolderId}
     />
 
-    <div className="flex min-w-0 max-w-full gap-3 overflow-x-auto pb-1">
+    <div
+      role="region"
+      aria-label="Pastas da biblioteca"
+      tabIndex={0}
+      className="scrollbar-none flex min-w-0 max-w-full gap-3 overflow-x-auto rounded-xl p-1 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    >
       <AllMusicCard
         songs={songs}
         selectedFolderId={selectedFolderId}

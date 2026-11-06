@@ -19,10 +19,7 @@ export const AccountContent = ({ name }: AccountContentProps) => (
     <div className="flex flex-col gap-2">
       <Link
         href="/cadastrar?edit=true"
-        className={cn(
-          "max-sm:rounded-full w-full",
-          buttonVariants({ size: "lg" }),
-        )}
+        className={cn("w-full", buttonVariants({ size: "lg" }))}
       >
         Alterar dados
       </Link>

@@ -12,7 +12,7 @@ export const LogoutButton = () => {
       variant="outline"
       aria-label="Sair"
       onClick={handleLogout}
-      className="max-sm:rounded-full w-full flex items-center gap-1 text-sm"
+      className="w-full flex items-center gap-1 text-sm"
     >
       <p>Sair</p>
       <LogOut className="size-4 text-destructive" />

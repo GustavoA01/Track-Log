@@ -30,14 +30,14 @@ export const SearchSection = ({
 }: SearchSectionProps) => (
   <div className="flex flex-col sm:flex-row gap-4">
     <SearchInput query={query} setQuery={setQuery} />
-    <div className="flex w-full flex-col gap-2 sm:ml-auto sm:w-auto sm:flex-row">
+    <div className="flex w-full flex-col gap-2 sm:ml-auto sm:w-auto sm:shrink-0 sm:flex-row">
       <Select
         value={statusQuery}
         onValueChange={(value) => setStatusQuery(value!)}
       >
         <SelectTrigger
           aria-label="Filtrar por status"
-          className="w-full sm:max-w-44"
+          className="w-full sm:w-44"
         >
           <SelectValue>
             <span className={statusColors[statusQuery]}>
@@ -60,7 +60,7 @@ export const SearchSection = ({
         >
           <SelectTrigger
             aria-label="Filtrar por instrumento"
-            className="w-full sm:max-w-44"
+            className="w-full sm:w-44"
           >
             <SelectValue>
               {instrumentQuery === "all" ? "Instrumentos" : instrumentQuery}

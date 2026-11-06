@@ -45,7 +45,7 @@ export const MusicSectionHeader = ({
           href={`/musica/nova?folderId=${selectedFolderId}`}
           aria-label={`Nova música em ${selectedFolderName}`}
           className={cn(
-            "min-w-0 max-sm:max-w-28 max-sm:rounded-full",
+            "min-w-0 max-sm:max-w-28",
             buttonVariants({ variant: "outline", size: "sm" }),
           )}
         >
@@ -58,14 +58,17 @@ export const MusicSectionHeader = ({
       )}
 
       <Select value={sortBy} onValueChange={(value) => setSortBy(value!)}>
-        <SelectTrigger className="min-w-0 shrink sm:min-w-44">
+        <SelectTrigger
+          aria-label="Ordenar músicas"
+          className="min-w-0 shrink text-sm sm:min-w-44"
+        >
           <SelectValue>
             {sortItens.find((item) => item.value === sortBy)?.label}
           </SelectValue>
         </SelectTrigger>
         <SelectContent className="min-w-56">
           {sortItens.map(({ label, value }) => (
-            <SelectItem className="w-full" key={value} value={value}>
+            <SelectItem className="w-full text-sm" key={value} value={value}>
               {label}
             </SelectItem>
           ))}

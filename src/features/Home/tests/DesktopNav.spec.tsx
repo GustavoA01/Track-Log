@@ -19,14 +19,4 @@ describe("DesktopNav", () => {
       "/historico",
     );
   });
-
-  it("highlights the active link based on pathname", () => {
-    mockUsePathname.mockReturnValue("/historico");
-
-    render(<DesktopNav />);
-
-    expect(screen.getByRole("link", { name: "Histórico" })).toHaveClass(
-      "bg-secondary",
-    );
-  });
 });

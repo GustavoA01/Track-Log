@@ -5,6 +5,12 @@ export type SongStatusType =
   | "paused";
 
 export type StatusLabelType =
+  | "Aprendidas"
+  | "Aprendendo"
+  | "Pausadas"
+  | "Quero aprender";
+
+export type SongStatusLabelType =
   | "Aprendida"
   | "Aprendendo"
   | "Pausada"
@@ -57,7 +63,7 @@ export interface PracticeSessionType {
 }
 
 export type SongStatusConfig = {
-  label: StatusLabelType;
+  label: SongStatusLabelType;
   badgeClassName: string;
   selectTriggerClassName: string;
 };

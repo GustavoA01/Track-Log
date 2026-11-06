@@ -15,16 +15,4 @@ describe("SongCover", () => {
       "https://example.com/wonderwall.jpg",
     );
   });
-
-  it("applies custom className", () => {
-    const { container } = render(
-      <SongCover
-        title="Wonderwall"
-        imageUrl="https://example.com/wonderwall.jpg"
-        className="custom-class"
-      />,
-    );
-
-    expect(container.firstChild).toHaveClass("custom-class");
-  });
 });

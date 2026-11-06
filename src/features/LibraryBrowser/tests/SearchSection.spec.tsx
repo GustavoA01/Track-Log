@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import type { SongStatusType } from "@/data/types";
+import { BottomNav } from "@/components/BottomNav";
 import { SearchSection } from "../components/SearchSection";
 
 const instrumentProps = {
@@ -103,5 +104,89 @@ describe("SearchSection", () => {
     expect(
       screen.queryByRole("combobox", { name: "Filtrar por instrumento" }),
     ).not.toBeInTheDocument();
+  });
+  it("keeps bottom navigation interactive while a select is open", async () => {
+    const user = userEvent.setup();
+    const onNavigate = jest.fn((event) => event.preventDefault());
+
+    render(
+      <>
+        <SearchHarness />
+        <div onClick={onNavigate}>
+          <BottomNav />
+        </div>
+      </>,
+    );
+
+    await user.click(
+      screen.getByRole("combobox", { name: "Filtrar por instrumento" }),
+    );
+
+    expect(await screen.findByRole("listbox")).toBeInTheDocument();
+    await user.click(screen.getByRole("link", { name: "Histórico" }));
+
+    expect(onNavigate).toHaveBeenCalledTimes(1);
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+  });
+
+  it("selects an instrument with the keyboard and restores trigger focus", async () => {
+    const user = userEvent.setup();
+
+    render(<SearchHarness />);
+
+    const trigger = screen.getByRole("combobox", {
+      name: "Filtrar por instrumento",
+    });
+    trigger.focus();
+    await user.keyboard("{ArrowDown}");
+    await screen.findByRole("listbox");
+    await user.keyboard("{End}{Enter}");
+
+    expect(trigger).toHaveTextContent("Violão");
+    expect(trigger).toHaveFocus();
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+  });
+  it("keeps the menu fixed and navigation available on the first and second touch opening", async () => {
+    const user = userEvent.setup();
+    const onNavigate = jest.fn((event) => event.preventDefault());
+
+    render(
+      <>
+        <SearchHarness />
+        <div onClick={onNavigate}>
+          <BottomNav />
+        </div>
+      </>,
+    );
+
+    const trigger = screen.getByRole("combobox", {
+      name: "Filtrar por instrumento",
+    });
+    const bodyStyles = document.body.getAttribute("style");
+    const htmlStyles = document.documentElement.getAttribute("style");
+
+    for (let opening = 0; opening < 2; opening++) {
+      await user.pointer([
+        { keys: "[TouchA>]", target: trigger },
+        { keys: "[/TouchA]" },
+      ]);
+
+      const list = await screen.findByRole("listbox");
+      const positioner = list.closest('[data-slot="select-positioner"]');
+
+      await waitFor(() => {
+        expect(positioner).toHaveStyle({ position: "fixed" });
+      });
+      expect(screen.getByRole("navigation")).toBeVisible();
+      expect(document.body.getAttribute("style")).toBe(bodyStyles);
+      expect(document.documentElement.getAttribute("style")).toBe(htmlStyles);
+
+      await user.click(screen.getByRole("link", { name: "Histórico" }));
+      await waitFor(() => {
+        expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
+      });
+    }
+
+    expect(onNavigate).toHaveBeenCalledTimes(2);
   });
 });

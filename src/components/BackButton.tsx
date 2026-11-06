@@ -12,7 +12,7 @@ type BackButtonProps = {
 export const BackButton = ({ className, href }: BackButtonProps) => {
   const router = useRouter();
   const buttonClassName = cn(
-    "max-sm:border max-sm:rounded-full max-sm:p-2 max-sm:border-border",
+    "max-sm:border max-sm:p-2 max-sm:border-border",
     className,
   );
 

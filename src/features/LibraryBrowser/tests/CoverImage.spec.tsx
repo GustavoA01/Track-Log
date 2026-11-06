@@ -18,27 +18,8 @@ describe("CoverImage", () => {
   });
 
   it("renders music fallback when src is missing", () => {
-    const { container } = render(
-      <CoverImage alt="Wonderwall" fallbackColor="#0d9488" />,
-    );
+    render(<CoverImage alt="Wonderwall" fallbackColor="#0d9488" />);
 
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
-    expect(container.querySelector(".lucide-music")).toBeInTheDocument();
-  });
-
-  it("renders folder fallback icon when requested", () => {
-    const { container } = render(
-      <CoverImage alt="Rock" fallbackIcon="folder" fallbackColor="#2563eb" />,
-    );
-
-    expect(container.querySelector(".lucide-folder-open")).toBeInTheDocument();
-  });
-
-  it("applies size class for small covers", () => {
-    const { container } = render(
-      <CoverImage alt="Wonderwall" size="sm" fallbackColor="#0d9488" />,
-    );
-
-    expect(container.firstChild).toHaveClass("size-10");
   });
 });

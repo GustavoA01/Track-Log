@@ -15,7 +15,7 @@ export const FolderFormFooter = ({
   onCancel,
 }: FolderFormFooterProps) => (
   <DialogFooter>
-    <Button variant="ghost" disabled={isSaving} onClick={onCancel}>
+    <Button variant="outline" disabled={isSaving} onClick={onCancel}>
       Cancelar
     </Button>
     <Button type="submit" form={formId} disabled={isSaving}>
