@@ -21,7 +21,7 @@ Track Log é uma aplicação web para músicos organizarem seu repertório e aco
 - [Next.js 16](https://nextjs.org/) (App Router)
 - [React 19](https://react.dev/) + TypeScript
 - [Tailwind CSS 4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
-- [Prisma ORM](https://www.prisma.io/) com banco de dados SQLite
+- [Prisma ORM](https://www.prisma.io/) com banco de dados PostgreSQL
 - [Firebase Authentication](https://firebase.google.com/products/auth)
 - [TanStack Query (React Query)](https://tanstack.com/query/latest) para gerenciamento de estado assíncrono
 - [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) para formulários e validação
@@ -56,6 +56,10 @@ prisma/
 - **SongFolder**: relação muitos-para-muitos entre músicas e pastas
 - **PracticeSession**: sessões de prática vinculadas a uma música (data, duração, anotações)
 
+Os diagramas UML dos modelos persistidos e dos contratos da interface, com atributos e relacionamentos, estão em [Arquitetura e diagramas de classes](docs/arquitetura.md).
+
+As orientações de implementação e validação estão no [AGENTS.md](AGENTS.md).
+
 ## 🚀 Como rodar o projeto
 
 ### Pré-requisitos
@@ -80,6 +84,7 @@ Crie um arquivo `.env` na raiz do projeto com base no `.env.example`:
 
 ```env
 DATABASE_URL=
+DIRECT_URL=
 NEXT_PUBLIC_FIREBASE_API_KEY=
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
 NEXT_PUBLIC_FIREBASE_PROJECT_ID=
