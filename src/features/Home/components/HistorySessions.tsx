@@ -2,6 +2,7 @@
 
 import { SearchInput } from "@/components/SearchInput";
 import { SessionHistoryList } from "@/components/SessionHistoryList";
+import { Button } from "@/components/ui/button";
 import type { PracticeSessionType, SongType } from "@/data/types";
 import type { SongDetailFrom } from "@/utils/navigation";
 import { useSessionHistorySearch } from "../hooks/useSessionHistorySearch";
@@ -17,10 +18,11 @@ export const HistorySessions = ({
   songs,
   from,
 }: HistorySessionsProps) => {
-  const { query, setQuery, filteredSessions } = useSessionHistorySearch({
-    sessions,
-    songs,
-  });
+  const { query, setQuery, filteredSessions, hasMore, loadMore } =
+    useSessionHistorySearch({
+      sessions,
+      songs,
+    });
 
   return (
     <div className="space-y-4">
@@ -39,6 +41,13 @@ export const HistorySessions = ({
             : "Nenhuma sessão registrada ainda."
         }
       />
+      {hasMore && (
+        <div className="flex justify-center">
+          <Button type="button" variant="outline" onClick={loadMore}>
+            Carregar mais
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

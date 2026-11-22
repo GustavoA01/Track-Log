@@ -11,7 +11,7 @@ type SearchInputProps = {
 export const SearchInput = ({
   query,
   setQuery,
-  placeholder = "Buscar músicas, artistas ou pastas...",
+  placeholder = "Buscar músicas, artistas ou gêneros...",
 }: SearchInputProps) => (
   <section className="relative min-w-0 flex-1">
     <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />

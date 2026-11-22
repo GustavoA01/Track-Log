@@ -42,7 +42,8 @@ export const useLibraryBrowser = ({ songs }: { songs: SongType[] }) => {
       result = result.filter(
         (song) =>
           normalize(song.title).includes(normalizedQuery) ||
-          normalize(song.artist).includes(normalizedQuery),
+          normalize(song.artist).includes(normalizedQuery) ||
+          normalize(song.genre).includes(normalizedQuery),
       );
     }
 

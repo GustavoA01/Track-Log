@@ -25,8 +25,8 @@ export const BottomNav = () => {
               key={href}
               href={href}
               className={cn(
-                "flex flex-1 flex-col items-center justify-center gap-1 text-xs transition-all",
-                isActive && "text-muted-foreground",
+                "flex flex-1 flex-col items-center justify-center gap-1 text-xs text-muted-foreground transition-all",
+                isActive && "text-foreground",
               )}
             >
               <Icon className="size-5" />

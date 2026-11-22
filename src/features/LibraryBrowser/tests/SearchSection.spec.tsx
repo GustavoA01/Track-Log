@@ -42,7 +42,7 @@ describe("SearchSection", () => {
     );
 
     expect(
-      screen.getByPlaceholderText("Buscar músicas, artistas ou pastas..."),
+      screen.getByPlaceholderText("Buscar músicas, artistas ou gêneros..."),
     ).toBeInTheDocument();
   });
 

@@ -47,6 +47,17 @@ describe("useLibraryBrowser", () => {
     expect(result.current.filteredSongs[0]?.artist).toBe("Pearl Jam");
   });
 
+  it("filters songs by genre query", () => {
+    const { result } = renderHook(() => useLibraryBrowser({ songs }));
+
+    act(() => {
+      result.current.setQuery("mpb");
+    });
+
+    expect(result.current.filteredSongs).toHaveLength(1);
+    expect(result.current.filteredSongs[0]?.genre).toBe("MPB");
+  });
+
   it("ignores accents when searching", () => {
     const { result } = renderHook(() => useLibraryBrowser({ songs }));
 

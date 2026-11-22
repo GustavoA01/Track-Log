@@ -1,6 +1,9 @@
 import { useMemo, useState } from "react";
 import type { PracticeSessionType, SongType } from "@/data/types";
 
+const INITIAL_LIMIT = 20;
+const PAGE_SIZE = 10;
+
 const normalize = (text: string) =>
   text
     .normalize("NFD")
@@ -14,7 +17,8 @@ export const useSessionHistorySearch = ({
   sessions: PracticeSessionType[];
   songs: SongType[];
 }) => {
-  const [query, setQuery] = useState("");
+  const [query, setQueryState] = useState("");
+  const [visibleCount, setVisibleCount] = useState(INITIAL_LIMIT);
   const normalizedQuery = normalize(query.trim());
 
   const songsById = useMemo(
@@ -37,9 +41,27 @@ export const useSessionHistorySearch = ({
     });
   }, [normalizedQuery, sessions, songsById]);
 
+  const visibleSessions = useMemo(
+    () => filteredSessions.slice(0, visibleCount),
+    [filteredSessions, visibleCount],
+  );
+
+  const hasMore = visibleCount < filteredSessions.length;
+
+  const setQuery = (value: string) => {
+    setQueryState(value);
+    setVisibleCount(INITIAL_LIMIT);
+  };
+
+  const loadMore = () => {
+    setVisibleCount((count) => count + PAGE_SIZE);
+  };
+
   return {
     query,
     setQuery,
-    filteredSessions,
+    filteredSessions: visibleSessions,
+    hasMore,
+    loadMore,
   };
 };
